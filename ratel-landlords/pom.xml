@@ -47,6 +47,13 @@
         <version>2.0.5.RELEASE</version>
     </parent>
 	
+	<dependencies>
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -151,6 +158,7 @@
 	<modules>
 		<module>landlords-client</module>
 		<module>landlords-server</module>
+		<module>landlords-common</module>
 	</modules>
 
 	<distributionManagement>
