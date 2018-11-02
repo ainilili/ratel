@@ -1,7 +1,7 @@
-package org.nico.trap.landlords.entity;
+package org.nico.ratel.landlords.entity;
 
-import org.nico.trap.landlords.enums.PokerLevel;
-import org.nico.trap.landlords.enums.PokerType;
+import org.nico.ratel.landlords.enums.PokerLevel;
+import org.nico.ratel.landlords.enums.PokerType;
 
 /**
  * Poke, with {@link PokerLevel} and {@link PokerType}
@@ -13,6 +13,14 @@ public class Poker {
 	private PokerLevel level;
 	
 	private PokerType type;
+
+	public Poker() {
+	}
+
+	public Poker(PokerLevel level, PokerType type) {
+		this.level = level;
+		this.type = type;
+	}
 
 	public final PokerLevel getLevel() {
 		return level;
@@ -42,6 +50,11 @@ public class Poker {
 		if (level != other.level)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Poker [level=" + level + ", type=" + type + "]";
 	}
 	
 }

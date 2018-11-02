@@ -9,4 +9,12 @@
 		<artifactId>landlords</artifactId>
 		<version>1.0.0</version>
     </parent>
+    
+    <dependencies>
+	    <dependency>
+	    	<groupId>com.smallnico.ratel</groupId>
+			<artifactId>landlords-common</artifactId>
+			<version>1.0.0</version>
+	    </dependency>
+    </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package org.nico.trap.landlords.enums;
+package org.nico.ratel.landlords.enums;
 
 /**
  * Poker level

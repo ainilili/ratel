@@ -1,4 +1,4 @@
-package org.nico.trap.landlords.transfer;
+package org.nico.ratel.landlords.transfer;
 
 /**
  * Byte manipulation tool
@@ -39,10 +39,22 @@ public class ByteKit {
 					}
 				}
 				if(isEquals) {
-					targetIndex = index;  
+					targetIndex = index;
+					break;
 				}
 			}
 		}
 		return targetIndex;
+	}
+	
+	/**
+	 * Gets the position of the byte byte in the byte array
+	 * 
+	 * @param b Byte
+	 * @param start Matching start index
+	 * @return Match index, not match to return -1
+	 */
+	public int indexOf(byte b, int start) {
+		return indexOf(new byte[] {b}, start);
 	}
 }
