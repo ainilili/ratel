@@ -1,29 +1,39 @@
 package org.nico.ratel.landlords.entity;
 
+import java.io.Serializable;
+
 import org.nico.ratel.landlords.enums.ClientEventCode;
 
-public class ClientTransferData {
+public class ClientTransferData<T> implements Serializable{
 
-	private int serverId;
-	
+	private static final long serialVersionUID = -5144173747228946445L;
+
 	private ClientEventCode code;
 	
-	private String data;
+	private T data;
 	
-	public ClientTransferData() {}
+	private String msg;
 
-	public ClientTransferData(int serverId, ClientEventCode code, String data) {
-		this.serverId = serverId;
+	public ClientTransferData() {
+	}
+
+	public ClientTransferData(ClientEventCode code, T data) {
 		this.code = code;
 		this.data = data;
 	}
-
-	public final int getServerId() {
-		return serverId;
+	
+	public ClientTransferData(ClientEventCode code, T data, String msg) {
+		this.code = code;
+		this.data = data;
+		this.msg = msg;
+	}
+	
+	public final String getMsg() {
+		return msg;
 	}
 
-	public final void setServerId(int serverId) {
-		this.serverId = serverId;
+	public final void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	public final ClientEventCode getCode() {
@@ -34,17 +44,17 @@ public class ClientTransferData {
 		this.code = code;
 	}
 
-	public final String getData() {
+	public final T getData() {
 		return data;
 	}
 
-	public final void setData(String data) {
+	public final void setData(T data) {
 		this.data = data;
 	}
 
 	@Override
 	public String toString() {
-		return "ClientTransferData [serverId=" + serverId + ", code=" + code + ", data=" + data + "]";
+		return "ClientTransferData [code=" + code + ", data=" + data + ", msg=" + msg + "]";
 	}
-	
+
 }

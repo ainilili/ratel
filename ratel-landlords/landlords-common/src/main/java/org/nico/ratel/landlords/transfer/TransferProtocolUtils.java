@@ -1,14 +1,6 @@
 package org.nico.ratel.landlords.transfer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.nico.noson.Noson;
-import org.nico.noson.entity.NoType;
-import org.nico.ratel.landlords.entity.Poker;
-import org.nico.ratel.landlords.enums.PokerLevel;
-import org.nico.ratel.landlords.enums.PokerType;
 import org.nico.ratel.landlords.exception.LandlordException;
 
 /**
@@ -18,7 +10,8 @@ import org.nico.ratel.landlords.exception.LandlordException;
  * @time 2018-11-01 20:43
  */
 public class TransferProtocolUtils {
-
+	
+	
 	/**
 	 * A protocol header that represents the beginning of an available stream of data
 	 */
@@ -68,5 +61,5 @@ public class TransferProtocolUtils {
 			return Noson.convert(new String(content), clazz);
 		}
 	}
-
+	
 }

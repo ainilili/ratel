@@ -2,18 +2,19 @@ package org.nico.ratel.landlords.enums;
 
 import java.io.Serializable;
 
-public enum ServerEventCode implements Serializable{
+public enum RoomStatus implements Serializable{
 
-	CODE_RENAME("修改昵称"),
+	BLANK("空闲"),
 	
-	CODE_CREATE_ROOM("创建房间"),
+	WAIT("等待"),
 	
-	CODE_JOIN_ROOM("加入房间"),
+	STARTING("进行中"),
+	
 	;
 	
 	private String msg;
 
-	private ServerEventCode(String msg) {
+	private RoomStatus(String msg) {
 		this.msg = msg;
 	}
 

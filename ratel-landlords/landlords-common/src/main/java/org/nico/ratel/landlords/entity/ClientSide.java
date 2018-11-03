@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.nico.ratel.landlords.enums.ClientStatus;
@@ -7,11 +8,15 @@ import org.nico.ratel.landlords.enums.ClientType;
 
 import io.netty.channel.Channel;
 
-public class ClientSide {
+public class ClientSide implements Serializable{
+
+	private static final long serialVersionUID = -1208782543528394339L;
 
 	private int id;
 	
-	private int serverId;
+	private int roomId;
+	
+	private String nickname;
 	
 	private List<Poker> pokers;
 	
@@ -23,8 +28,24 @@ public class ClientSide {
 	
 	private ClientSide pre;
 	
-	private Channel channel;
+	private transient Channel channel;
 	
+	public ClientSide() {}
+
+	public ClientSide(int id, ClientStatus status, Channel channel) {
+		this.id = id;
+		this.status = status;
+		this.channel = channel;
+	}
+
+	public final String getNickname() {
+		return nickname;
+	}
+
+	public final void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public final Channel getChannel() {
 		return channel;
 	}
@@ -33,12 +54,12 @@ public class ClientSide {
 		this.channel = channel;
 	}
 
-	public final int getServerId() {
-		return serverId;
+	public final int getRoomId() {
+		return roomId;
 	}
 
-	public final void setServerId(int serverId) {
-		this.serverId = serverId;
+	public final void setRoomId(int roomId) {
+		this.roomId = roomId;
 	}
 
 	public final List<Poker> getPokers() {

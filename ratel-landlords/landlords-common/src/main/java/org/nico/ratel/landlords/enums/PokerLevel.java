@@ -1,11 +1,13 @@
 package org.nico.ratel.landlords.enums;
 
+import java.io.Serializable;
+
 /**
  * Poker level
  * 
  * @author nico
  */
-public enum PokerLevel {
+public enum PokerLevel implements Serializable{
 
 	LEVEL_3(3, "3"),
 	

@@ -1,6 +1,8 @@
 package org.nico.ratel.landlords.enums;
 
-public enum ClientType {
+import java.io.Serializable;
+
+public enum ClientType implements Serializable{
 
 	LANDLORD,
 	

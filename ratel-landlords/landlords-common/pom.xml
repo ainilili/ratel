@@ -13,11 +13,4 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<dependencies>
-		 <dependency>
-			<groupId>com.smallnico</groupId>
-			<artifactId>noson</artifactId>
-			<version>1.1.4</version>
-		</dependency>
-	</dependencies>
 </project>

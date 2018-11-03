@@ -1,6 +1,8 @@
 package org.nico.ratel.landlords.enums;
 
-public enum ClientStatus {
+import java.io.Serializable;
+
+public enum ClientStatus implements Serializable{
 
 	TO_CHOOSE,
 	
