@@ -26,7 +26,6 @@ public class ServerEventListener_CODE_JOIN_ROOM implements ServerEventListener<I
 			room.getClientSideMap().put(clientSide.getId(), clientSide);
 			if(room.getClientSideMap().size() == 3) {
 				room.setStatus(RoomStatus.STARTING);
-				
 				for(ClientSide client: room.getClientSideMap().values()) {
 					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_ROOM_STARTING, room);
 				}

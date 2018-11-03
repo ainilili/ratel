@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public enum PokerType implements Serializable{
 
+	BLANK(" "),
+	
 	DIAMOND("♦"),
 	
 	CLUB("♣"),

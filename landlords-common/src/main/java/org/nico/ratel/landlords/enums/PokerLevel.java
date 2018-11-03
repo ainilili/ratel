@@ -35,9 +35,9 @@ public enum PokerLevel implements Serializable{
 	
 	LEVEL_2(15, "2"),
 	
-	LEVEL_SMALL_KING(16, "SMALL JOKER"),
+	LEVEL_SMALL_KING(16, "S"),
 	
-	LEVEL_BIG_KING(17, "BIG JOKER"),
+	LEVEL_BIG_KING(17, "SS"),
 	;
 	
 	private int level;
