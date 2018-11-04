@@ -10,7 +10,7 @@ import org.nico.ratel.landlords.print.SimpleWriter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_CONNECT implements ClientEventListener<ClientSide>{
+public class ClientEventListener_CODE_CONNECT extends ClientEventListener<ClientSide>{
 
 	@Override
 	public void call(Channel channel, ClientTransferData<ClientSide> clientTransferData) {
@@ -22,7 +22,7 @@ public class ClientEventListener_CODE_CONNECT implements ClientEventListener<Cli
 		
 		ClientContains.clientSide = clientSide;
 		
-		ChannelUtils.pushToServer(channel, clientSide.getId(), ServerEventCode.CODE_RENAME, clientSide);
+		pushToServer(channel, ServerEventCode.CODE_RENAME, clientSide);
 	}
 
 

@@ -6,7 +6,7 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_JOIN_ROOM_SUCCESS implements ClientEventListener<Room>{
+public class ClientEventListener_CODE_JOIN_ROOM_SUCCESS extends ClientEventListener<Room>{
 
 	@Override
 	public void call(Channel channel, ClientTransferData<Room> clientTransferData) {

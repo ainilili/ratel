@@ -8,7 +8,13 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_CREATE_ROOM("创建房间"),
 	
+	CODE_GET_ROOM_LIST("获取房间列表"),
+	
 	CODE_JOIN_ROOM("加入房间"),
+	
+	CODE_GRAB_LANDLORD("抢地主"),
+	
+	CODE_PLAY_ROUND("出牌环节");
 	;
 	
 	private String msg;

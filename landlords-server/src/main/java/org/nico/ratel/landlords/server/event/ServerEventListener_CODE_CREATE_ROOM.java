@@ -15,12 +15,14 @@ public class ServerEventListener_CODE_CREATE_ROOM implements ServerEventListener
 	@Override
 	public void call(Channel channel, ServerTransferData<Integer> serverTransferData) {
 		
-		ClientSide clientSide = ServerContains.CLIENT_SIDE_MAP.get(serverTransferData.getData());
+		ClientSide clientSide = ServerContains.CLIENT_SIDE_MAP.get(serverTransferData.getClientId());
 		
 		Room room = new Room(ServerContains.getServerId());
 		room.setStatus(RoomStatus.BLANK);
 		room.getClientSideMap().put(clientSide.getId(), clientSide);
+		room.getClientSideList().add(clientSide);
 		
+		clientSide.setRoomId(room.getId());
 		ServerContains.ROOM_MAP.put(room.getId(), room);
 		
 		ChannelUtils.pushToClient(channel, ClientEventCode.CODE_JOIN_ROOM_SUCCESS, room);

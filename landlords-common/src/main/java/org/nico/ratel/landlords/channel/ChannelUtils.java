@@ -18,17 +18,10 @@ public class ChannelUtils {
 		channel.writeAndFlush(clientTransferData);
 	}
 	
-	public static <T> void pushToServer(Channel channel, int clientId, int roomId, ServerEventCode code, T datas) {
-		ServerTransferData<T> serverTransferData = new ServerTransferData<T>(clientId, roomId, code, datas);
+	public static <T> void pushToServer(Channel channel, int clientId, ServerEventCode code, T datas) {
+		ServerTransferData<T> serverTransferData = new ServerTransferData<T>(clientId, -1, code, datas);
 		channel.writeAndFlush(serverTransferData);
 	}
 	
-	public static <T> void pushToServer(Channel channel, int clientId, ServerEventCode code, T datas) {
-		pushToServer(channel, clientId, -1, code, datas);
-	}
-	
-	public static <T> void pushToServer(Channel channel, ServerEventCode code, T datas) {
-		pushToServer(channel, -1, -1, code, datas);
-	}
 	
 }

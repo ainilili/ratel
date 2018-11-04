@@ -40,7 +40,34 @@ public class PokerHelper {
 				basePokers.add(new Poker(level, type));
 			}
 		}
+	}
+	
+	public static void sortPoker(List<Poker> pokers){
+		Collections.sort(pokers, pokerComparator);
+	}
+	
+	public static boolean checkPoker(int[] indexes, List<Poker> pokers){
+		boolean access = true;
+		for(int index: indexes){
+			if(index >= pokers.size()){
+				access = false;
+			}
+		}
+		return access;
+	}
+	
+	public static List<Poker> getPoker(int[] indexes, List<Poker> pokers){
+		List<Poker> resultPokers = new ArrayList<>(indexes.length);
+		for(int index: indexes){
+			resultPokers.add(pokers.get(index - 1));
+		}
+		sortPoker(resultPokers);
+		return resultPokers;
+	}
+	
+	public static boolean comparePoker(List<Poker> pres, List<Poker> currents){
 		
+		return true;
 	}
 	
 	public static List<List<Poker>> distributePoker(){
@@ -51,13 +78,13 @@ public class PokerHelper {
 		pokersList.add(basePokers.subList(34, 51));
 		pokersList.add(basePokers.subList(51, 54));
 		for(List<Poker> pokers: pokersList) {
-			Collections.sort(pokers, pokerComparator);
+			sortPoker(pokers);
 		}
 		return pokersList;
 	}
 	
-	public static String unfoldPoker(List<Poker> pokers) {
-		Collections.sort(pokers, pokerComparator);
+	public static String unfoldPoker(List<Poker> pokers, boolean serialFlag) {
+		sortPoker(pokers);
 		StringBuilder builder = new StringBuilder();
 		if(pokers != null && pokers.size() > 0) {
 			
@@ -95,16 +122,17 @@ public class PokerHelper {
 					builder.append("──┘");
 				}
 			}
-			builder.append(System.lineSeparator());
-			for(int index = 0; index < pokers.size(); index ++) {
-				if(index == 0) {
-					builder.append("Index: │");
+			if(serialFlag){
+				builder.append(System.lineSeparator());
+				for(int index = 0; index < pokers.size(); index ++) {
+					if(index == 0) {
+						builder.append("Index: │");
+					}
+					String number = String.valueOf(index + 1);
+					if(number.length() == 1) number = "0" + number;
+					builder.append(number +  "│");
 				}
-				String number = String.valueOf(index + 1);
-				if(number.length() == 1) number = "0" + number;
-				builder.append(number +  "│");
 			}
-			builder.append(System.lineSeparator());
 		}
 		return builder.toString();
 	}
@@ -114,7 +142,7 @@ public class PokerHelper {
 	public static void main(String[] args) {
 		List<List<Poker>> pokersList = distributePoker();
 		for(List<Poker> pokers: pokersList) {
-			System.out.println(unfoldPoker(pokers));
+			System.out.println(unfoldPoker(pokers, true));
 		}
 	}
 }

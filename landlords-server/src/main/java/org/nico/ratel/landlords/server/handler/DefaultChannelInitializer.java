@@ -8,7 +8,6 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.ServerContains;
 
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;

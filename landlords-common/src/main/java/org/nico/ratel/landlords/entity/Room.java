@@ -1,6 +1,8 @@
 package org.nico.ratel.landlords.entity;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -15,11 +17,62 @@ public class Room implements Serializable{
 	private RoomStatus status;
 	
 	private Map<Integer, ClientSide> clientSideMap;
+	
+	private LinkedList<ClientSide> clientSideList;
+	
+	private int landlordId;
+	
+	private List<Poker> landlordPokers;
+	
+	private List<Poker> lastSellPokers;
+	
+	private int lastSellClient;
 
 	public Room(int id) {
 		this.id = id;
 		this.clientSideMap = new ConcurrentSkipListMap<>();
+		this.clientSideList = new LinkedList<>();
 		this.status = RoomStatus.BLANK;
+	}
+
+	public int getLastSellClient() {
+		return lastSellClient;
+	}
+
+	public void setLastSellClient(int lastSellClient) {
+		this.lastSellClient = lastSellClient;
+	}
+
+	public List<Poker> getLastSellPokers() {
+		return lastSellPokers;
+	}
+
+	public void setLastSellPokers(List<Poker> lastSellPokers) {
+		this.lastSellPokers = lastSellPokers;
+	}
+
+	public int getLandlordId() {
+		return landlordId;
+	}
+
+	public void setLandlordId(int landlordId) {
+		this.landlordId = landlordId;
+	}
+
+	public LinkedList<ClientSide> getClientSideList() {
+		return clientSideList;
+	}
+
+	public void setClientSideList(LinkedList<ClientSide> clientSideList) {
+		this.clientSideList = clientSideList;
+	}
+
+	public List<Poker> getLandlordPokers() {
+		return landlordPokers;
+	}
+
+	public void setLandlordPokers(List<Poker> landlordPokers) {
+		this.landlordPokers = landlordPokers;
 	}
 
 	public final int getId() {
@@ -48,7 +101,7 @@ public class Room implements Serializable{
 
 	@Override
 	public String toString() {
-		return status.getMsg() + "|" + clientSideMap.size() + " online";
+		return id + "|" + status.getMsg() + "|" + clientSideMap.size() + " online";
 	}
 
 }

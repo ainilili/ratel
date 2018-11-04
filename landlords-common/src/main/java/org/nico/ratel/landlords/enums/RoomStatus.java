@@ -8,7 +8,8 @@ public enum RoomStatus implements Serializable{
 	
 	WAIT("等待"),
 	
-	STARTING("进行中"),
+	STARTING("开始"),
+	
 	
 	;
 	
