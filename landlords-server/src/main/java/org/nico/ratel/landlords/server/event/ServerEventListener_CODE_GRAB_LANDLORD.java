@@ -22,9 +22,13 @@ public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListen
 
 		boolean isY = serverTransferData.getData();
 		if(isY){
+			System.out.println(PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
+			System.out.println(PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
 			clientSide.getPokers().addAll(room.getLandlordPokers());
 			PokerHelper.sortPoker(clientSide.getPokers());
-
+			System.out.println(PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
+			
+			
 			room.setLandlordId(clientSide.getId());
 			for(ClientSide client: room.getClientSideList()){
 				ChannelUtils.pushToClient(client.getChannel(), null, null, clientSide.getNickname() + " grabed landlord, he got three pokers:\r\n" + PokerHelper.unfoldPoker(room.getLandlordPokers(), false));

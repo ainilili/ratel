@@ -73,10 +73,18 @@ public class PokerHelper {
 	public static List<List<Poker>> distributePoker(){
 		Collections.shuffle(basePokers);
 		List<List<Poker>> pokersList = new ArrayList<List<Poker>>();
-		pokersList.add(basePokers.subList(0, 17));
-		pokersList.add(basePokers.subList(17, 34));
-		pokersList.add(basePokers.subList(34, 51));
-		pokersList.add(basePokers.subList(51, 54));
+		List<Poker> pokers1 = new ArrayList<>(17);
+		pokers1.addAll(basePokers.subList(0, 17));
+		List<Poker> pokers2 = new ArrayList<>(17);
+		pokers2.addAll(basePokers.subList(17, 34));
+		List<Poker> pokers3 = new ArrayList<>(17);
+		pokers3.addAll(basePokers.subList(34, 51));
+		List<Poker> pokers4 = new ArrayList<>(3);
+		pokers4.addAll(basePokers.subList(51, 54));
+		pokersList.add(pokers1);
+		pokersList.add(pokers2);
+		pokersList.add(pokers3);
+		pokersList.add(pokers4);
 		for(List<Poker> pokers: pokersList) {
 			sortPoker(pokers);
 		}
@@ -137,12 +145,13 @@ public class PokerHelper {
 		return builder.toString();
 	}
 	
-	
-	
 	public static void main(String[] args) {
 		List<List<Poker>> pokersList = distributePoker();
-		for(List<Poker> pokers: pokersList) {
-			System.out.println(unfoldPoker(pokers, true));
-		}
+		System.out.println(unfoldPoker(pokersList.get(3), false));
+		List<Poker> newPokers = pokersList.get(0);
+		newPokers.addAll(pokersList.get(3));
+		sortPoker(newPokers);
+		System.out.println(unfoldPoker(pokersList.get(3), false));
+		System.out.println(unfoldPoker(pokersList.get(3), false));
 	}
 }
