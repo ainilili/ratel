@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.nico.ratel.landlords.enums.RoomStatus;
+import org.nico.ratel.landlords.enums.SellType;
 
 public class Room implements Serializable{
 
@@ -26,6 +27,8 @@ public class Room implements Serializable{
 	
 	private List<Poker> lastSellPokers;
 	
+	private SellType sellType;
+	
 	private int lastSellClient;
 
 	public Room(int id) {
@@ -33,6 +36,14 @@ public class Room implements Serializable{
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
 		this.status = RoomStatus.BLANK;
+	}
+
+	public final SellType getSellType() {
+		return sellType;
+	}
+
+	public final void setSellType(SellType sellType) {
+		this.sellType = sellType;
 	}
 
 	public int getLastSellClient() {

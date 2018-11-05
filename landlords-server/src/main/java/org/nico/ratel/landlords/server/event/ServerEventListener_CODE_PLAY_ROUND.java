@@ -18,7 +18,7 @@ public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<
 		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
 		int[] indexes = serverTransferData.getData();
 		
-		if(PokerHelper.checkPoker(indexes, clientSide.getPokers())){
+		if(PokerHelper.checkPokerIndex(indexes, clientSide.getPokers())){
 			if(room.getLastSellClient() != clientSide.getId() && room.getLastSellPokers() != null){
 				// Compare the brand
 			}else{

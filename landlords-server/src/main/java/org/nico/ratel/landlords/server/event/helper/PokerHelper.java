@@ -8,22 +8,23 @@ import java.util.List;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.PokerType;
+import org.nico.ratel.landlords.enums.SellType;
 
 public class PokerHelper {
 
 	private static List<Poker> basePokers = new ArrayList<Poker>(54);
-	
+
 	private static Comparator<Poker> pokerComparator = new Comparator<Poker>() {
 		@Override
 		public int compare(Poker o1, Poker o2) {
 			return o1.getLevel().getLevel() - o2.getLevel().getLevel();
 		}
 	};
-	
+
 	static {
 		PokerLevel[] pokerLevels = PokerLevel.values();
 		PokerType[] pokerTypes = PokerType.values();
-		
+
 		for(PokerLevel level: pokerLevels) {
 			if(level == PokerLevel.LEVEL_BIG_KING) {
 				basePokers.add(new Poker(level, PokerType.BLANK));
@@ -41,12 +42,12 @@ public class PokerHelper {
 			}
 		}
 	}
-	
+
 	public static void sortPoker(List<Poker> pokers){
 		Collections.sort(pokers, pokerComparator);
 	}
-	
-	public static boolean checkPoker(int[] indexes, List<Poker> pokers){
+
+	public static boolean checkPokerIndex(int[] indexes, List<Poker> pokers){
 		boolean access = true;
 		for(int index: indexes){
 			if(index >= pokers.size()){
@@ -55,7 +56,70 @@ public class PokerHelper {
 		}
 		return access;
 	}
-	
+
+	public static SellType checkPokerType(List<Poker> pokers) {
+		if(pokers != null && pokers.isEmpty()) {
+			sortPoker(pokers);
+			
+			int[] levelTable = new int[20];
+			for(Poker poker: pokers) {
+				levelTable[poker.getLevel().getLevel()] ++; 
+			}
+
+			int startIndex = -1;
+			int endIndex = -1;
+			int count = -1;
+			
+			int singleCount = 0;
+			int doubleCount = 0;
+			int threeCount = 0;
+			int fourCount = 0;
+			for(int index = 0; index < levelTable.length; index ++) {
+				int value = levelTable[index];
+				if(value != 0) {
+					endIndex = index;
+					count ++;
+					if(startIndex == -1) {
+						startIndex = index;
+					}
+					if(value == 1) {
+						singleCount ++;
+					}else if(value == 2) {
+						doubleCount ++;
+					}else if(value == 3) {
+						threeCount ++;
+					}else if(value == 4) {
+						fourCount ++;
+					}
+				}
+			}
+			if(count == 1) {
+				if(levelTable[startIndex] == 1) {
+					return SellType.SINGLE;
+				}else if(levelTable[startIndex] == 2) {
+					return SellType.DOUBLE;
+				}else if(levelTable[startIndex] == 3) {
+					return SellType.THREE;
+				}else if(levelTable[startIndex] == 4) {
+					return SellType.BOMB;
+				}
+			}
+			if(endIndex - startIndex == count - 1 && endIndex < PokerLevel.LEVEL_2.getLevel()) {
+				if(levelTable[startIndex] == 1) {
+					return SellType.SINGLE_STRAIGHT;
+				}else if(levelTable[startIndex] == 2) {
+					return SellType.DOUBLE_STRAIGHT;
+				}else if(levelTable[startIndex] == 3) {
+					return SellType.THREE_STRAIGHT;
+				}else if(levelTable[startIndex] == 4) {
+					return SellType.FOUR_STRAIGHT;
+				}
+			}
+
+		}
+		return SellType.ILLEGAL;
+	}
+
 	public static List<Poker> getPoker(int[] indexes, List<Poker> pokers){
 		List<Poker> resultPokers = new ArrayList<>(indexes.length);
 		for(int index: indexes){
@@ -64,12 +128,12 @@ public class PokerHelper {
 		sortPoker(resultPokers);
 		return resultPokers;
 	}
-	
+
 	public static boolean comparePoker(List<Poker> pres, List<Poker> currents){
-		
+
 		return true;
 	}
-	
+
 	public static List<List<Poker>> distributePoker(){
 		Collections.shuffle(basePokers);
 		List<List<Poker>> pokersList = new ArrayList<List<Poker>>();
@@ -90,12 +154,12 @@ public class PokerHelper {
 		}
 		return pokersList;
 	}
-	
+
 	public static String unfoldPoker(List<Poker> pokers, boolean serialFlag) {
 		sortPoker(pokers);
 		StringBuilder builder = new StringBuilder();
 		if(pokers != null && pokers.size() > 0) {
-			
+
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
 					builder.append("Poker: ┌──┐");
@@ -144,7 +208,7 @@ public class PokerHelper {
 		}
 		return builder.toString();
 	}
-	
+
 	public static void main(String[] args) {
 		List<List<Poker>> pokersList = distributePoker();
 		System.out.println(unfoldPoker(pokersList.get(3), false));
