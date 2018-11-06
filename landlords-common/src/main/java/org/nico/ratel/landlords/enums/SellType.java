@@ -6,8 +6,6 @@ public enum SellType implements Serializable{
 
 	ILLEGAL("非合法"),
 	
-	ROCKET("火箭"),
-	
 	BOMB("炸弹"),
 	
 	KING_BOMB("王炸"),
@@ -21,6 +19,10 @@ public enum SellType implements Serializable{
 	THREE_ZONES_A("三带一"),
 	
 	THREE_ZONES_TWO("三带二"),
+	
+	FOUR_ZONES_A("四带一"),
+	
+	FOUR_ZONES_TWO("四带二"),
 	
 	SINGLE_STRAIGHT("单顺子"),
 	

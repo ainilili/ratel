@@ -19,6 +19,8 @@ public enum ClientEventCode implements Serializable{
 	CODE_GRAB_LANDLORD("抢地主"),
 	
 	CODE_PLAY_ROUND("出牌回合"),
+	
+	CODE_GAME_OVER("游戏结束"),
 	;
 	
 	private String msg;

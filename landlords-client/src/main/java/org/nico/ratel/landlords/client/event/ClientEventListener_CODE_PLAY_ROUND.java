@@ -15,30 +15,35 @@ public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener<Str
 		SimplePrinter.println(clientTransferData.getData());
 		SimplePrinter.println("Please enter the number you want：");
 		String line = SimpleWriter.write();
+
 		if(line == null){
 			SimplePrinter.println("Invalid input");
 			call(channel, clientTransferData);
 		}else{
-			String[] options = line.split(" ");
-			int[] indexes = new int[options.length];
-			boolean access = true;
-			for(int index = 0; index < options.length; index ++){
-				String option = options[index];
-				int result = OptionsUtils.getOptions(option);
-				if(result < 1){
-					access = false;
-					break;
+			if(line.equalsIgnoreCase("PASS")) {
+				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, new int[] {0});
+			}else {
+				String[] options = line.split(" ");
+				int[] indexes = new int[options.length];
+				boolean access = true;
+				for(int index = 0; index < options.length; index ++){
+					String option = options[index];
+					int result = OptionsUtils.getOptions(option);
+					if(result < 1){
+						access = false;
+						break;
+					}
+					indexes[index] = result;
 				}
-				indexes[index] = result;
-			}
-			if(access){
-				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, indexes);
-			}else{
-				SimplePrinter.println("Invalid input");
-				call(channel, clientTransferData);
+				if(access){
+					pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, indexes);
+				}else{
+					SimplePrinter.println("Invalid input");
+					call(channel, clientTransferData);
+				}
 			}
 		}
-		
+
 	}
 
 }

@@ -22,12 +22,8 @@ public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListen
 
 		boolean isY = serverTransferData.getData();
 		if(isY){
-			System.out.println(PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
-			System.out.println(PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
 			clientSide.getPokers().addAll(room.getLandlordPokers());
 			PokerHelper.sortPoker(clientSide.getPokers());
-			System.out.println(PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
-			
 			
 			room.setLandlordId(clientSide.getId());
 			for(ClientSide client: room.getClientSideList()){
@@ -38,7 +34,7 @@ public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListen
 
 			for(ClientSide client: room.getClientSideList()){
 				if(client.getId() != clientSide.getId()){
-					ChannelUtils.pushToClient(client.getChannel(), null, null, "Please wait for " + clientSide.getNickname() + " to come out\r\n" + PokerHelper.unfoldPoker(client.getPokers(), true));
+					ChannelUtils.pushToClient(client.getChannel(), null, null, "Please wait for " + clientSide.getNickname() + " to come out");
 				}
 			}
 

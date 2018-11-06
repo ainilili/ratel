@@ -25,11 +25,9 @@ public class Room implements Serializable{
 	
 	private List<Poker> landlordPokers;
 	
-	private List<Poker> lastSellPokers;
+	private PokerSell lastPokerShell;
 	
-	private SellType sellType;
-	
-	private int lastSellClient;
+	private int lastSellClient = -1;
 
 	public Room(int id) {
 		this.id = id;
@@ -38,12 +36,12 @@ public class Room implements Serializable{
 		this.status = RoomStatus.BLANK;
 	}
 
-	public final SellType getSellType() {
-		return sellType;
+	public final PokerSell getLastPokerShell() {
+		return lastPokerShell;
 	}
 
-	public final void setSellType(SellType sellType) {
-		this.sellType = sellType;
+	public final void setLastPokerShell(PokerSell lastPokerShell) {
+		this.lastPokerShell = lastPokerShell;
 	}
 
 	public int getLastSellClient() {
@@ -52,14 +50,6 @@ public class Room implements Serializable{
 
 	public void setLastSellClient(int lastSellClient) {
 		this.lastSellClient = lastSellClient;
-	}
-
-	public List<Poker> getLastSellPokers() {
-		return lastSellPokers;
-	}
-
-	public void setLastSellPokers(List<Poker> lastSellPokers) {
-		this.lastSellPokers = lastSellPokers;
 	}
 
 	public int getLandlordId() {
