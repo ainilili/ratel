@@ -1,6 +1,11 @@
 package org.nico.ratel.landlords.client.event;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.nico.ratel.landlords.entity.ClientTransferData;
+import org.nico.ratel.landlords.enums.PokerLevel;
+import org.nico.ratel.landlords.enums.PokerType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
@@ -21,24 +26,29 @@ public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener<Str
 			call(channel, clientTransferData);
 		}else{
 			if(line.equalsIgnoreCase("PASS")) {
-				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, new int[] {0});
+				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, new Character[] {'p'});
 			}else if(line.equalsIgnoreCase("EXIT")){
 				pushToServer(channel, ServerEventCode.CODE_PLAYER_EXIT, null);
 			}else {
-				String[] options = line.split(" ");
-				int[] indexes = new int[options.length];
+				String[] strs = line.split(" ");
+				List<Character> options = new ArrayList<>();
 				boolean access = true;
-				for(int index = 0; index < options.length; index ++){
-					String option = options[index];
-					int result = OptionsUtils.getOptions(option);
-					if(result < 1){
-						access = false;
-						break;
+				for(int index = 0; index < strs.length; index ++){
+					String str = strs[index];
+					for(char c: str.toCharArray()) {
+						if(c == ' ' || c == '\t') {
+						}else {
+							if(! PokerLevel.aliasContains(c)) {
+								access = false;
+								break;
+							}else {
+								options.add(c);
+							}
+						}
 					}
-					indexes[index] = result;
 				}
 				if(access){
-					pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, indexes);
+					pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, options.toArray(new Character[] {}));
 				}else{
 					SimplePrinter.println("Invalid input");
 					call(channel, clientTransferData);

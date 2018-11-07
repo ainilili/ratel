@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.server.event;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.nico.ratel.landlords.channel.ChannelUtils;
@@ -16,14 +17,15 @@ import org.nico.ratel.landlords.server.event.helper.TimeHelper;
 
 import io.netty.channel.Channel;
 
-public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<int[]>{
+public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<Character[]>{
 
 	@Override
-	public void call(Channel channel, ServerTransferData<int[]> serverTransferData) {
+	public void call(Channel channel, ServerTransferData<Character[]> serverTransferData) {
 		ClientSide clientSide = ServerContains.CLIENT_SIDE_MAP.get(serverTransferData.getClientId());
 		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
-		int[] indexes = serverTransferData.getData();
-		
+		Character[] options = serverTransferData.getData();
+		int[] indexes = PokerHelper.getIndexes(options, clientSide.getPokers());
+		System.out.println("index:" + Arrays.toString(indexes));
 		if(PokerHelper.checkPokerIndex(indexes, clientSide.getPokers())){
 			boolean sellFlag = false;
 			List<Poker> currentPokers = PokerHelper.getPoker(indexes, clientSide.getPokers());
@@ -61,7 +63,7 @@ public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<
 				}
 			}
 		}else{
-			if(indexes.length > 0 && indexes[0] == 0) {
+			if(options.length > 0 && options[0] == 'p') {
 				for(ClientSide client: room.getClientSideList()) {
 					ChannelUtils.pushToClient(client.getChannel(), null, null, clientSide.getNickname() + " don't sell， turn " + clientSide.getNext().getNickname());
 				}

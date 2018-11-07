@@ -26,9 +26,8 @@ public class ServerEventListener_CODE_PLAYER_EXIT implements ServerEventListener
 				}
 				client.init();
 			}
+			ServerContains.ROOM_MAP.remove(room.getId());
 		}
-		
-		ServerContains.ROOM_MAP.remove(room.getId());
 	}
 
 }

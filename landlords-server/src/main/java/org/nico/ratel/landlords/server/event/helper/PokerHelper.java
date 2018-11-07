@@ -1,6 +1,7 @@
 package org.nico.ratel.landlords.server.event.helper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,12 +48,43 @@ public class PokerHelper {
 	public static void sortPoker(List<Poker> pokers){
 		Collections.sort(pokers, pokerComparator);
 	}
+	
+	public static int[] getIndexes(Character[] options, List<Poker> pokers) {
+		List<Poker> copyList = new ArrayList<>(pokers.size());
+		copyList.addAll(pokers);
+		int[] indexes = new int[options.length];
+		for(int index = 0; index < options.length; index ++) {
+			char option = options[index];
+			boolean isTarget = false;
+			for(int pi = 0; pi < copyList.size(); pi ++) {
+				Poker poker = copyList.get(pi);
+				if(poker != null) {
+					if(Arrays.asList(poker.getLevel().getAlias()).contains(option)) {
+						isTarget = true;
+						//Index start from 1, not 0
+						indexes[index] = pi + 1;
+						copyList.set(pi, null);
+						break;
+					}
+				}
+			}
+			if(! isTarget) {
+				return null;
+			}
+		}
+		Arrays.sort(indexes);
+		return indexes;
+	}
 
 	public static boolean checkPokerIndex(int[] indexes, List<Poker> pokers){
 		boolean access = true;
-		for(int index: indexes){
-			if(index >= pokers.size() || index < 1){
-				access = false;
+		if(indexes == null || indexes.length == 0) {
+			access = false;
+		}else {
+			for(int index: indexes){
+				if(index > pokers.size() || index < 1){
+					access = false;
+				}
 			}
 		}
 		return access;
@@ -267,9 +299,7 @@ public class PokerHelper {
 					if(index == 0) {
 						builder.append("Index: │");
 					}
-					String number = String.valueOf(index + 1);
-					if(number.length() == 1) number = "0" + number;
-					builder.append(number +  "│");
+					builder.append(pokers.get(index).getLevel().getAlias()[0] +  " │");
 				}
 			}
 		}
