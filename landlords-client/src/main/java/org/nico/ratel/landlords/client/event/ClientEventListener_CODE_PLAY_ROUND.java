@@ -22,6 +22,8 @@ public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener<Str
 		}else{
 			if(line.equalsIgnoreCase("PASS")) {
 				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, new int[] {0});
+			}else if(line.equalsIgnoreCase("EXIT")){
+				pushToServer(channel, ServerEventCode.CODE_PLAYER_EXIT, null);
 			}else {
 				String[] options = line.split(" ");
 				int[] indexes = new int[options.length];
