@@ -14,7 +14,9 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_GRAB_LANDLORD("抢地主"),
 	
-	CODE_PLAY_ROUND("出牌环节");
+	CODE_PLAY_ROUND("出牌环节"),
+	
+	CODE_PLAYER_EXIT("玩家退出"),
 	;
 	
 	private String msg;

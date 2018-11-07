@@ -37,6 +37,15 @@ public class ClientSide implements Serializable{
 		this.status = status;
 		this.channel = channel;
 	}
+	
+	public void init() {
+		roomId = 0;
+		pokers = null;
+		status = ClientStatus.TO_CHOOSE;
+		type = null;
+		next = null;
+		pre = null;
+	}
 
 	public final String getNickname() {
 		return nickname;
