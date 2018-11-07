@@ -1,9 +1,18 @@
 package org.nico.ratel.landlords.server.handler;
 
+import java.net.InetSocketAddress;
+
+import org.nico.ratel.landlords.channel.ChannelUtils;
+import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.ServerTransferData;
+import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.print.SimplePrinter;
+import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.ServerEventListener;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -11,6 +20,19 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 
 	private final static String LISTENER_PREFIX = "org.nico.ratel.landlords.server.event.ServerEventListener_";
 	
+	
+	
+	@Override
+	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+		Channel ch = ctx.channel();
+		
+		ClientSide clientSide = new ClientSide(((InetSocketAddress)ch.remoteAddress()).getPort(), ClientStatus.TO_CHOOSE, ch);
+		clientSide.setNickname(String.valueOf(clientSide.getId()));
+		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
+		SimplePrinter.println("A client connects to the server：" + clientSide.getId());
+		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CONNECT, clientSide);
+	}
+
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		
@@ -20,18 +42,23 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			ServerEventCode code = serverTransferData.getCode();
 			
 			if(code != null) {
-				String eventListener = LISTENER_PREFIX + code.name();
-				
-				try {
-					Class<ServerEventListener> listenerClass = (Class<ServerEventListener>) Class.forName(eventListener);
-					ServerEventListener listener = listenerClass.newInstance();
-					listener.call(ctx.channel(), serverTransferData);
-				}catch(ClassNotFoundException e) {
-					e.printStackTrace();
-				}
+				ServerEventListener.get(code).call(ctx.channel(), serverTransferData);
 			}
 		}
 		
 	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		if(cause instanceof java.io.IOException) {
+			ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(((InetSocketAddress)ctx.channel().remoteAddress()).getPort());
+			if(client != null) {
+				SimplePrinter.println(client.getNickname() + " exit");
+				ServerEventListener.get(ServerEventCode.CODE_PLAYER_EXIT).call(ctx.channel(), new ServerTransferData<>(client.getId(), client.getRoomId(), ServerEventCode.CODE_PLAYER_EXIT, null));
+			}
+		}
+	}
+	
+	
 	
 }

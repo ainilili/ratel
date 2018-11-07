@@ -7,6 +7,7 @@ import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.ServerContains;
 
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
@@ -24,10 +25,6 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
 		ch.pipeline().addLast(new ObjectEncoder());
 		ch.pipeline().addLast(new TransferHandler());
 
-		ClientSide clientSide = new ClientSide(ServerContains.getClientId(), ClientStatus.TO_CHOOSE, ch);
-		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
-		SimplePrinter.println("A client connects to the server：" + clientSide.getId());
-		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CONNECT, clientSide);
 	}
 
 }
