@@ -5,7 +5,7 @@ import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.server.ServerContains;
 
-public class ServerEventListener_CODE_SET_NICKNAME implements ServerEventListener{
+public class ServerEventListener_CODE_CLIENT_NICKNAME_SET implements ServerEventListener{
 
 	@Override
 	public void call(ClientSide client, String data) {

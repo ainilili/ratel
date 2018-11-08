@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.nico.ratel.landlords.channel.ChannelUtils;
-import org.nico.ratel.landlords.entity.ClientTransferData;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 
@@ -12,7 +11,7 @@ import io.netty.channel.Channel;
 
 public abstract class ClientEventListener {
 
-	public abstract void call(Channel channel, ClientTransferData clientTransferData);
+	public abstract void call(Channel channel, String data);
 
 	public final static Map<ClientEventCode, ClientEventListener> LISTENER_MAP = new HashMap<>();
 	

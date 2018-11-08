@@ -26,7 +26,7 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 		clientSide.setNickname(String.valueOf(clientSide.getId()));
 		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
 		SimplePrinter.println("A client connects to the server：" + clientSide.getId());
-		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_SET_NICKNAME, null);
+		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_NICKNAME_SET, null);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(((InetSocketAddress)ctx.channel().remoteAddress()).getPort());
 			if(client != null) {
 				SimplePrinter.println(client.getNickname() + " exit");
-				ServerEventListener.get(ServerEventCode.CODE_PLAYER_EXIT).call(client, null);
+				ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(client, null);
 			}
 		}
 	}

@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+import org.nico.noson.annotations.JsonIgnore;
 import org.nico.ratel.landlords.enums.RoomStatus;
-import org.nico.ratel.landlords.enums.SellType;
 
 public class Room implements Serializable{
 
 	private static final long serialVersionUID = -9182226630057841379L;
 
 	private int id;
+	
+	private String roomOwner;
 	
 	private RoomStatus status;
 	
@@ -79,6 +81,14 @@ public class Room implements Serializable{
 		this.landlordPokers = landlordPokers;
 	}
 
+	public final String getRoomOwner() {
+		return roomOwner;
+	}
+
+	public final void setRoomOwner(String roomOwner) {
+		this.roomOwner = roomOwner;
+	}
+
 	public final int getId() {
 		return id;
 	}
@@ -101,11 +111,6 @@ public class Room implements Serializable{
 
 	public final void setClientSideMap(Map<Integer, ClientSide> clientSideMap) {
 		this.clientSideMap = clientSideMap;
-	}
-
-	@Override
-	public String toString() {
-		return id + "|" + status.getMsg() + "|" + clientSideMap.size() + " online";
 	}
 
 }

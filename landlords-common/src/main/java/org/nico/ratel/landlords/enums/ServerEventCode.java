@@ -4,19 +4,22 @@ import java.io.Serializable;
 
 public enum ServerEventCode implements Serializable{
 
-	CODE_SET_NICKNAME("设置昵称"),
+	CODE_CLIENT_EXIT("玩家退出"),
 	
-	CODE_CREATE_ROOM("创建房间"),
+	CODE_CLIENT_NICKNAME_SET("设置昵称"),
 	
-	CODE_GET_ROOM_LIST("获取房间列表"),
+	CODE_ROOM_CREATE("创建房间"),
 	
-	CODE_JOIN_ROOM("加入房间"),
+	CODE_ROOM_LIST_GET("获取房间列表"),
 	
-	CODE_GRAB_LANDLORD("抢地主"),
+	CODE_ROOM_JOIN("加入房间"),
 	
-	CODE_PLAY_ROUND("出牌环节"),
+	CODE_GAME_STARTING("游戏开始"),
 	
-	CODE_PLAYER_EXIT("玩家退出"),
+	CODE_GAME_LANDLORD_ELECT("抢地主"),
+	
+	CODE_GAME_POKER_PLAY("出牌环节"),
+	
 	;
 	
 	private String msg;

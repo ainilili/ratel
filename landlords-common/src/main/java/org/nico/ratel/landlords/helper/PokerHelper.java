@@ -1,4 +1,4 @@
-package org.nico.ratel.landlords.server.event.helper;
+package org.nico.ratel.landlords.helper;
 
 import java.util.ArrayList;
 import java.util.Arrays;

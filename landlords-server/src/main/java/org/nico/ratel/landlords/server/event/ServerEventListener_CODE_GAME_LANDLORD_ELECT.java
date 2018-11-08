@@ -1,15 +1,16 @@
 package org.nico.ratel.landlords.server.event;
 
+import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.helper.PokerHelper;
+import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.server.ServerContains;
-import org.nico.ratel.landlords.server.event.helper.PokerHelper;
-import org.nico.ratel.landlords.server.event.helper.RoomHelper;
-import org.nico.ratel.landlords.server.event.helper.TimeHelper;
 
-public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListener{
+public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEventListener{
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
@@ -23,9 +24,14 @@ public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListen
 			
 			room.setLandlordId(clientSide.getId());
 			for(ClientSide client: room.getClientSideList()){
-				ChannelUtils.pushToClient(client.getChannel(), null, null, clientSide.getNickname() + " grabed landlord, he got three pokers:\r\n" + PokerHelper.unfoldPoker(room.getLandlordPokers(), false));
+				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, clientSide.getNickname());
 			}
-
+			
+			for(ClientSide client: room.getClientSideList()){
+				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS_LANDLORD, Noson.reversal(room.getLandlordPokers()));
+			}
+			
+			//PokerHelper.unfoldPoker(room.getLandlordPokers(), false)
 			TimeHelper.sleep(500);
 
 			for(ClientSide client: room.getClientSideList()){
@@ -36,13 +42,14 @@ public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListen
 
 			TimeHelper.sleep(200);
 
-			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true));
+			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(clientSide.getPokers(), true));
 		}else{
 			if(clientSide.getNext().getId() == room.getLandlordId()){
 				for(ClientSide client: room.getClientSideList()){
 					ChannelUtils.pushToClient(client.getChannel(), null, null, "No one takes the landowner. Reissue the license");
 				}
-				RoomHelper.restartingGame(room);
+				
+				ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
 			}else{
 				for(ClientSide client: room.getClientSideList()){
 					if(client.getId() != clientSide.getId()){
@@ -60,7 +67,7 @@ public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListen
 				TimeHelper.sleep(500);
 
 
-				ChannelUtils.pushToClient(currentClient.getChannel(), ClientEventCode.CODE_GRAB_LANDLORD, null);
+				ChannelUtils.pushToClient(currentClient.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, null);
 			}
 		}
 	}
