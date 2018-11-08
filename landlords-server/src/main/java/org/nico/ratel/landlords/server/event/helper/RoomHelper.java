@@ -3,6 +3,7 @@ package org.nico.ratel.landlords.server.event.helper;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
@@ -25,7 +26,7 @@ public class RoomHelper {
 		room.setStatus(RoomStatus.STARTING);
 		for(ClientSide client: roomClientList) {
 			client.setType(ClientType.PEASANT);
-			ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_ROOM_STARTING, room);
+			ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_ROOM_STARTING, Noson.reversal(room));
 		}
 		
 		TimeHelper.sleep(500);

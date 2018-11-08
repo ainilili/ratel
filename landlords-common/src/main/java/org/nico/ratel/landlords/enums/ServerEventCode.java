@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public enum ServerEventCode implements Serializable{
 
-	CODE_RENAME("修改昵称"),
+	CODE_SET_NICKNAME("设置昵称"),
 	
 	CODE_CREATE_ROOM("创建房间"),
 	

@@ -6,10 +6,10 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_ROOM_STARTING extends ClientEventListener<Room>{
+public class ClientEventListener_CODE_ROOM_STARTING extends ClientEventListener{
 
 	@Override
-	public void call(Channel channel, ClientTransferData<Room> clientTransferData) {
+	public void call(Channel channel, ClientTransferData clientTransferData) {
 		SimplePrinter.println(clientTransferData.getData() + " game starting !");
 		SimplePrinter.println("Wait for the server to issue the license...");
 	}

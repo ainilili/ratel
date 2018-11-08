@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public enum ClientEventCode implements Serializable{
 
-	CODE_CONNECT("进入系统"),
+	CODE_SET_NICKNAME("设置昵称"),
 	
 	CODE_SHOW_OPTIONS("展示选项"),
 	

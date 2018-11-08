@@ -29,6 +29,9 @@ public class Room implements Serializable{
 	
 	private int lastSellClient = -1;
 
+	public Room() {
+	}
+
 	public Room(int id) {
 		this.id = id;
 		this.clientSideMap = new ConcurrentSkipListMap<>();

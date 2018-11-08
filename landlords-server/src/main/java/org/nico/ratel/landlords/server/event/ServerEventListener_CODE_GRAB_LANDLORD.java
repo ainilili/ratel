@@ -3,24 +3,20 @@ package org.nico.ratel.landlords.server.event;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
-import org.nico.ratel.landlords.entity.ServerTransferData;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.helper.PokerHelper;
 import org.nico.ratel.landlords.server.event.helper.RoomHelper;
 import org.nico.ratel.landlords.server.event.helper.TimeHelper;
 
-import io.netty.channel.Channel;
-
-public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListener<Boolean>{
+public class ServerEventListener_CODE_GRAB_LANDLORD implements ServerEventListener{
 
 	@Override
-	public void call(Channel channel, ServerTransferData<Boolean> serverTransferData) {
-		ClientSide clientSide = ServerContains.CLIENT_SIDE_MAP.get(serverTransferData.getClientId());
+	public void call(ClientSide clientSide, String data) {
 
 		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
 
-		boolean isY = serverTransferData.getData();
+		boolean isY = Boolean.valueOf(data);
 		if(isY){
 			clientSide.getPokers().addAll(room.getLandlordPokers());
 			PokerHelper.sortPoker(clientSide.getPokers());

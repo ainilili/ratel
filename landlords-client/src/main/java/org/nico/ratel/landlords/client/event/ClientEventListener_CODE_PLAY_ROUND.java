@@ -1,8 +1,10 @@
 package org.nico.ratel.landlords.client.event;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.nico.noson.Noson;
 import org.nico.ratel.landlords.entity.ClientTransferData;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.PokerType;
@@ -13,10 +15,10 @@ import org.nico.ratel.landlords.utils.OptionsUtils;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener<String>{
+public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener{
 
 	@Override
-	public void call(Channel channel, ClientTransferData<String> clientTransferData) {
+	public void call(Channel channel, ClientTransferData clientTransferData) {
 		SimplePrinter.println(clientTransferData.getData());
 		SimplePrinter.println("Please enter the number you want：");
 		String line = SimpleWriter.write();
@@ -26,7 +28,7 @@ public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener<Str
 			call(channel, clientTransferData);
 		}else{
 			if(line.equalsIgnoreCase("PASS")) {
-				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, new Character[] {'p'});
+				pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, Noson.reversal(new Character[] {'p'}));
 			}else if(line.equalsIgnoreCase("EXIT")){
 				pushToServer(channel, ServerEventCode.CODE_PLAYER_EXIT, null);
 			}else {
@@ -48,14 +50,14 @@ public class ClientEventListener_CODE_PLAY_ROUND extends ClientEventListener<Str
 					}
 				}
 				if(access){
-					pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, options.toArray(new Character[] {}));
+					pushToServer(channel, ServerEventCode.CODE_PLAY_ROUND, Noson.reversal(options.toArray(new Character[] {})));
 				}else{
 					SimplePrinter.println("Invalid input");
 					call(channel, clientTransferData);
 				}
 			}
 		}
-
+		
 	}
 
 }

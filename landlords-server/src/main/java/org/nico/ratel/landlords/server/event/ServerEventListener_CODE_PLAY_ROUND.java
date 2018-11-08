@@ -1,31 +1,26 @@
 package org.nico.ratel.landlords.server.event;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
-import org.nico.ratel.landlords.entity.ServerTransferData;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.helper.PokerHelper;
 import org.nico.ratel.landlords.server.event.helper.TimeHelper;
 
-import io.netty.channel.Channel;
-
-public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<Character[]>{
+public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener{
 
 	@Override
-	public void call(Channel channel, ServerTransferData<Character[]> serverTransferData) {
-		ClientSide clientSide = ServerContains.CLIENT_SIDE_MAP.get(serverTransferData.getClientId());
+	public void call(ClientSide clientSide, String data) {
 		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
-		Character[] options = serverTransferData.getData();
+		Character[] options = Noson.convert(data, Character[].class);
 		int[] indexes = PokerHelper.getIndexes(options, clientSide.getPokers());
-		System.out.println("index:" + Arrays.toString(indexes));
 		if(PokerHelper.checkPokerIndex(indexes, clientSide.getPokers())){
 			boolean sellFlag = false;
 			List<Poker> currentPokers = PokerHelper.getPoker(indexes, clientSide.getPokers());
@@ -33,9 +28,9 @@ public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<
 			if(room.getLastSellClient() != -1 && room.getLastSellClient() != clientSide.getId() && room.getLastPokerShell() != null){
 				PokerSell lastPokerShell = room.getLastPokerShell();
 				if(lastPokerShell.getSellType() != currentPokerShell.getSellType() && currentPokerShell.getSellType() != SellType.BOMB && currentPokerShell.getSellType() != SellType.KING_BOMB) {
-					ChannelUtils.pushToClient(channel, ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "Your sell type is " + currentPokerShell.getSellType().getMsg() + " ,but last sell type is " + lastPokerShell.getSellType().getMsg());
+					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "Your sell type is " + currentPokerShell.getSellType().getMsg() + " ,but last sell type is " + lastPokerShell.getSellType().getMsg());
 				}else if(lastPokerShell.getScore() >= currentPokerShell.getScore()) {
-					ChannelUtils.pushToClient(channel, ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "It's not as big as the other side");
+					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "It's not as big as the other side");
 				}else {
 					sellFlag = true;
 				}
@@ -72,7 +67,7 @@ public class ServerEventListener_CODE_PLAY_ROUND implements ServerEventListener<
 				ClientSide next = clientSide.getNext();
 				ChannelUtils.pushToClient(next.getChannel(), ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(next.getPokers(), true));
 			}else {
-				ChannelUtils.pushToClient(channel, ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "The draw number is invalid");
+				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_PLAY_ROUND, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "The draw number is invalid");
 			}
 		}
 	}

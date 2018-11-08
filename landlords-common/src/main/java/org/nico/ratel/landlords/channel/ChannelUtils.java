@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.channel;
 
+import org.nico.noson.Noson;
 import org.nico.ratel.landlords.entity.ClientTransferData;
 import org.nico.ratel.landlords.entity.ServerTransferData;
 import org.nico.ratel.landlords.enums.ClientEventCode;
@@ -9,19 +10,18 @@ import io.netty.channel.Channel;
 
 public class ChannelUtils {
 
-	public static <T> void pushToClient(Channel channel, ClientEventCode code, T datas) {
-		pushToClient(channel, code, datas, null);
+	public static void pushToClient(Channel channel, ClientEventCode code, String data) {
+		pushToClient(channel, code, data, null);
 	}
 	
-	public static <T> void pushToClient(Channel channel, ClientEventCode code, T datas, String msg) {
-		ClientTransferData<T> clientTransferData = new ClientTransferData<T>(code, datas, msg);
+	public static void pushToClient(Channel channel, ClientEventCode code, String data, String info) {
+		ClientTransferData clientTransferData = new ClientTransferData(code, data, info);
 		channel.writeAndFlush(clientTransferData);
 	}
 	
-	public static <T> void pushToServer(Channel channel, int clientId, ServerEventCode code, T datas) {
-		ServerTransferData<T> serverTransferData = new ServerTransferData<T>(clientId, -1, code, datas);
+	public static void pushToServer(Channel channel, ServerEventCode code, String data) {
+		ServerTransferData serverTransferData = new ServerTransferData(code, data);
 		channel.writeAndFlush(serverTransferData);
 	}
-	
 	
 }
