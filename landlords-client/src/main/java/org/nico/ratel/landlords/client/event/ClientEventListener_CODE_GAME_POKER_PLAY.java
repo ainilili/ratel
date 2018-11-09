@@ -2,10 +2,15 @@ package org.nico.ratel.landlords.client.event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.nico.noson.Noson;
+import org.nico.noson.entity.NoType;
+import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.helper.MapHelper;
+import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 
@@ -15,7 +20,12 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.println(data);
+		Map<String, Object> map = MapHelper.parser(data);
+		
+		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
+		SimplePrinter.println(PokerHelper.unfoldPoker(pokers, true));
+		
+		
 		SimplePrinter.println("Please enter the number you want：");
 		String line = SimpleWriter.write();
 

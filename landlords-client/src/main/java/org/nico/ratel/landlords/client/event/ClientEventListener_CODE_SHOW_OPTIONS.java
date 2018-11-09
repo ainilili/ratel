@@ -27,7 +27,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		if(choose == 1) {
 			pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE, null);
 		}else if(choose == 2){
-			pushToServer(channel, ServerEventCode.CODE_ROOM_LIST_GET, null);
+			pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
 		}else {
 			SimplePrinter.print("Your choose rooms number：");
 			line = SimpleWriter.write();

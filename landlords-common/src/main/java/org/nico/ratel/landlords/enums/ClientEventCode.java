@@ -16,8 +16,6 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_SHOW_POKERS("展示Poker"),
 	
-	CODE_SHOW_POKERS_LANDLORD("展示地主牌"),
-
 	CODE_ROOM_CREATE_SUCCESS("创建房间成功"),
 	
 	CODE_ROOM_JOIN_SUCCESS("加入房间成功"),
@@ -34,7 +32,17 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_GAME_LANDLORD_CONFIRM("地主确认"),
 	
+	CODE_GAME_LANDLORD_CYCLE("地主一轮确认结束"),
+	
 	CODE_GAME_POKER_PLAY("出牌回合"),
+	
+	CODE_GAME_POKER_PLAY_MISMATCH("出牌不匹配"),
+	
+	CODE_GAME_POKER_PLAY_LESS("出牌太小"),
+	
+	CODE_GAME_POKER_PLAY_DONT_SELL("不出"),
+	
+	CODE_GAME_POKER_PLAY_INVALID("无效"),
 	
 	CODE_GAME_OVER("游戏结束"),
 	;

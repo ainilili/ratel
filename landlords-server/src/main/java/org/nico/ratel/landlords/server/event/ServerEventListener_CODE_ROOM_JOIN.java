@@ -32,7 +32,7 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener{
 					.json();
 
 			if(room.getClientSideList().size() == 3) {
-				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_JOIN_FAIL_BY_FULL, Noson.reversal(room));
+				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_JOIN_FAIL_BY_FULL, result);
 			}else {
 				clientSide.setRoomId(room.getId());
 

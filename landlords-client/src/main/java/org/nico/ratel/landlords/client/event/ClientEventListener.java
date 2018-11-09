@@ -8,6 +8,7 @@ import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
 public abstract class ClientEventListener {
 
@@ -35,7 +36,7 @@ public abstract class ClientEventListener {
 		return listener;
 	}
 	
-	protected void pushToServer(Channel channel, ServerEventCode code, String datas){
-		ChannelUtils.pushToServer(channel, code, datas);
+	protected ChannelFuture pushToServer(Channel channel, ServerEventCode code, String datas){
+		return ChannelUtils.pushToServer(channel, code, datas);
 	}
 }

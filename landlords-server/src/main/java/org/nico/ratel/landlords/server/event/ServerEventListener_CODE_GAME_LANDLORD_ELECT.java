@@ -1,13 +1,12 @@
 package org.nico.ratel.landlords.server.event;
 
-import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
-import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
 public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEventListener{
@@ -24,56 +23,34 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 			
 			room.setLandlordId(clientSide.getId());
 			for(ClientSide client: room.getClientSideList()){
-				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, clientSide.getNickname());
+				String result = MapHelper.newInstance()
+						.put("roomId", room.getId())
+						.put("roomOwner", room.getRoomOwner())
+						.put("roomClientCount", room.getClientSideList().size())
+						.put("landlordNickname", clientSide.getNickname())
+						.put("landlordId", clientSide.getId())
+						.put("pokers", client.getPokers())
+						.put("additionalPokers", room.getLandlordPokers())
+						.json();
+				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);
 			}
-			
-			for(ClientSide client: room.getClientSideList()){
-				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS_LANDLORD, Noson.reversal(room.getLandlordPokers()));
-			}
-			
-			//PokerHelper.unfoldPoker(room.getLandlordPokers(), false)
-			TimeHelper.sleep(500);
-
-			for(ClientSide client: room.getClientSideList()){
-				if(client.getId() != clientSide.getId()){
-					ChannelUtils.pushToClient(client.getChannel(), null, null, "Please wait for " + clientSide.getNickname() + " to come out");
-				}
-			}
-
-			TimeHelper.sleep(200);
-
-			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(clientSide.getPokers(), true));
 		}else{
 			if(clientSide.getNext().getId() == room.getLandlordId()){
 				for(ClientSide client: room.getClientSideList()){
-					ChannelUtils.pushToClient(client.getChannel(), null, null, "No one takes the landowner. Reissue the license");
+					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
 				}
-				
-				ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
+				ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, null);
 			}else{
-				for(ClientSide client: room.getClientSideList()){
-					if(client.getId() != clientSide.getId()){
-						ChannelUtils.pushToClient(client.getChannel(), null, null, clientSide.getNickname() + " don't grab");
-					}
-				}
-
-				TimeHelper.sleep(500);
-
-				ClientSide currentClient = clientSide.getNext();
-				for(ClientSide client: room.getClientSideList()){
-					ChannelUtils.pushToClient(client.getChannel(), null, null, "Turn " + currentClient.getNickname() + " confirm");
-				}
-
-				TimeHelper.sleep(500);
-
-
-				ChannelUtils.pushToClient(currentClient.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, null);
+				ClientSide turnClientSide = clientSide.getNext();
+				String result = MapHelper.newInstance()
+						.put("roomId", room.getId())
+						.put("roomOwner", room.getRoomOwner())
+						.put("roomClientCount", room.getClientSideList().size())
+						.put("turnClientNickname", turnClientSide.getNickname())
+						.put("turnClientId", turnClientSide.getId())
+						.json();
+				ChannelUtils.pushToClient(turnClientSide.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, result);
 			}
 		}
 	}
-
-
-
-
-
 }

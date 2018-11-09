@@ -1,6 +1,10 @@
 package org.nico.ratel.landlords.client.event;
 
+import java.util.Map;
+
+import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 
@@ -10,16 +14,24 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.print("It's your turn to rob the landlord[Y/N]：");
-		String line = SimpleWriter.write();
-		if(line.equalsIgnoreCase("Y")){
-			pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "TRUE");
-		}else if(line.equalsIgnoreCase("N")){
-			pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "FALSE");
-		}else{
-			SimplePrinter.println("Invalid options");
-			call(channel, data);
+		Map<String, Object> map = MapHelper.parser(data);
+		int turnClientId = (int) map.get("turnClientId");
+		
+		if(turnClientId == SimpleClient.id) {
+			SimplePrinter.println("It's your turn to rob the landlord[Y/N]：");
+			String line = SimpleWriter.write();
+			if(line.equalsIgnoreCase("Y")){
+				pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "TRUE");
+			}else if(line.equalsIgnoreCase("N")){
+				pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "FALSE");
+			}else{
+				SimplePrinter.println("Invalid options");
+				call(channel, data);
+			}
+		}else {
+			SimplePrinter.println("It's turn " + map.get("turnClientNickname") + " to confirm, please wait patiently !");
 		}
+		
 	}
 
 }

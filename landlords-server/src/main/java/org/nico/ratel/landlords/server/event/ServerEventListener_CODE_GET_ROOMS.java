@@ -13,7 +13,7 @@ import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
-public class ServerEventListener_CODE_ROOM_LIST_GET implements ServerEventListener{
+public class ServerEventListener_CODE_GET_ROOMS implements ServerEventListener{
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
@@ -28,9 +28,5 @@ public class ServerEventListener_CODE_ROOM_LIST_GET implements ServerEventListen
 		}
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_SHOW_ROOMS, Noson.reversal(roomList));
 	}
-
-	
-
-
 
 }

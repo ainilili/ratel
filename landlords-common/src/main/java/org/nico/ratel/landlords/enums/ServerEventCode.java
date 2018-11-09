@@ -10,13 +10,15 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_ROOM_CREATE("创建房间"),
 	
-	CODE_ROOM_LIST_GET("获取房间列表"),
-	
+	CODE_GET_ROOMS("获取房间列表"),
+
 	CODE_ROOM_JOIN("加入房间"),
 	
 	CODE_GAME_STARTING("游戏开始"),
 	
 	CODE_GAME_LANDLORD_ELECT("抢地主"),
+	
+	CODE_GAME_LANDLORD_GET("抢地主信息"),
 	
 	CODE_GAME_POKER_PLAY("出牌环节"),
 	

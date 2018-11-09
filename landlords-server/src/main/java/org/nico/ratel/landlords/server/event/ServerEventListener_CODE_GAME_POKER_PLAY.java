@@ -10,6 +10,7 @@ import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.SellType;
+import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.server.ServerContains;
@@ -28,9 +29,19 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 			if(room.getLastSellClient() != -1 && room.getLastSellClient() != clientSide.getId() && room.getLastPokerShell() != null){
 				PokerSell lastPokerShell = room.getLastPokerShell();
 				if(lastPokerShell.getSellType() != currentPokerShell.getSellType() && currentPokerShell.getSellType() != SellType.BOMB && currentPokerShell.getSellType() != SellType.KING_BOMB) {
-					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "Your sell type is " + currentPokerShell.getSellType().getMsg() + " ,but last sell type is " + lastPokerShell.getSellType().getMsg());
+					String result = MapHelper.newInstance()
+										.put("playType", currentPokerShell.getSellType())
+										.put("preType", lastPokerShell.getSellType())
+										.put("pokers", clientSide.getPokers())
+										.json();
+					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_MISMATCH, result);
 				}else if(lastPokerShell.getScore() >= currentPokerShell.getScore()) {
-					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "It's not as big as the other side");
+					String result = MapHelper.newInstance()
+							.put("playScore", currentPokerShell.getScore())
+							.put("preScore", lastPokerShell.getScore())
+							.put("pokers", clientSide.getPokers())
+							.json();
+					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_LESS, result);
 				}else {
 					sellFlag = true;
 				}
@@ -41,33 +52,51 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 				room.setLastSellClient(clientSide.getId());
 				room.setLastPokerShell(currentPokerShell);
 				clientSide.getPokers().removeAll(currentPokers);
-				
+				String result = MapHelper.newInstance()
+						.put("currentClientId", clientSide.getId())
+						.put("currentClientNickname", clientSide.getNickname())
+						.put("pokers", currentPokers)
+						.json();
 				for(ClientSide client: room.getClientSideList()) {
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, PokerHelper.unfoldPoker(currentPokers, false), clientSide.getNickname() + " sell， turn " + clientSide.getNext().getNickname());
+					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
 				}
 				
 				TimeHelper.sleep(500);
 				
 				if(clientSide.getPokers().isEmpty()) {
+					result = MapHelper.newInstance()
+										.put("winnerNickname", clientSide.getNickname())
+										.json();
 					for(ClientSide client: room.getClientSideList()) {
-						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, null, clientSide.getNickname() + " win");
+						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 					}
 				}else {
 					ClientSide next = clientSide.getNext();
-					ChannelUtils.pushToClient(next.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(next.getPokers(), true));
+					result = MapHelper.newInstance()
+							.put("pokers", next.getPokers())
+							.json();
+					
+					ChannelUtils.pushToClient(next.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, result);
 				}
 			}
 		}else{
 			if(options.length > 0 && options[0] == 'p') {
+				ClientSide turnClient = clientSide.getNext();
 				for(ClientSide client: room.getClientSideList()) {
-					ChannelUtils.pushToClient(client.getChannel(), null, null, clientSide.getNickname() + " don't sell， turn " + clientSide.getNext().getNickname());
+					String result = MapHelper.newInstance()
+							.put("currentClientId", clientSide.getId())
+							.put("currentClientNickname", clientSide.getNickname())
+							.put("turnClientId", turnClient.getId())
+							.put("turnClientNickname", turnClient.getNickname())
+							.put("pokers", client.getPokers())
+							.json();
+					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_DONT_SELL, result);
 				}
-				TimeHelper.sleep(500);
-				
-				ClientSide next = clientSide.getNext();
-				ChannelUtils.pushToClient(next.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(next.getPokers(), true));
 			}else {
-				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, PokerHelper.unfoldPoker(clientSide.getPokers(), true), "The draw number is invalid");
+				String result = MapHelper.newInstance()
+						.put("pokers", clientSide.getPokers())
+						.json();
+				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, result);
 			}
 		}
 	}
