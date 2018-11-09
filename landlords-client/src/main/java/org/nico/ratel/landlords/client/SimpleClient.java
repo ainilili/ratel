@@ -23,7 +23,7 @@ public class SimpleClient {
 					.group(group)
 					.channel(NioSocketChannel.class)
 					.handler(new DefaultChannelInitializer());
-			Channel channel = b.connect("127.0.0.1", 80).sync().channel();
+			Channel channel = b.connect("127.0.0.1", 1024).sync().channel();
 			channel.closeFuture().sync();
 		} finally {
 			group.shutdownGracefully().sync();
