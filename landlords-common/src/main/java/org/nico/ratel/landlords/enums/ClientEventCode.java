@@ -38,9 +38,13 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_GAME_POKER_PLAY_LESS("出牌太小"),
 	
-	CODE_GAME_POKER_PLAY_DONT_SELL("不出"),
+	CODE_GAME_POKER_PLAY_PASS("不出"),
+	
+	CODE_GAME_POKER_PLAY_CANT_PASS("不允许不出"),
 	
 	CODE_GAME_POKER_PLAY_INVALID("无效"),
+	
+	CODE_GAME_POKER_PLAY_ORDER_ERROR("顺序错误"),
 	
 	CODE_GAME_OVER("游戏结束"),
 	;

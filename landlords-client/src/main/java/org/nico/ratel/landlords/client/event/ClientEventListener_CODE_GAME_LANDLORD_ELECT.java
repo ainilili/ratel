@@ -15,7 +15,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		int turnClientId = (int) map.get("turnClientId");
+		int turnClientId = (int) map.get("nextClientId");
 		
 		if(turnClientId == SimpleClient.id) {
 			SimplePrinter.printNotice("It's your turn to rob the landlord[Y/N]");
@@ -29,7 +29,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 				call(channel, data);
 			}
 		}else {
-			SimplePrinter.printNotice("It's turn " + map.get("turnClientNickname") + " to confirm, please wait patiently !");
+			SimplePrinter.printNotice("It's turn " + map.get("nextClientNickname") + " to confirm, please wait patiently !");
 		}
 		
 	}

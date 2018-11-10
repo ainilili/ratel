@@ -9,7 +9,7 @@ public class ClientEventListener_CODE_CLIENT_CONNECT extends ClientEventListener
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.printNotice("Connection to server successful !!");
+		SimplePrinter.printNotice("Connection to server successful, welcome to ratel !!");
 		SimpleClient.id = Integer.parseInt(data);
 	}
 

@@ -30,6 +30,8 @@ public class Room implements Serializable{
 	private PokerSell lastPokerShell;
 	
 	private int lastSellClient = -1;
+	
+	private int currentSellClient = -1;
 
 	public Room() {
 	}
@@ -47,6 +49,14 @@ public class Room implements Serializable{
 
 	public final void setLastPokerShell(PokerSell lastPokerShell) {
 		this.lastPokerShell = lastPokerShell;
+	}
+
+	public final int getCurrentSellClient() {
+		return currentSellClient;
+	}
+
+	public final void setCurrentSellClient(int currentSellClient) {
+		this.currentSellClient = currentSellClient;
 	}
 
 	public int getLastSellClient() {

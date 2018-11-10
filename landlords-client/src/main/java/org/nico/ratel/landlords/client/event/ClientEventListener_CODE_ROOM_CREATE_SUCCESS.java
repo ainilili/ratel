@@ -15,7 +15,6 @@ public class ClientEventListener_CODE_ROOM_CREATE_SUCCESS extends ClientEventLis
 		
 		SimplePrinter.printNotice("You has been create room with id " + room.getId());
 		SimplePrinter.printNotice("Please wait for other players to join !");
-		
 	}
 
 }

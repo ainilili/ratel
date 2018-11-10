@@ -48,8 +48,8 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("roomId", room.getId())
 					.put("roomOwner", room.getRoomOwner())
 					.put("roomClientCount", room.getClientSideList().size())
-					.put("turnClientNickname", startGrabClient.getNickname())
-					.put("turnClientId", startGrabClient.getId())
+					.put("nextClientNickname", startGrabClient.getNickname())
+					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
 					//.put("additionalPokers", room.getLandlordPokers())
 					.json();

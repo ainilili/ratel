@@ -39,4 +39,8 @@ public abstract class ClientEventListener {
 	protected ChannelFuture pushToServer(Channel channel, ServerEventCode code, String datas){
 		return ChannelUtils.pushToServer(channel, code, datas);
 	}
+	
+	protected ChannelFuture pushToServer(Channel channel, ServerEventCode code){
+		return pushToServer(channel, code, null);
+	}
 }

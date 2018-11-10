@@ -18,9 +18,9 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_GAME_LANDLORD_ELECT("抢地主"),
 	
-	CODE_GAME_LANDLORD_GET("抢地主信息"),
-	
 	CODE_GAME_POKER_PLAY("出牌环节"),
+	
+	CODE_GAME_POKER_PLAY_PASS("不出"),
 	
 	;
 	

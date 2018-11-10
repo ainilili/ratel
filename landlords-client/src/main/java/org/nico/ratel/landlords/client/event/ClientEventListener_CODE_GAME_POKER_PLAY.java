@@ -10,7 +10,6 @@ import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
-import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 
@@ -27,7 +26,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.printNotice("Please enter the card you came up");
+		SimplePrinter.printNotice("Please enter the card you came up (enter [exit] to exit current room, enter [pass] jump current round)");
 		String line = SimpleWriter.write("card");
 
 		if(line == null){
@@ -35,9 +34,9 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 			call(channel, data);
 		}else{
 			if(line.equalsIgnoreCase("PASS")) {
-				pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY, Noson.reversal(new Character[] {'p'}));
+				pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_PASS);
 			}else if(line.equalsIgnoreCase("EXIT")){
-				pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT, null);
+				pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT);
 			}else {
 				String[] strs = line.split(" ");
 				List<Character> options = new ArrayList<>();

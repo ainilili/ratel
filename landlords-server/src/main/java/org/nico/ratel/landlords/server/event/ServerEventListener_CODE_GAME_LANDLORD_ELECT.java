@@ -21,7 +21,11 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 			clientSide.getPokers().addAll(room.getLandlordPokers());
 			PokerHelper.sortPoker(clientSide.getPokers());
 			
-			room.setLandlordId(clientSide.getId());
+			int currentClientId = clientSide.getId();
+			room.setLandlordId(currentClientId);
+			room.setLastSellClient(currentClientId);
+			room.setCurrentSellClient(currentClientId);
+			
 			for(ClientSide client: room.getClientSideList()){
 				String result = MapHelper.newInstance()
 						.put("roomId", room.getId())
@@ -46,8 +50,8 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 						.put("roomId", room.getId())
 						.put("roomOwner", room.getRoomOwner())
 						.put("roomClientCount", room.getClientSideList().size())
-						.put("turnClientNickname", turnClientSide.getNickname())
-						.put("turnClientId", turnClientSide.getId())
+						.put("nextClientNickname", turnClientSide.getNickname())
+						.put("nextClientId", turnClientSide.getId())
 						.json();
 				ChannelUtils.pushToClient(turnClientSide.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, result);
 			}

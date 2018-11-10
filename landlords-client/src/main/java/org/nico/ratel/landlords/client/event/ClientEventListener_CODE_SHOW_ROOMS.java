@@ -29,6 +29,7 @@ public class ClientEventListener_CODE_SHOW_ROOMS extends ClientEventListener{
 			SimplePrinter.printNotice("No available room, please create a room ！");
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}
+		SimplePrinter.printNotice("");
 	}
 
 
