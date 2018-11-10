@@ -10,7 +10,7 @@ import java.util.Set;
  * 
  * @author nico
  */
-public enum PokerLevel implements Serializable{
+public enum PokerLevel{
 
 	LEVEL_3(3, "3", new Character[]{'3'}),
 	

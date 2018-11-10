@@ -7,7 +7,7 @@ import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.entity.Poker;
-import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
@@ -26,10 +26,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_CONFIRM extends ClientEventL
 		List<Poker> additionalPokers = Noson.convert(map.get("additionalPokers"), new NoType<List<Poker>>() {});
 		SimplePrinter.printPokers(additionalPokers);
 		
-		int landlordId = (int) map.get("landlordId");
-		if(SimpleClient.id == landlordId) {
-			get(ClientEventCode.CODE_GAME_POKER_PLAY).call(channel, data);
-		}
+		pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT);
 	}
 
 }

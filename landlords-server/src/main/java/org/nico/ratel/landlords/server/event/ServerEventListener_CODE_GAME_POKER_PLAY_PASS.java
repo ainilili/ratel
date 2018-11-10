@@ -25,15 +25,11 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEven
 							.put("clientNickname", clientSide.getNickname())
 							.put("nextClientId", turnClient.getId())
 							.put("nextClientNickname", turnClient.getNickname())
-							.put("pokers", client.getPokers())
 							.json();
 					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_PASS, result);
 				}
 			}else {
-				String result = MapHelper.newInstance()
-						.put("pokers", clientSide.getPokers())
-						.json();
-				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_CANT_PASS, result);
+				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_CANT_PASS, null);
 			}
 		}else {
 			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_ORDER_ERROR, null);

@@ -51,8 +51,8 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("nextClientNickname", startGrabClient.getNickname())
 					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
-					//.put("additionalPokers", room.getLandlordPokers())
 					.json();
+			
 			ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
 		}
 		

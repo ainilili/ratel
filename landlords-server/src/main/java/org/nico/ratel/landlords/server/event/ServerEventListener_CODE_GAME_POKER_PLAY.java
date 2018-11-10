@@ -1,6 +1,7 @@
 package org.nico.ratel.landlords.server.event;
 
 import java.util.List;
+import java.util.Map;
 
 import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
@@ -10,6 +11,7 @@ import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.SellType;
+import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.helper.TimeHelper;
@@ -36,7 +38,6 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 						String result = MapHelper.newInstance()
 											.put("playType", currentPokerShell.getSellType())
 											.put("preType", lastPokerShell.getSellType())
-											.put("pokers", clientSide.getPokers())
 											.json();
 						sellFlag = false;
 						ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_MISMATCH, result);
@@ -44,7 +45,6 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 						String result = MapHelper.newInstance()
 								.put("playScore", currentPokerShell.getScore())
 								.put("preScore", lastPokerShell.getScore())
-								.put("pokers", clientSide.getPokers())
 								.json();
 						sellFlag = false;
 						ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_LESS, result);
@@ -62,6 +62,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 							.put("clientId", clientSide.getId())
 							.put("clientNickname", clientSide.getNickname())
 							.put("pokers", currentPokers)
+							.put("sellClinetNickname", next.getNickname())
 							.json();
 					for(ClientSide client: room.getClientSideList()) {
 						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
@@ -78,19 +79,11 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 							ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 						}
 					}else {
-						result = MapHelper.newInstance()
-								.put("pokers", next.getPokers())
-								.json();
-						
-						ChannelUtils.pushToClient(next.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY, result);
+						ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT).call(next, data);
 					}
 				}
 			}else{
-				String result = MapHelper.newInstance()
-						.put("pokers", clientSide.getPokers())
-						.json();
-				
-				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_INVALID, result);
+				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_INVALID, null);
 			}
 		}else {
 			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_ORDER_ERROR, null);

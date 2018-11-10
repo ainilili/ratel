@@ -20,13 +20,13 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		SimplePrinter.printNotice("");
+		
 		SimplePrinter.printNotice("It's your turn to play, your pokers are as follows");
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
 		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.printNotice("Please enter the card you came up (enter [exit] to exit current room, enter [pass] jump current round)");
+		SimplePrinter.printNotice("Please enter the card you came up (enter [EXIT] to exit current room, enter [PASS] jump current round)");
 		String line = SimpleWriter.write("card");
 
 		if(line == null){

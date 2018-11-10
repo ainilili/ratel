@@ -293,52 +293,7 @@ public class PokerHelper {
 					builder.append("──┘");
 				}
 			}
-//			if(serialFlag){
-//				builder.append(System.lineSeparator());
-//				for(int index = 0; index < pokers.size(); index ++) {
-//					if(index == 0) {
-//						builder.append("Index: │");
-//					}
-//					builder.append(pokers.get(index).getLevel().getAlias()[0] +  " │");
-//				}
-//			}
 		}
 		return builder.toString();
-	}
-
-	public static void main(String[] args) {
-		List<Poker> pokers = new ArrayList<>();
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.HEART));
-		
-//		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_10, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_BIG_KING, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_SMALL_KING, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_K, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_A, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_K, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_A, PokerType.HEART));
-		
-		System.out.println(checkPokerType(pokers));
 	}
 }

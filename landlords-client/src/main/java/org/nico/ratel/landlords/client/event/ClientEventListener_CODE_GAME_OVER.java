@@ -2,7 +2,7 @@ package org.nico.ratel.landlords.client.event;
 
 import java.util.Map;
 
-import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
@@ -15,7 +15,7 @@ public class ClientEventListener_CODE_GAME_OVER extends ClientEventListener{
 		Map<String, Object> map = MapHelper.parser(data);
 		SimplePrinter.printNotice(map.get("winnerNickname") + " win");
 		SimplePrinter.printNotice("Game over");
-		get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
+		pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT);
 	}
 
 }

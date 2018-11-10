@@ -20,6 +20,8 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_GAME_POKER_PLAY("出牌环节"),
 	
+	CODE_GAME_POKER_PLAY_REDIRECT("出牌重定向"),
+	
 	CODE_GAME_POKER_PLAY_PASS("不出"),
 	
 	;

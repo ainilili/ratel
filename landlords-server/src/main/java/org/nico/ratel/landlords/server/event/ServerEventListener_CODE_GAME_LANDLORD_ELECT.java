@@ -1,9 +1,14 @@
 package org.nico.ratel.landlords.server.event;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
@@ -25,6 +30,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 			room.setLandlordId(currentClientId);
 			room.setLastSellClient(currentClientId);
 			room.setCurrentSellClient(currentClientId);
+			clientSide.setType(ClientType.LANDLORD);
 			
 			for(ClientSide client: room.getClientSideList()){
 				String result = MapHelper.newInstance()
@@ -33,7 +39,6 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 						.put("roomClientCount", room.getClientSideList().size())
 						.put("landlordNickname", clientSide.getNickname())
 						.put("landlordId", clientSide.getId())
-						.put("pokers", client.getPokers())
 						.put("additionalPokers", room.getLandlordPokers())
 						.json();
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);

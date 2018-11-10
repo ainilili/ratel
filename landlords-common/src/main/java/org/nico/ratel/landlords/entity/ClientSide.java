@@ -1,6 +1,5 @@
 package org.nico.ratel.landlords.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.nico.ratel.landlords.enums.ClientStatus;
@@ -8,9 +7,7 @@ import org.nico.ratel.landlords.enums.ClientType;
 
 import io.netty.channel.Channel;
 
-public class ClientSide implements Serializable{
-
-	private static final long serialVersionUID = -1208782543528394339L;
+public class ClientSide{
 
 	private int id;
 	

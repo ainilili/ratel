@@ -29,14 +29,19 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		}else if(choose == 2){
 			pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
 		}else {
-			SimplePrinter.printNotice("Please enter the room id you want to join");
+			SimplePrinter.printNotice("Please enter the room id you want to join (enter [BACK] return options list)");
 			line = SimpleWriter.write("roomid");
-			int option = OptionsUtils.getOptions(line);
-			if(line == null || option < 1) {
-				SimplePrinter.printNotice("Invalid options, please choose again：");
+			
+			if(line.equalsIgnoreCase("BACK")) {
 				call(channel, data);
-			}else{
-				pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
+			}else {
+				int option = OptionsUtils.getOptions(line);
+				if(line == null || option < 1) {
+					SimplePrinter.printNotice("Invalid options, please choose again：");
+					call(channel, data);
+				}else{
+					pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
+				}
 			}
 		}
 		

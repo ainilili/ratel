@@ -34,6 +34,8 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_GAME_POKER_PLAY("出牌回合"),
 	
+	CODE_GAME_POKER_PLAY_REDIRECT("出牌重定向"),
+	
 	CODE_GAME_POKER_PLAY_MISMATCH("出牌不匹配"),
 	
 	CODE_GAME_POKER_PLAY_LESS("出牌太小"),

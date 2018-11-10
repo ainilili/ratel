@@ -2,7 +2,7 @@ package org.nico.ratel.landlords.enums;
 
 import java.io.Serializable;
 
-public enum SellType implements Serializable{
+public enum SellType {
 
 	ILLEGAL("非合法"),
 	

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 
  * @author nico
  */
-public enum PokerType implements Serializable{
+public enum PokerType{
 
 	BLANK(" "),
 	

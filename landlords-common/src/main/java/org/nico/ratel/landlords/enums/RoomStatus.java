@@ -2,7 +2,7 @@ package org.nico.ratel.landlords.enums;
 
 import java.io.Serializable;
 
-public enum RoomStatus implements Serializable{
+public enum RoomStatus{
 
 	BLANK("空闲"),
 	

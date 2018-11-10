@@ -1,17 +1,13 @@
 package org.nico.ratel.landlords.entity;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import org.nico.noson.annotations.JsonIgnore;
 import org.nico.ratel.landlords.enums.RoomStatus;
 
-public class Room implements Serializable{
-
-	private static final long serialVersionUID = -9182226630057841379L;
+public class Room{
 
 	private int id;
 	

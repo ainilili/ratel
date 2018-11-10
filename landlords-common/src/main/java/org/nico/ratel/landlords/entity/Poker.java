@@ -1,7 +1,5 @@
 package org.nico.ratel.landlords.entity;
 
-import java.io.Serializable;
-
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.PokerType;
 
@@ -10,10 +8,8 @@ import org.nico.ratel.landlords.enums.PokerType;
  * 
  * @author nico
  */
-public class Poker implements Serializable{
+public class Poker{
 	
-	private static final long serialVersionUID = -3830261356192537124L;
-
 	private PokerLevel level;
 	
 	private PokerType type;
