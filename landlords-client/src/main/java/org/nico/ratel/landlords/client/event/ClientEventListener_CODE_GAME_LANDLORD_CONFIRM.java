@@ -9,7 +9,6 @@ import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
-import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
@@ -22,10 +21,10 @@ public class ClientEventListener_CODE_GAME_LANDLORD_CONFIRM extends ClientEventL
 		
 		String landlordNickname = (String) map.get("landlordNickname");
 		
-		SimplePrinter.println(landlordNickname + " grabed landlord, he got three pokers");
+		SimplePrinter.printNotice(landlordNickname + " grabbed the landlord and got an extra three poker shots");
 		
 		List<Poker> additionalPokers = Noson.convert(map.get("additionalPokers"), new NoType<List<Poker>>() {});
-		SimplePrinter.println(PokerHelper.unfoldPoker(additionalPokers, false));
+		SimplePrinter.printPokers(additionalPokers);
 		
 		int landlordId = (int) map.get("landlordId");
 		if(SimpleClient.id == landlordId) {

@@ -2,6 +2,7 @@ package org.nico.ratel.landlords.client.event;
 
 import java.util.Map;
 
+import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
@@ -11,10 +12,18 @@ public class ClientEventListener_CODE_ROOM_JOIN_SUCCESS extends ClientEventListe
 
 	@Override
 	public void call(Channel channel, String data) {
-		Map<String, Object> dataMap = MapHelper.parser(data);
+		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.println("You has been join room：" + dataMap.get("roomId") + ", There are " + dataMap.get("roomClientCount") + " people in the room now");
-		SimplePrinter.println("Please wait for other players to join !");
+		int joinClientId = (int) map.get("clientId");
+		if(SimpleClient.id == joinClientId) {
+			SimplePrinter.printNotice("You has been join room：" + map.get("roomId") + ", there are " + map.get("roomClientCount") + " player in the room now");
+			SimplePrinter.printNotice("Please wait for other players to join, start a good game when the room player reaches three !");
+		}else {
+			SimplePrinter.printNotice(map.get("clientNickname") + " join room, the current number of rooms is " + map.get("roomClientCount"));
+		}
+		
+		
+		
 	}
 
 

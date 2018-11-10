@@ -21,16 +21,17 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		
+		SimplePrinter.printNotice("");
+		SimplePrinter.printNotice("It's your turn to play, your pokers are as follows");
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
-		SimplePrinter.println(PokerHelper.unfoldPoker(pokers, true));
+		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.println("Please enter the number you want：");
-		String line = SimpleWriter.write();
+		SimplePrinter.printNotice("Please enter the card you came up");
+		String line = SimpleWriter.write("card");
 
 		if(line == null){
-			SimplePrinter.println("Invalid input");
+			SimplePrinter.printNotice("Invalid enter");
 			call(channel, data);
 		}else{
 			if(line.equalsIgnoreCase("PASS")) {
@@ -58,7 +59,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 				if(access){
 					pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY, Noson.reversal(options.toArray(new Character[] {})));
 				}else{
-					SimplePrinter.println("Invalid input");
+					SimplePrinter.printNotice("Invalid enter");
 					call(channel, data);
 				}
 			}

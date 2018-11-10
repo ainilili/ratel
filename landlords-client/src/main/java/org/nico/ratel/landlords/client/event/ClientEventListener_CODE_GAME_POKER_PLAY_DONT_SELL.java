@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.enums.ClientEventCode;
-import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
@@ -16,8 +15,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_DONT_SELL extends ClientEv
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.println(map.get("currentClientNickname") + " dont sell");
-		SimplePrinter.println("It's turn " + map.get("turnClientNickname"));
+		SimplePrinter.printNotice(map.get("currentClientNickname") + " dont out, turn next player " + map.get("turnClientNickname") + " out pokers");
 		
 		int turnClientId = (int) map.get("turnClientId");
 		if(SimpleClient.id == turnClientId) {

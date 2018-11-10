@@ -20,13 +20,13 @@ public class ClientEventListener_CODE_SHOW_ROOMS extends ClientEventListener{
 		
 		List<Map<String, Object>> roomList = Noson.convert(data, new NoType<List<Map<String, Object>>>() {});
 		if(roomList != null && ! roomList.isEmpty()){
-			SimplePrinter.println("#\tID\t|\tOWNER\t|\tCOUNT\t#");
+			SimplePrinter.printNotice("#\tID\t|\tOWNER\t|\tCOUNT\t#");
 			for(Map<String, Object> room: roomList) {
-				SimplePrinter.println("#\t" + room.get("roomId") + "\t|\t" + room.get("roomOwner") + "\t|\t" + room.get("roomClientCount") + "\t#");
+				SimplePrinter.printNotice("#\t" + room.get("roomId") + "\t|\t" + room.get("roomOwner") + "\t|\t" + room.get("roomClientCount") + "\t#");
 			}
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}else {
-			SimplePrinter.println("No available room, please create a room ！");
+			SimplePrinter.printNotice("No available room, please create a room ！");
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}
 	}

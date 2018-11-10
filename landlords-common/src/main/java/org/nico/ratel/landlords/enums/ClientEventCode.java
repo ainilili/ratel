@@ -20,8 +20,6 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_ROOM_JOIN_SUCCESS("加入房间成功"),
 	
-	CODE_ROOM_JOIN_TRIGGER("加入房间触发"),
-	
 	CODE_ROOM_JOIN_FAIL_BY_FULL("房间人数已满"),
 	
 	CODE_ROOM_JOIN_FAIL_BY_INEXIST("房间不存在"),

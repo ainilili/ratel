@@ -17,7 +17,7 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			ClientTransferData clientTransferData = (ClientTransferData) msg;
 			
 			if(clientTransferData.getInfo() != null) {
-				SimplePrinter.println(clientTransferData.getInfo());
+				SimplePrinter.printNotice(clientTransferData.getInfo());
 			}
 			
 			ClientEventCode code = clientTransferData.getCode();

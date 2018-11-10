@@ -10,10 +10,8 @@ public class ClientEventListener_CODE_CLIENT_NICKNAME_SET extends ClientEventLis
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.println("You has been join Nico-Landlords, please set your nickname: ");
-		String nickname = SimpleWriter.write();
-		
-		
+		SimplePrinter.printNotice("Please set your nickname");
+		String nickname = SimpleWriter.write("nickname");
 		pushToServer(channel, ServerEventCode.CODE_CLIENT_NICKNAME_SET, nickname);
 	}
 

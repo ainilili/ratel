@@ -10,7 +10,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_INVALID extends ClientEven
 	@Override
 	public void call(Channel channel, String data) {
 		
-		SimplePrinter.println("Sell is invalid");
+		SimplePrinter.printNotice("Out pokers format is invalid");
 		get(ClientEventCode.CODE_GAME_POKER_PLAY).call(channel, data);
 	}
 

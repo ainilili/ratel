@@ -18,18 +18,18 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 		int turnClientId = (int) map.get("turnClientId");
 		
 		if(turnClientId == SimpleClient.id) {
-			SimplePrinter.println("It's your turn to rob the landlord[Y/N]：");
-			String line = SimpleWriter.write();
+			SimplePrinter.printNotice("It's your turn to rob the landlord[Y/N]");
+			String line = SimpleWriter.write("Y/N");
 			if(line.equalsIgnoreCase("Y")){
 				pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "TRUE");
 			}else if(line.equalsIgnoreCase("N")){
 				pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "FALSE");
 			}else{
-				SimplePrinter.println("Invalid options");
+				SimplePrinter.printNotice("Invalid options");
 				call(channel, data);
 			}
 		}else {
-			SimplePrinter.println("It's turn " + map.get("turnClientNickname") + " to confirm, please wait patiently !");
+			SimplePrinter.printNotice("It's turn " + map.get("turnClientNickname") + " to confirm, please wait patiently !");
 		}
 		
 	}

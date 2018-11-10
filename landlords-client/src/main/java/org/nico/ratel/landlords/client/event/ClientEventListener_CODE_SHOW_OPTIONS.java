@@ -11,15 +11,15 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.println("Options: ");
-		SimplePrinter.println("1. Create Room");
-		SimplePrinter.println("2. Room List");
-		SimplePrinter.println("3. Join Room");
-		SimplePrinter.println("Your choose options number：");
-		String line = SimpleWriter.write();
+		SimplePrinter.printNotice("Options: ");
+		SimplePrinter.printNotice("1. Create Room");
+		SimplePrinter.printNotice("2. Room List");
+		SimplePrinter.printNotice("3. Join Room");
+		SimplePrinter.printNotice("Please enter the number of options");
+		String line = SimpleWriter.write("options");
 		while(line == null || (! line.equals("1") && ! line.equals("2") && ! line.equals("3"))) {
-			SimplePrinter.println("Invalid options, please choose again：");
-			line = SimpleWriter.write();
+			SimplePrinter.printNotice("Invalid options, please choose again：");
+			line = SimpleWriter.write("options");
 		}
 		
 		int choose = Integer.valueOf(line);
@@ -29,11 +29,11 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		}else if(choose == 2){
 			pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
 		}else {
-			SimplePrinter.print("Your choose rooms number：");
-			line = SimpleWriter.write();
+			SimplePrinter.printNotice("Please enter the room id you want to join");
+			line = SimpleWriter.write("roomid");
 			int option = OptionsUtils.getOptions(line);
 			if(line == null || option < 1) {
-				SimplePrinter.println("Invalid options, please choose again：");
+				SimplePrinter.printNotice("Invalid options, please choose again：");
 				call(channel, data);
 			}else{
 				pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
