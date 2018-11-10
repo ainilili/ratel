@@ -4,36 +4,28 @@ import java.io.Serializable;
 
 import org.nico.ratel.landlords.enums.ClientEventCode;
 
-public class ClientTransferData<T> implements Serializable{
+public class ClientTransferData implements Serializable{
 
 	private static final long serialVersionUID = -5144173747228946445L;
 
 	private ClientEventCode code;
 	
-	private T data;
+	private String data;
 	
-	private String msg;
+	private String info;
 
 	public ClientTransferData() {
 	}
 
-	public ClientTransferData(ClientEventCode code, T data) {
+	public ClientTransferData(ClientEventCode code, String data) {
 		this.code = code;
 		this.data = data;
-	}
-	
-	public ClientTransferData(ClientEventCode code, T data, String msg) {
-		this.code = code;
-		this.data = data;
-		this.msg = msg;
-	}
-	
-	public final String getMsg() {
-		return msg;
 	}
 
-	public final void setMsg(String msg) {
-		this.msg = msg;
+	public ClientTransferData(ClientEventCode code, String data, String info) {
+		this.code = code;
+		this.data = data;
+		this.info = info;
 	}
 
 	public final ClientEventCode getCode() {
@@ -44,17 +36,20 @@ public class ClientTransferData<T> implements Serializable{
 		this.code = code;
 	}
 
-	public final T getData() {
+	public final String getData() {
 		return data;
 	}
 
-	public final void setData(T data) {
+	public final void setData(String data) {
 		this.data = data;
 	}
 
-	@Override
-	public String toString() {
-		return "ClientTransferData [code=" + code + ", data=" + data + ", msg=" + msg + "]";
+	public final String getInfo() {
+		return info;
+	}
+
+	public final void setInfo(String info) {
+		this.info = info;
 	}
 
 }

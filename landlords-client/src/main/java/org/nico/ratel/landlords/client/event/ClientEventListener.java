@@ -4,22 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.nico.ratel.landlords.channel.ChannelUtils;
-import org.nico.ratel.landlords.client.ClientContains;
-import org.nico.ratel.landlords.entity.ClientTransferData;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
-public abstract class ClientEventListener<T> {
+public abstract class ClientEventListener {
 
-	public abstract void call(Channel channel, ClientTransferData<T> clientTransferData);
+	public abstract void call(Channel channel, String data);
 
-	public final static Map<ClientEventCode, ClientEventListener<?>> LISTENER_MAP = new HashMap<>();
+	public final static Map<ClientEventCode, ClientEventListener> LISTENER_MAP = new HashMap<>();
 	
 	private final static String LISTENER_PREFIX = "org.nico.ratel.landlords.client.event.ClientEventListener_";
 	
-	public static ClientEventListener<?> get(ClientEventCode code){
+	public static ClientEventListener get(ClientEventCode code){
 		ClientEventListener listener = null;
 		try {
 			if(ClientEventListener.LISTENER_MAP.containsKey(code)){
@@ -37,11 +36,11 @@ public abstract class ClientEventListener<T> {
 		return listener;
 	}
 	
-	protected void pushToServer(Channel channel, ServerEventCode code, Object datas){
-		int clientId = -1;
-		if(ClientContains.clientSide != null){
-			clientId = ClientContains.clientSide.getId();
-		}
-		ChannelUtils.pushToServer(channel, clientId, code, datas);
+	protected ChannelFuture pushToServer(Channel channel, ServerEventCode code, String datas){
+		return ChannelUtils.pushToServer(channel, code, datas);
+	}
+	
+	protected ChannelFuture pushToServer(Channel channel, ServerEventCode code){
+		return pushToServer(channel, code, null);
 	}
 }

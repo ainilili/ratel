@@ -12,6 +12,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class SimpleClient {
 
+	public static int id = -1;
+	
 	public static void main(String[] args) throws InterruptedException, IOException {
 
 		EventLoopGroup group = new NioEventLoopGroup();

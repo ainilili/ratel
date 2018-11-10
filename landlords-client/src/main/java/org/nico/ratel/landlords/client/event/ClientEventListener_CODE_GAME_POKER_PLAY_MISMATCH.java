@@ -8,14 +8,15 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_GAME_OVER extends ClientEventListener{
+public class ClientEventListener_CODE_GAME_POKER_PLAY_MISMATCH extends ClientEventListener{
 
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		SimplePrinter.printNotice(map.get("winnerNickname") + " win");
-		SimplePrinter.printNotice("Game over");
-		pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT);
+		
+		SimplePrinter.printNotice("Your pokers type is " + map.get("playType") + " and pre pokers type is " + map.get("preType") + ", mismatch !!");
+		
+		pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT);
 	}
 
 }

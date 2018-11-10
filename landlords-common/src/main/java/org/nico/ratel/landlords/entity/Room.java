@@ -1,19 +1,17 @@
 package org.nico.ratel.landlords.entity;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.nico.ratel.landlords.enums.RoomStatus;
-import org.nico.ratel.landlords.enums.SellType;
 
-public class Room implements Serializable{
-
-	private static final long serialVersionUID = -9182226630057841379L;
+public class Room{
 
 	private int id;
+	
+	private String roomOwner;
 	
 	private RoomStatus status;
 	
@@ -28,6 +26,11 @@ public class Room implements Serializable{
 	private PokerSell lastPokerShell;
 	
 	private int lastSellClient = -1;
+	
+	private int currentSellClient = -1;
+
+	public Room() {
+	}
 
 	public Room(int id) {
 		this.id = id;
@@ -42,6 +45,14 @@ public class Room implements Serializable{
 
 	public final void setLastPokerShell(PokerSell lastPokerShell) {
 		this.lastPokerShell = lastPokerShell;
+	}
+
+	public final int getCurrentSellClient() {
+		return currentSellClient;
+	}
+
+	public final void setCurrentSellClient(int currentSellClient) {
+		this.currentSellClient = currentSellClient;
 	}
 
 	public int getLastSellClient() {
@@ -76,6 +87,14 @@ public class Room implements Serializable{
 		this.landlordPokers = landlordPokers;
 	}
 
+	public final String getRoomOwner() {
+		return roomOwner;
+	}
+
+	public final void setRoomOwner(String roomOwner) {
+		this.roomOwner = roomOwner;
+	}
+
 	public final int getId() {
 		return id;
 	}
@@ -98,11 +117,6 @@ public class Room implements Serializable{
 
 	public final void setClientSideMap(Map<Integer, ClientSide> clientSideMap) {
 		this.clientSideMap = clientSideMap;
-	}
-
-	@Override
-	public String toString() {
-		return id + "|" + status.getMsg() + "|" + clientSideMap.size() + " online";
 	}
 
 }

@@ -6,26 +6,28 @@ import java.util.Map;
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.entity.Poker;
+import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_SHOW_POKERS extends ClientEventListener{
+public class ClientEventListener_CODE_GAME_STARTING extends ClientEventListener{
 
 	@Override
 	public void call(Channel channel, String data) {
 		
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice(map.get("clientNickname") + " out of the poker");
+		SimplePrinter.printNotice("Game starting !!");
 		
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
-		SimplePrinter.printPokers(pokers);
 		
-		if(map.containsKey("sellClinetNickname")) {
-			SimplePrinter.printNotice("Next out player is " + map.get("sellClinetNickname") + ", please wait for him to out his poker");
-		}
+		SimplePrinter.printNotice("");
+		SimplePrinter.printNotice("Your pokers is");
+		SimplePrinter.printPokers(pokers);
+	
+		get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(channel, data);
 	}
 
 }

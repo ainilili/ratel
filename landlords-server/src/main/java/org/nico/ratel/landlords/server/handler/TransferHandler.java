@@ -18,10 +18,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class TransferHandler extends ChannelInboundHandlerAdapter{
 
-	private final static String LISTENER_PREFIX = "org.nico.ratel.landlords.server.event.ServerEventListener_";
-	
-	
-	
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
 		Channel ch = ctx.channel();
@@ -29,8 +25,10 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 		ClientSide clientSide = new ClientSide(((InetSocketAddress)ch.remoteAddress()).getPort(), ClientStatus.TO_CHOOSE, ch);
 		clientSide.setNickname(String.valueOf(clientSide.getId()));
 		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
-		SimplePrinter.println("A client connects to the server：" + clientSide.getId());
-		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CONNECT, clientSide);
+		SimplePrinter.printNotice("A client connects to the server：" + clientSide.getId());
+		
+		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_CONNECT, String.valueOf(clientSide.getId()));
+		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_NICKNAME_SET, null);
 	}
 
 	@Override
@@ -42,7 +40,9 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			ServerEventCode code = serverTransferData.getCode();
 			
 			if(code != null) {
-				ServerEventListener.get(code).call(ctx.channel(), serverTransferData);
+				ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(((InetSocketAddress)ctx.channel().remoteAddress()).getPort());
+				
+				ServerEventListener.get(code).call(client, serverTransferData.getData());
 			}
 		}
 		
@@ -53,8 +53,8 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 		if(cause instanceof java.io.IOException) {
 			ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(((InetSocketAddress)ctx.channel().remoteAddress()).getPort());
 			if(client != null) {
-				SimplePrinter.println(client.getNickname() + " exit");
-				ServerEventListener.get(ServerEventCode.CODE_PLAYER_EXIT).call(ctx.channel(), new ServerTransferData<>(client.getId(), client.getRoomId(), ServerEventCode.CODE_PLAYER_EXIT, null));
+				SimplePrinter.printNotice(client.getNickname() + " exit");
+				ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(client, null);
 			}
 		}
 	}

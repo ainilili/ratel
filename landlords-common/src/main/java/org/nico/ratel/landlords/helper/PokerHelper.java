@@ -1,4 +1,4 @@
-package org.nico.ratel.landlords.server.event.helper;
+package org.nico.ratel.landlords.helper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -254,14 +254,14 @@ public class PokerHelper {
 		return pokersList;
 	}
 
-	public static String unfoldPoker(List<Poker> pokers, boolean serialFlag) {
+	public static String printPoker(List<Poker> pokers) {
 		sortPoker(pokers);
 		StringBuilder builder = new StringBuilder();
 		if(pokers != null && pokers.size() > 0) {
 
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
-					builder.append("Poker: ┌──┐");
+					builder.append("┌──┐");
 				}else if(index == pokers.size() - 1) {
 					builder.append("──┐");
 				}else {
@@ -271,7 +271,7 @@ public class PokerHelper {
 			builder.append(System.lineSeparator());
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
-					builder.append("       │");
+					builder.append("│");
 				}
 				String name = pokers.get(index).getLevel().getName();
 				builder.append(name + (name.length() == 1 ? " " : "" ) +  "|");
@@ -279,66 +279,21 @@ public class PokerHelper {
 			builder.append(System.lineSeparator());
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
-					builder.append("       │");
+					builder.append("│");
 				}
 				builder.append(pokers.get(index).getType().getName() + " |");
 			}
 			builder.append(System.lineSeparator());
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
-					builder.append("       └──┘");
+					builder.append("└──┘");
 				}else if(index == pokers.size() - 1) {
 					builder.append("──┘");
 				}else {
 					builder.append("──┘");
 				}
 			}
-			if(serialFlag){
-				builder.append(System.lineSeparator());
-				for(int index = 0; index < pokers.size(); index ++) {
-					if(index == 0) {
-						builder.append("Index: │");
-					}
-					builder.append(pokers.get(index).getLevel().getAlias()[0] +  " │");
-				}
-			}
 		}
 		return builder.toString();
-	}
-
-	public static void main(String[] args) {
-		List<Poker> pokers = new ArrayList<>();
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.HEART));
-		
-//		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_10, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_BIG_KING, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_SMALL_KING, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_K, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_A, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_K, PokerType.HEART));
-//		pokers.add(new Poker(PokerLevel.LEVEL_A, PokerType.HEART));
-		
-		System.out.println(checkPokerType(pokers));
 	}
 }
