@@ -5,7 +5,7 @@
 	<groupId>com.smallnico.ratel</groupId>
 	<artifactId>landlords</artifactId>
 	<version>1.0.0</version>
-	<name>Ratel</name>
+	<name>ratel</name>
 	<url>https://github.com/ainilili/ratel</url>
 	<packaging>pom</packaging>
 	<description>Ratel Project</description>

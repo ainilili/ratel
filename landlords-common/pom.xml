@@ -4,7 +4,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>landlords-common</artifactId>
-	<name>Landlords-common</name>
+	<name>landlords-common</name>
 	<description>This is a console version of the fight landlord game</description>
 
 	<parent>
