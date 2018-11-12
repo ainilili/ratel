@@ -31,25 +31,31 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 				
 				List<Poker> currentPokers = PokerHelper.getPoker(indexes, clientSide.getPokers());
 				PokerSell currentPokerShell = PokerHelper.checkPokerType(currentPokers);
-				if(room.getLastSellClient() != clientSide.getId() && room.getLastPokerShell() != null){
-					PokerSell lastPokerShell = room.getLastPokerShell();
-					
-					if(lastPokerShell.getSellType() != currentPokerShell.getSellType() && currentPokerShell.getSellType() != SellType.BOMB && currentPokerShell.getSellType() != SellType.KING_BOMB) {
-						String result = MapHelper.newInstance()
-											.put("playType", currentPokerShell.getSellType())
-											.put("preType", lastPokerShell.getSellType())
-											.json();
-						sellFlag = false;
-						ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_MISMATCH, result);
-					}else if(lastPokerShell.getScore() >= currentPokerShell.getScore()) {
-						String result = MapHelper.newInstance()
-								.put("playScore", currentPokerShell.getScore())
-								.put("preScore", lastPokerShell.getScore())
-								.json();
-						sellFlag = false;
-						ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_LESS, result);
+				if(currentPokerShell.getSellType() != SellType.ILLEGAL) {
+					if(room.getLastSellClient() != clientSide.getId() && room.getLastPokerShell() != null){
+						PokerSell lastPokerShell = room.getLastPokerShell();
+						
+						if(lastPokerShell.getSellType() != currentPokerShell.getSellType() && currentPokerShell.getSellType() != SellType.BOMB && currentPokerShell.getSellType() != SellType.KING_BOMB) {
+							String result = MapHelper.newInstance()
+												.put("playType", currentPokerShell.getSellType())
+												.put("preType", lastPokerShell.getSellType())
+												.json();
+							sellFlag = false;
+							ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_MISMATCH, result);
+						}else if(lastPokerShell.getScore() >= currentPokerShell.getScore()) {
+							String result = MapHelper.newInstance()
+									.put("playScore", currentPokerShell.getScore())
+									.put("preScore", lastPokerShell.getScore())
+									.json();
+							sellFlag = false;
+							ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_LESS, result);
+						}
 					}
+				}else {
+					sellFlag = false;
+					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_INVALID, null);
 				}
+				
 				if(sellFlag) {
 					ClientSide next = clientSide.getNext();
 					

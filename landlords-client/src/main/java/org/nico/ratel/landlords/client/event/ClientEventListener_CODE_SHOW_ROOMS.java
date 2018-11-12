@@ -24,12 +24,12 @@ public class ClientEventListener_CODE_SHOW_ROOMS extends ClientEventListener{
 			for(Map<String, Object> room: roomList) {
 				SimplePrinter.printNotice("#\t" + room.get("roomId") + "\t|\t" + room.get("roomOwner") + "\t|\t" + room.get("roomClientCount") + "\t#");
 			}
+			SimplePrinter.printNotice("");
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}else {
 			SimplePrinter.printNotice("No available room, please create a room ！");
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}
-		SimplePrinter.printNotice("");
 	}
 
 
