@@ -178,7 +178,7 @@ public class PokerHelper {
 				score = threeEndIndex;
 				if(singleCount != 0 && singleCount == threeCount && doubleCount == 0 && fourCount == 0) {
 					if(threeCount == 1) {
-						return new PokerSell(score, SellType.THREE_ZONES_A, pokers);
+						return new PokerSell(score, SellType.THREE_ZONES_SINGLE, pokers);
 					}else {
 						if(threeEndIndex - threeStartIndex + 1 == threeCount && threeEndIndex < PokerLevel.LEVEL_2.getLevel()) {
 							return new PokerSell(score, SellType.THREE_STRAIGHT_WITH_SINGLE, pokers);
@@ -186,7 +186,7 @@ public class PokerHelper {
 					}
 				}else if(doubleCount != 0 && doubleCount == threeCount && singleCount == 0 && fourCount == 0) {
 					if(threeCount == 1) {
-						return new PokerSell(score, SellType.THREE_ZONES_TWO, pokers);
+						return new PokerSell(score, SellType.THREE_ZONES_DOUBLE, pokers);
 					}else {
 						if(threeEndIndex - threeStartIndex + 1 == threeCount && threeEndIndex < PokerLevel.LEVEL_2.getLevel()) {
 							return new PokerSell(score, SellType.FOUR_STRAIGHT_WITH_DOUBLE, pokers);
@@ -197,17 +197,17 @@ public class PokerHelper {
 			
 			if(fourCount != 0) {
 				score = fourEndIndex;
-				if(singleCount != 0 && singleCount == fourCount && doubleCount == 0 && threeCount == 0) {
+				if(singleCount != 0 && singleCount == fourCount * 2 && doubleCount == 0 && threeCount == 0) {
 					if(fourCount == 1) {
-						return new PokerSell(score, SellType.FOUR_ZONES_A, pokers);
+						return new PokerSell(score, SellType.FOUR_ZONES_SINGLE, pokers);
 					}else {
 						if(fourEndIndex - fourStartIndex + 1 == fourCount && fourEndIndex < PokerLevel.LEVEL_2.getLevel()) {
 							return new PokerSell(score, SellType.FOUR_STRAIGHT_WITH_SINGLE, pokers);
 						}
 					}
-				}else if(doubleCount != 0 && doubleCount == fourCount && singleCount == 0 && threeCount == 0) {
+				}else if(doubleCount != 0 && doubleCount == fourCount * 2 && singleCount == 0 && threeCount == 0) {
 					if(fourCount == 1) {
-						return new PokerSell(score, SellType.FOUR_ZONES_TWO, pokers);
+						return new PokerSell(score, SellType.FOUR_ZONES_DOUBLE, pokers);
 					}else {
 						if(fourEndIndex - fourStartIndex + 1 == fourCount && fourEndIndex < PokerLevel.LEVEL_2.getLevel()) {
 							return new PokerSell(score, SellType.FOUR_STRAIGHT_WITH_DOUBLE, pokers);
@@ -296,4 +296,5 @@ public class PokerHelper {
 		}
 		return builder.toString();
 	}
+	
 }
