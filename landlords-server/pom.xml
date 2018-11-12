@@ -1,57 +1,59 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>landlords-server</artifactId>
-  <name>Landlords</name>
-  <description>This is a console version of the fight landlord game</description>
-  
-  <parent>
-        <groupId>com.smallnico.ratel</groupId>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>landlords-server</artifactId>
+	<name>Landlords</name>
+	<description>This is a console version of the fight landlord game</description>
+
+	<parent>
+		<groupId>com.smallnico.ratel</groupId>
 		<artifactId>landlords</artifactId>
 		<version>1.0.0</version>
-    </parent>
-    
-    <properties>
-    	<start-class>org.nico.ratel.landlords.server.SimpleServer</start-class>
-    </properties>
-    
-    <dependencies>
-	    <dependency>
-	    	<groupId>com.smallnico.ratel</groupId>
+	</parent>
+
+	<properties>
+		<start-class>org.nico.ratel.landlords.server.SimpleServer</start-class>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.smallnico.ratel</groupId>
 			<artifactId>landlords-common</artifactId>
 			<version>1.0.0</version>
-	    </dependency>
-    </dependencies>
-    
-    <build>
-    <plugins>
-         <plugin>
-             <groupId>org.springframework.boot</groupId>
-             <artifactId>spring-boot-maven-plugin</artifactId>
-             <configuration>
-                 <mainClass>${start-class}</mainClass>
-             </configuration>
-             <executions>  
-			    <execution>  
-			      <goals>  
-			        <goal>repackage</goal>  
-			      </goals>  
-			    </execution>  
-			  </executions>  
-         </plugin>
+		</dependency>
+	</dependencies>
 
-         <plugin>
-             <groupId>org.apache.maven.plugins</groupId>
-             <artifactId>maven-compiler-plugin</artifactId>
-             <configuration>
-                 <source>1.8</source>
-                 <target>1.8</target>
-                 <compilerArgs>
-                     <arg>-parameters</arg>
-                 </compilerArgs>
-                 <fork>true</fork>
-             </configuration>
-         </plugin>
-        
-     </plugins>
-     </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>${start-class}</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>

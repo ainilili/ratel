@@ -1,7 +1,5 @@
 package org.nico.ratel.landlords.enums;
 
-import java.io.Serializable;
-
 /**
  * Poker type Spade、 Heart、 Diamond、 Club
  * 

@@ -1,7 +1,6 @@
 package org.nico.ratel.landlords.server.event;
 
 import java.util.List;
-import java.util.Map;
 
 import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;

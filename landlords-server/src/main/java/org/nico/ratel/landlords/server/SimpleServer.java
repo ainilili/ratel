@@ -14,19 +14,26 @@ public class SimpleServer {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-		EventLoopGroup group = new NioEventLoopGroup();
+		if(args != null && args.length > 1) {
+			if(args[0].equalsIgnoreCase("-p") || args[0].equalsIgnoreCase("-port")) {
+				ServerContains.port = Integer.valueOf(args[1]);
+			}
+		}
 		
+		EventLoopGroup parentGroup = new NioEventLoopGroup();
+		EventLoopGroup childGroup = new NioEventLoopGroup();
 		try {
-			ServerBootstrap b = new ServerBootstrap()
-			.group(group)
+			ServerBootstrap bootstrap = new ServerBootstrap()
+			.group(parentGroup, childGroup)
 			.channel(NioServerSocketChannel.class)
-			.localAddress(new InetSocketAddress(ServerContains.PORT))
+			.localAddress(new InetSocketAddress(ServerContains.port))
 			.childHandler(new DefaultChannelInitializer());
 			
-			ChannelFuture f = b.bind().sync();
+			ChannelFuture f = bootstrap .bind().sync();
 			f.channel().closeFuture().sync();
 		} finally {
-			group.shutdownGracefully().sync();
+			parentGroup.shutdownGracefully();
+			childGroup.shutdownGracefully();
 		}
 		
 		

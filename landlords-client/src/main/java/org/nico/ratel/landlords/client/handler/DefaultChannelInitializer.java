@@ -13,6 +13,7 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
 
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
+		
 		ch.pipeline()
         .addLast(new ProtobufVarint32FrameDecoder())
         .addLast(new ProtobufDecoder(ClientTransferData.ClientTransferDataProtoc.getDefaultInstance()))
@@ -20,6 +21,7 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
         .addLast(new ProtobufEncoder())
         .addLast(new SecondProtobufCodec())
         .addLast(new TransferHandler());
+		
 	}
 
 }
