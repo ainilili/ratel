@@ -84,4 +84,5 @@ sx
 ## End
  - If you have good code, you are welcome to submit it to us and we will incorporate good code
  - If you find some bugs in use, please mention issue to us
+ - Ratel designs cross-platform and welcomes client rewrite in other languages
  - Contact us by email ``ainililia@163.com``
