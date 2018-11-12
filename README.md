@@ -17,6 +17,11 @@ java -jar landlords-server/target/landlords-server-#{version}.jar -p 1024
 java -jar landlords-client/target/landlords-client-#{version}.jar -p 1024 -h 127.0.0.1
 ```
 Start a fun game !
+
+## Looking For Players
+
+Join the qq group ``948365095``
+
 ## How To Play?
 You can create a server by yourself, or you can connect to public server with ip ``39.105.65.8`` by your client !
 
