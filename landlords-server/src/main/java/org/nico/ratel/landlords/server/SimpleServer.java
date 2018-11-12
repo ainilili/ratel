@@ -2,6 +2,7 @@ package org.nico.ratel.landlords.server;
 
 import java.net.InetSocketAddress;
 
+import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.handler.DefaultChannelInitializer;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -30,6 +31,8 @@ public class SimpleServer {
 			.childHandler(new DefaultChannelInitializer());
 			
 			ChannelFuture f = bootstrap .bind().sync();
+			
+			SimplePrinter.printNotice("The server was successfully started on port " + ServerContains.port);
 			f.channel().closeFuture().sync();
 		} finally {
 			parentGroup.shutdownGracefully();
