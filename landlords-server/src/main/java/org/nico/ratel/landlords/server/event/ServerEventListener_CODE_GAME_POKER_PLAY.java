@@ -34,10 +34,12 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 					if(room.getLastSellClient() != clientSide.getId() && room.getLastPokerShell() != null){
 						PokerSell lastPokerShell = room.getLastPokerShell();
 						
-						if(lastPokerShell.getSellType() != currentPokerShell.getSellType() && currentPokerShell.getSellType() != SellType.BOMB && currentPokerShell.getSellType() != SellType.KING_BOMB) {
+						if((lastPokerShell.getSellType() != currentPokerShell.getSellType() || lastPokerShell.getSellPokers().size() != currentPokerShell.getSellPokers().size()) && currentPokerShell.getSellType() != SellType.BOMB && currentPokerShell.getSellType() != SellType.KING_BOMB) {
 							String result = MapHelper.newInstance()
 												.put("playType", currentPokerShell.getSellType())
+												.put("playCount", currentPokerShell.getSellPokers().size())
 												.put("preType", lastPokerShell.getSellType())
+												.put("preCount", lastPokerShell.getSellPokers().size())
 												.json();
 							sellFlag = false;
 							ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_MISMATCH, result);

@@ -25,7 +25,7 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 		ClientSide clientSide = new ClientSide(((InetSocketAddress)ch.remoteAddress()).getPort(), ClientStatus.TO_CHOOSE, ch);
 		clientSide.setNickname(String.valueOf(clientSide.getId()));
 		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
-		SimplePrinter.printNotice("Has client connect to the server：" + clientSide.getId());
+		SimplePrinter.serverLog("Has client connect to the server：" + clientSide.getId());
 		
 		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_CONNECT, String.valueOf(clientSide.getId()));
 		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_NICKNAME_SET, null);
@@ -42,6 +42,7 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			if(code != null) {
 				ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(((InetSocketAddress)ctx.channel().remoteAddress()).getPort());
 				
+				SimplePrinter.serverLog(client.getId() + " | " + client.getNickname() + " do:" + code.getMsg());
 				ServerEventListener.get(code).call(client, serverTransferData.getData());
 			}
 		}
@@ -54,11 +55,11 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			int clientId = ((InetSocketAddress)ctx.channel().remoteAddress()).getPort();
 			ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(clientId);
 			if(client != null) {
-				SimplePrinter.printNotice("Has client exit to the server：" + clientId + " | " + client.getNickname());
+				SimplePrinter.serverLog("Has client exit to the server：" + clientId + " | " + client.getNickname());
 				ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(client, null);
 			}
 		}else {
-			SimplePrinter.printNotice("ERROR：" + cause.getMessage());
+			SimplePrinter.serverLog("ERROR：" + cause.getMessage());
 		}
 	}
 	

@@ -32,7 +32,7 @@ public class SimpleServer {
 			
 			ChannelFuture f = bootstrap .bind().sync();
 			
-			SimplePrinter.printNotice("The server was successfully started on port " + ServerContains.port);
+			SimplePrinter.serverLog("The server was successfully started on port " + ServerContains.port);
 			f.channel().closeFuture().sync();
 		} finally {
 			parentGroup.shutdownGracefully();

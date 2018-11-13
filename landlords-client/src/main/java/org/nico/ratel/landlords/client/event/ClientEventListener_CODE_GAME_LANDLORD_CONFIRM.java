@@ -19,7 +19,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_CONFIRM extends ClientEventL
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		String landlordNickname = (String) map.get("landlordNickname");
+		String landlordNickname = String.valueOf(map.get("landlordNickname"));
 		
 		SimplePrinter.printNotice(landlordNickname + " grabbed the landlord and got an extra three poker shots");
 		

@@ -14,7 +14,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_MISMATCH extends ClientEve
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice("Your pokers type is " + map.get("playType") + " and pre pokers type is " + map.get("preType") + ", mismatch !!");
+		SimplePrinter.printNotice("Your pokers type is " + map.get("playType") + " (" + map.get("playCount") + ") but pre pokers type is " + map.get("preType") + " (" + map.get("preCount") + "), mismatch !!");
 		
 		pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT);
 	}

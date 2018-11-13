@@ -18,7 +18,7 @@ public class PokerSell {
 		this.sellType = sellType;
 		this.sellPokers = sellPokers;
 	}
-
+	
 	public final int getScore() {
 		return score;
 	}
