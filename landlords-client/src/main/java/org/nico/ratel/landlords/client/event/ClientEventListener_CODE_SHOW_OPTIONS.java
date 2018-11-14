@@ -1,7 +1,6 @@
 package org.nico.ratel.landlords.client.event;
 
 import org.nico.ratel.landlords.enums.ClientEventCode;
-import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 import org.nico.ratel.landlords.utils.OptionsUtils;

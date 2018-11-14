@@ -14,9 +14,8 @@ import org.nico.ratel.landlords.enums.SellType;
 
 public class PokerHelper {
 
+	public static int pokerPrinterType = 0;
 	private static List<Poker> basePokers = new ArrayList<Poker>(54);
-	
-	public static boolean disguise = false;
 
 	private static Comparator<Poker> pokerComparator = new Comparator<Poker>() {
 		@Override
@@ -258,54 +257,116 @@ public class PokerHelper {
 
 	public static String printPoker(List<Poker> pokers) {
 		sortPoker(pokers);
+		switch(pokerPrinterType){
+			case 0:
+			return buildHandStringSharp(pokers);
+			case 1:
+			return buildHandStringRounded(pokers);
+			case 2:
+			return textOnly(pokers);
+			case 3:
+			return textOnlyNoType(pokers);
+			default:
+			return buildHandStringSharp(pokers);
+
+		}
+		
+	}
+	private static String buildHandStringSharp(List<Poker> pokers){
 		StringBuilder builder = new StringBuilder();
 		if(pokers != null && pokers.size() > 0) {
-			if(disguise) {
-				for(int index = 0; index < pokers.size(); index ++) {
-					if(index == 0) {
-						builder.append(" ");
-					}
-					String name = pokers.get(index).getLevel().getName();
-					builder.append(name + (name.length() == 1 ? " " : "" ) +  " ");
+
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("┌──┐");
+				}else {
+					builder.append("──┐");
 				}
-			}else {
-				for(int index = 0; index < pokers.size(); index ++) {
-					if(index == 0) {
-						builder.append("┌──┐");
-					}else if(index == pokers.size() - 1) {
-						builder.append("──┐");
-					}else {
-						builder.append("──┐");
-					}
+			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("│");
 				}
-				builder.append(System.lineSeparator());
-				for(int index = 0; index < pokers.size(); index ++) {
-					if(index == 0) {
-						builder.append("│");
-					}
-					String name = pokers.get(index).getLevel().getName();
-					builder.append(name + (name.length() == 1 ? " " : "" ) +  "|");
+				String name = pokers.get(index).getLevel().getName();
+				builder.append(name + (name.length() == 1 ? " " : "" ) +  "|");
+			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("│");
 				}
-				builder.append(System.lineSeparator());
-				for(int index = 0; index < pokers.size(); index ++) {
-					if(index == 0) {
-						builder.append("│");
-					}
-					builder.append(pokers.get(index).getType().getName() + " |");
-				}
-				builder.append(System.lineSeparator());
-				for(int index = 0; index < pokers.size(); index ++) {
-					if(index == 0) {
-						builder.append("└──┘");
-					}else if(index == pokers.size() - 1) {
-						builder.append("──┘");
-					}else {
-						builder.append("──┘");
-					}
+				builder.append(pokers.get(index).getType().getName() + " |");
+			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("└──┘");
+				} else {
+					builder.append("──┘");
 				}
 			}
 		}
 		return builder.toString();
 	}
-	
+	private static String buildHandStringRounded(List<Poker> pokers){
+		StringBuilder builder = new StringBuilder();
+		if(pokers != null && pokers.size() > 0) {
+
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("┌──╮");
+				}else {
+					builder.append("──╮");
+				}
+			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("│");
+				}
+				String name = pokers.get(index).getLevel().getName();
+				builder.append(name + (name.length() == 1 ? " " : "" ) +  "|");
+			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("│");
+				}
+				builder.append(pokers.get(index).getType().getName() + " |");
+			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				if(index == 0) {
+					builder.append("└──╯");
+				} else {
+					builder.append("──╯");
+				}
+			}
+		}
+		return builder.toString();
+	}
+
+	private static String textOnly(List<Poker> pokers){
+		StringBuilder builder = new StringBuilder();
+		if(pokers != null && pokers.size() > 0) {
+			for(int index = 0; index < pokers.size(); index ++) {
+				String name = pokers.get(index).getLevel().getName();
+				String type = pokers.get(index).getType().getName();
+
+				builder.append(name + type);
+			}
+		}
+		return builder.toString();
+	}
+	private static String textOnlyNoType(List<Poker> pokers){
+		StringBuilder builder = new StringBuilder();
+		if(pokers != null && pokers.size() > 0) {
+			for(int index = 0; index < pokers.size(); index ++) {
+				String name = pokers.get(index).getLevel().getName();
+				builder.append(name);
+			}
+		}
+		return builder.toString();
+	}
 }

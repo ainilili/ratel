@@ -12,6 +12,7 @@ import org.nico.ratel.landlords.helper.PokerHelper;
 public class SimplePrinter {
 
 	private final static SimpleDateFormat FORMAT = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	public static int pokerDisplayFormat = 0;
 	
 	public static void printPokers(List<Poker> pokers) {
 		System.out.println(PokerHelper.printPoker(pokers));
