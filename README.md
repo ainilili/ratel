@@ -45,7 +45,7 @@ If you want to choose **Link**
 ```
 You can enter ``7890j`` or ``789tj``
 
-If you want to choose **The king of Fried**
+If you want to choose **The Joker Bomb**
 ```
 ┌──┐──┐
 │S |X |

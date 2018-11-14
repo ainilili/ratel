@@ -18,6 +18,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		SimplePrinter.printNotice("3. Setting");
 		SimplePrinter.printNotice("Please enter the number of options");
 		String line = SimpleWriter.write("options");
+		
 		while(line == null || OptionsUtils.getOptions(line) == -1) {
 			SimplePrinter.printNotice("Invalid option, please choose again：");
 			line = SimpleWriter.write("option");

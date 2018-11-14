@@ -3,6 +3,8 @@ package org.nico.ratel.landlords.print;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.helper.PokerHelper;
@@ -19,6 +21,15 @@ public class SimplePrinter {
 		System.out.println(msg);
 	}
 	
+	public static void printNotice(String msgKey, String locale) {
+		//TODO : read locale
+		Map<String,Map<String, String>> map = new HashMap<String,Map<String, String>>();
+		map.put("english", new HashMap<String, String>());
+		map.get("eng").put("caterpillar", "caterpillar's message!!");
+
+		System.out.println(map.get(locale).get(msgKey));
+	}
+
 	public static void serverLog(String msg) {
 		System.out.println(FORMAT.format(new Date()) + "-> " + msg);
 	}

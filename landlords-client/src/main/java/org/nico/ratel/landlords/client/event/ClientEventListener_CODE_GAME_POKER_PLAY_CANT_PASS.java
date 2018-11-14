@@ -9,7 +9,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_CANT_PASS extends ClientEv
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.printNotice("The last time you play the card, you can't pass");
+		SimplePrinter.printNotice("You played the previous card, so you can't pass.");
 		pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT);
 	}
 
