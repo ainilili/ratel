@@ -15,6 +15,8 @@ import org.nico.ratel.landlords.enums.SellType;
 public class PokerHelper {
 
 	private static List<Poker> basePokers = new ArrayList<Poker>(54);
+	
+	public static boolean disguise = false;
 
 	private static Comparator<Poker> pokerComparator = new Comparator<Poker>() {
 		@Override
@@ -258,39 +260,48 @@ public class PokerHelper {
 		sortPoker(pokers);
 		StringBuilder builder = new StringBuilder();
 		if(pokers != null && pokers.size() > 0) {
-
-			for(int index = 0; index < pokers.size(); index ++) {
-				if(index == 0) {
-					builder.append("┌──┐");
-				}else if(index == pokers.size() - 1) {
-					builder.append("──┐");
-				}else {
-					builder.append("──┐");
+			if(disguise) {
+				for(int index = 0; index < pokers.size(); index ++) {
+					if(index == 0) {
+						builder.append(" ");
+					}
+					String name = pokers.get(index).getLevel().getName();
+					builder.append(name + (name.length() == 1 ? " " : "" ) +  " ");
 				}
-			}
-			builder.append(System.lineSeparator());
-			for(int index = 0; index < pokers.size(); index ++) {
-				if(index == 0) {
-					builder.append("│");
+			}else {
+				for(int index = 0; index < pokers.size(); index ++) {
+					if(index == 0) {
+						builder.append("┌──┐");
+					}else if(index == pokers.size() - 1) {
+						builder.append("──┐");
+					}else {
+						builder.append("──┐");
+					}
 				}
-				String name = pokers.get(index).getLevel().getName();
-				builder.append(name + (name.length() == 1 ? " " : "" ) +  "|");
-			}
-			builder.append(System.lineSeparator());
-			for(int index = 0; index < pokers.size(); index ++) {
-				if(index == 0) {
-					builder.append("│");
+				builder.append(System.lineSeparator());
+				for(int index = 0; index < pokers.size(); index ++) {
+					if(index == 0) {
+						builder.append("│");
+					}
+					String name = pokers.get(index).getLevel().getName();
+					builder.append(name + (name.length() == 1 ? " " : "" ) +  "|");
 				}
-				builder.append(pokers.get(index).getType().getName() + " |");
-			}
-			builder.append(System.lineSeparator());
-			for(int index = 0; index < pokers.size(); index ++) {
-				if(index == 0) {
-					builder.append("└──┘");
-				}else if(index == pokers.size() - 1) {
-					builder.append("──┘");
-				}else {
-					builder.append("──┘");
+				builder.append(System.lineSeparator());
+				for(int index = 0; index < pokers.size(); index ++) {
+					if(index == 0) {
+						builder.append("│");
+					}
+					builder.append(pokers.get(index).getType().getName() + " |");
+				}
+				builder.append(System.lineSeparator());
+				for(int index = 0; index < pokers.size(); index ++) {
+					if(index == 0) {
+						builder.append("└──┘");
+					}else if(index == pokers.size() - 1) {
+						builder.append("──┘");
+					}else {
+						builder.append("──┘");
+					}
 				}
 			}
 		}

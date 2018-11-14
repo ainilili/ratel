@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.client.event;
 
+import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
@@ -12,37 +13,27 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 	@Override
 	public void call(Channel channel, String data) {
 		SimplePrinter.printNotice("Options: ");
-		SimplePrinter.printNotice("1. Create Room");
-		SimplePrinter.printNotice("2. Room List");
-		SimplePrinter.printNotice("3. Join Room");
+		SimplePrinter.printNotice("1. PvP");
+		SimplePrinter.printNotice("2. PvE");
+		SimplePrinter.printNotice("3. Setting");
 		SimplePrinter.printNotice("Please enter the number of options");
 		String line = SimpleWriter.write("options");
-		while(line == null || (! line.equals("1") && ! line.equals("2") && ! line.equals("3"))) {
-			SimplePrinter.printNotice("Invalid options, please choose again：");
-			line = SimpleWriter.write("options");
+		while(line == null || OptionsUtils.getOptions(line) == -1) {
+			SimplePrinter.printNotice("Invalid option, please choose again：");
+			line = SimpleWriter.write("option");
 		}
 		
 		int choose = Integer.valueOf(line);
 		
 		if(choose == 1) {
-			pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE, null);
+			get(ClientEventCode.CODE_SHOW_OPTIONS_PVP).call(channel, data);
 		}else if(choose == 2){
-			pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
+			get(ClientEventCode.CODE_SHOW_OPTIONS_PVE).call(channel, data);
+		}else if(choose == 3){
+			get(ClientEventCode.CODE_SHOW_OPTIONS_SETTING).call(channel, data);
 		}else {
-			SimplePrinter.printNotice("Please enter the room id you want to join (enter [BACK] return options list)");
-			line = SimpleWriter.write("roomid");
-			
-			if(line.equalsIgnoreCase("BACK")) {
-				call(channel, data);
-			}else {
-				int option = OptionsUtils.getOptions(line);
-				if(line == null || option < 1) {
-					SimplePrinter.printNotice("Invalid options, please choose again：");
-					call(channel, data);
-				}else{
-					pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
-				}
-			}
+			SimplePrinter.printNotice("Invalid option, please choose again：");
+			call(channel, data);
 		}
 		
 	}

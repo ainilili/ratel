@@ -10,7 +10,13 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_CLIENT_CONNECT("客户端加入成功"),
 	
-	CODE_SHOW_OPTIONS("展示选项"),
+	CODE_SHOW_OPTIONS("全局选项列表"),
+	
+	CODE_SHOW_OPTIONS_SETTING("设置选项"),
+	
+	CODE_SHOW_OPTIONS_PVP("玩家对战选项"),
+	
+	CODE_SHOW_OPTIONS_PVE("人机对战选项"),
 	
 	CODE_SHOW_ROOMS("展示房间列表"),
 	

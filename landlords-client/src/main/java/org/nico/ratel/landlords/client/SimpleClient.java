@@ -3,6 +3,7 @@ package org.nico.ratel.landlords.client;
 import java.io.IOException;
 
 import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.helper.PokerHelper;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -14,7 +15,7 @@ public class SimpleClient {
 
 	public static int id = -1;
 	
-	public static String serverAddress = "39.105.65.8";
+	public static String serverAddress = "127.0.0.1"; //"39.105.65.8";
 	
 	public static int port = 1024;
 	

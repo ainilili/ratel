@@ -1,9 +1,9 @@
 package org.nico.ratel.landlords.enums;
 
-public enum ClientType{
+public enum ClientRole{
 
-	LANDLORD,
+	PLAYER,
 	
-	PEASANT
+	ROBOT
 	
 }
