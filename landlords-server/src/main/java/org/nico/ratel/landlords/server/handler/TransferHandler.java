@@ -63,6 +63,7 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			}
 		}else {
 			SimplePrinter.serverLog("ERROR：" + cause.getMessage());
+			cause.printStackTrace();
 		}
 	}
 	

@@ -12,7 +12,7 @@ public interface RobotEventListener {
 	
 	public final static Map<ClientEventCode, RobotEventListener> LISTENER_MAP = new HashMap<>();
 	
-	public void call(ClientSide player, ClientSide robot, String data);
+	public void call(ClientSide robot, String data);
 	
 	public static RobotEventListener get(ClientEventCode code) {
 		RobotEventListener listener = null;

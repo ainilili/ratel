@@ -8,7 +8,9 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_CLIENT_NICKNAME_SET("设置昵称"),
 	
-	CODE_ROOM_CREATE("创建房间"),
+	CODE_ROOM_CREATE("创建PVP房间"),
+	
+	CODE_ROOM_CREATE_PVE("创建PVE房间"),
 	
 	CODE_GET_ROOMS("获取房间列表"),
 
