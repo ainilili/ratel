@@ -18,7 +18,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		SimplePrinter.printNotice("Please enter the number of options");
 		String line = SimpleWriter.write("options");
 		while(line == null || (! line.equals("1") && ! line.equals("2") && ! line.equals("3"))) {
-			SimplePrinter.printNotice("Invalid options, please choose again：");
+			SimplePrinter.printNotice("Invalid options, please choose again: ");
 			line = SimpleWriter.write("options");
 		}
 		
@@ -37,7 +37,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 			}else {
 				int option = OptionsUtils.getOptions(line);
 				if(line == null || option < 1) {
-					SimplePrinter.printNotice("Invalid options, please choose again：");
+					SimplePrinter.printNotice("Invalid options, please choose again: ");
 					call(channel, data);
 				}else{
 					pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));

@@ -14,7 +14,7 @@ public class ClientEventListener_CODE_ROOM_JOIN_FAIL_BY_INEXIST extends ClientEv
 	public void call(Channel channel, String data) {
 		Map<String, Object> dataMap = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice("Join room fail, room " + dataMap.get("roomId") + " is inexist!");
+		SimplePrinter.printNotice("Join room failed. Room " + dataMap.get("roomId") + " inexists!");
 		ClientEventListener.get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 	}
 
