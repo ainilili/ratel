@@ -2,9 +2,9 @@ package org.nico.ratel.landlords.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.nico.noson.Noson;
@@ -23,9 +23,9 @@ public class SimpleClient {
 
 	public static int id = -1;
 	
-	public static String serverAddress = "39.105.65.8";
+	public static String serverAddress = "";
 	
-	public static int port = 1024;
+	public static int port = 0;
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
 		if(args != null && args.length > 0) {
@@ -39,18 +39,22 @@ public class SimpleClient {
 					}
 				}
 			}
-		}else{
+		}
+		
+		if(serverAddress.equals("") || port == 0){
 			StringBuffer buffer = new StringBuffer();
 			try {
-				InputStream is = new URL("https://raw.githubusercontent.com/abbychau/ratel/master/serverlist.json").openStream();
-				InputStreamReader isr = new InputStreamReader(is);
+				URL url = new URL("https://raw.githubusercontent.com/abbychau/ratel/master/serverlist.json");
+				URLConnection con = url.openConnection();
+				con.setUseCaches(false);
+				InputStreamReader isr = new InputStreamReader(con.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
 				String s = null;
 				while ( (s = in.readLine()) != null) {
 					buffer.append(s).append("\n");
 				}
 			} catch ( Exception e ) {
-				System.out.println( e.toString() );
+				System.out.println(e.toString());
 				buffer = null;
 			} 
 			List<String> serverAddressList = Noson.convert(buffer.toString(), new NoType<List<String>>() {});
@@ -63,6 +67,9 @@ public class SimpleClient {
 				SimplePrinter.printNotice("Invalid Option");
 			}
 			serverAddress = serverAddressList.get(serverPick-1);
+			String[] elements = serverAddress.split(":");
+			serverAddress = elements[0];
+			port = Integer.parseInt(elements[1]);
 		}
 		
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -71,13 +78,12 @@ public class SimpleClient {
 					.group(group)
 					.channel(NioSocketChannel.class)
 					.handler(new DefaultChannelInitializer());
-			SimplePrinter.printNotice("Connecting to " + serverAddress);
+			SimplePrinter.printNotice("Connecting to " + serverAddress + ":" + port);
 			Channel channel = bootstrap.connect(serverAddress, port).sync().channel();
 			channel.closeFuture().sync();
 		} finally {
 			group.shutdownGracefully().sync();
 		}
-
 
 	}
 	

@@ -261,11 +261,9 @@ public class PokerHelper {
 
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
-					builder.append("┌──┐");
-				}else if(index == pokers.size() - 1) {
-					builder.append("──┐");
+					builder.append("┌──╮");
 				}else {
-					builder.append("──┐");
+					builder.append("──╮");
 				}
 			}
 			builder.append(System.lineSeparator());
@@ -286,11 +284,9 @@ public class PokerHelper {
 			builder.append(System.lineSeparator());
 			for(int index = 0; index < pokers.size(); index ++) {
 				if(index == 0) {
-					builder.append("└──┘");
-				}else if(index == pokers.size() - 1) {
-					builder.append("──┘");
-				}else {
-					builder.append("──┘");
+					builder.append("└──╯");
+				} else {
+					builder.append("──╯");
 				}
 			}
 		}
