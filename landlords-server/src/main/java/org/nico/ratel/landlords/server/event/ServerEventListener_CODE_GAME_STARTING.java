@@ -3,18 +3,17 @@ package org.nico.ratel.landlords.server.event;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.ClientType;
 import org.nico.ratel.landlords.enums.RoomStatus;
 import org.nico.ratel.landlords.enums.RoomType;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
-import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
@@ -42,11 +41,11 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 
 		// Push start game messages
 		room.setStatus(RoomStatus.STARTING);
-		
-		
+
+
 		for(ClientSide client: roomClientList) {
 			client.setType(ClientType.PEASANT);
-			
+
 			String result = MapHelper.newInstance()
 					.put("roomId", room.getId())
 					.put("roomOwner", room.getRoomOwner())
@@ -55,20 +54,16 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
 					.json();
-			
-			if(room.getType() == RoomType.PVP) {
+
+			if(client.getRole() == ClientRole.PLAYER) {
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
 			}else {
-				if(client.equals(clientSide)) {
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
-				}else {
-					RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(clientSide, client, result);
-				}
+				RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(client, result);
 			}
-			
+
 		}
-		
-		
+
+
 	}
 
 }

@@ -3,7 +3,6 @@ package org.nico.ratel.landlords.client;
 import java.io.IOException;
 
 import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
-import org.nico.ratel.landlords.helper.PokerHelper;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

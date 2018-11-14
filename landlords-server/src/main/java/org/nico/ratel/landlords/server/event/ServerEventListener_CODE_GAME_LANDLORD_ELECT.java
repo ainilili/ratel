@@ -8,11 +8,14 @@ import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.ClientType;
+import org.nico.ratel.landlords.enums.RoomType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.server.ServerContains;
+import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
 public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEventListener{
 
@@ -41,7 +44,12 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 						.put("landlordId", clientSide.getId())
 						.put("additionalPokers", room.getLandlordPokers())
 						.json();
-				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);
+				
+				if(client.getRole() == ClientRole.PLAYER) {
+					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);
+				}else {
+					RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(client, result);
+				}
 			}
 		}else{
 			if(clientSide.getNext().getId() == room.getLandlordId()){
@@ -58,7 +66,12 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 						.put("nextClientNickname", turnClientSide.getNickname())
 						.put("nextClientId", turnClientSide.getId())
 						.json();
-				ChannelUtils.pushToClient(turnClientSide.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, result);
+				
+				if(turnClientSide.getRole() == ClientRole.PLAYER) {
+					ChannelUtils.pushToClient(turnClientSide.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
+				}else {
+					RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(turnClientSide, result);
+				}
 			}
 		}
 	}

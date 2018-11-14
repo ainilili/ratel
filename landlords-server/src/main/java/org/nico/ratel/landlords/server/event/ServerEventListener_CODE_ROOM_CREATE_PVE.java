@@ -24,14 +24,22 @@ public class ServerEventListener_CODE_ROOM_CREATE_PVE implements ServerEventList
 		clientSide.setRoomId(room.getId());
 		ServerContains.ROOM_MAP.put(room.getId(), room);
 		
+		ClientSide preClient = clientSide;
 		//Add robots
 		for(int index = 1; index < 3; index ++) {
 			ClientSide robot = new ClientSide(- ServerContains.getClientId(), ClientStatus.PLAYING, null);
 			robot.setNickname("robot_" + index);
 			robot.setRole(ClientRole.ROBOT);
+			preClient.setNext(robot);
+			robot.setPre(preClient);
+			robot.setRoomId(room.getId());
 			room.getClientSideMap().put(robot.getId(), robot);
 			room.getClientSideList().add(robot);
+			
+			preClient = robot;
 		}
+		preClient.setNext(clientSide);
+		clientSide.setPre(preClient);
 		
 		ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
 	}

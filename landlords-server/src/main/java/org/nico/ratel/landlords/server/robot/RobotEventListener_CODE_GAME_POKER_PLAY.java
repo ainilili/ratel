@@ -7,7 +7,7 @@ import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.event.ServerEventListener;
 
-public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventListener{
+public class RobotEventListener_CODE_GAME_POKER_PLAY implements RobotEventListener{
 
 	@Override
 	public void call(ClientSide robot, String data) {
