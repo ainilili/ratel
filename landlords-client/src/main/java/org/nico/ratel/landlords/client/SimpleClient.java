@@ -10,6 +10,7 @@ import java.util.List;
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 
@@ -37,6 +38,14 @@ public class SimpleClient {
 					if(args[index].equalsIgnoreCase("-h") || args[index].equalsIgnoreCase("-host")) {
 						serverAddress = args[index + 1];
 					}
+					if(args[index].equalsIgnoreCase("-pt") || args[index].equalsIgnoreCase("-pt")) {
+						int selection =  Integer.parseInt(args[index + 1]);
+
+						if( selection > 0 && selection < 4 ){
+							PokerHelper.pokerPrinterType = selection;
+						}
+					}
+					
 				}
 			}
 		}
