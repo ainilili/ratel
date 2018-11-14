@@ -31,7 +31,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 				call(channel, data);
 			}
 		}else {
-			SimplePrinter.printNotice("It's " + map.get("nextClientNickname") + "'s' turn. Please wait patiently for his/her confirmation !");
+			SimplePrinter.printNotice("It's " + map.get("nextClientNickname") + "'s turn. Please wait patiently for his/her confirmation !");
 		}
 		
 	}
