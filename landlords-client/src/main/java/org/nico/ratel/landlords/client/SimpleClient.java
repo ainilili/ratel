@@ -1,8 +1,17 @@
 package org.nico.ratel.landlords.client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.List;
 
+import org.nico.noson.Noson;
+import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.print.SimplePrinter;
+import org.nico.ratel.landlords.print.SimpleWriter;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -30,6 +39,30 @@ public class SimpleClient {
 					}
 				}
 			}
+		}else{
+			StringBuffer buffer = new StringBuffer();
+			try {
+				InputStream is = new URL("https://raw.githubusercontent.com/abbychau/ratel/master/serverlist.json").openStream();
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader in = new BufferedReader(isr);
+				String s = null;
+				while ( (s = in.readLine()) != null) {
+					buffer.append(s).append("\n");
+				}
+			} catch ( Exception e ) {
+				System.out.println( e.toString() );
+				buffer = null;
+			} 
+			List<String> serverAddressList = Noson.convert(buffer.toString(), new NoType<List<String>>() {});
+			SimplePrinter.printNotice("Please select a server:");
+			for(int i = 0; i < serverAddressList.size(); i++) {
+				SimplePrinter.printNotice((i+1) + ". " + serverAddressList.get(i));
+			}
+			int serverPick = Integer.parseInt(SimpleWriter.write("option"));
+			while(serverPick<1 || serverPick>serverAddressList.size()){
+				SimplePrinter.printNotice("Invalid Option");
+			}
+			serverAddress = serverAddressList.get(serverPick-1);
 		}
 		
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -38,6 +71,7 @@ public class SimpleClient {
 					.group(group)
 					.channel(NioSocketChannel.class)
 					.handler(new DefaultChannelInitializer());
+			SimplePrinter.printNotice("Connecting to " + serverAddress);
 			Channel channel = bootstrap.connect(serverAddress, port).sync().channel();
 			channel.closeFuture().sync();
 		} finally {
