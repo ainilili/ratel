@@ -13,6 +13,7 @@ import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
+import org.nico.ratel.landlords.utils.StreamUtils;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -24,7 +25,7 @@ public class SimpleClient {
 
 	public static int id = -1;
 	
-	public static String serverAddress = "";
+	public static String serverAddress = null;
 	
 	public static int port = 0;
 	
@@ -38,35 +39,13 @@ public class SimpleClient {
 					if(args[index].equalsIgnoreCase("-h") || args[index].equalsIgnoreCase("-host")) {
 						serverAddress = args[index + 1];
 					}
-					if(args[index].equalsIgnoreCase("-pt") || args[index].equalsIgnoreCase("-pt")) {
-						int selection =  Integer.parseInt(args[index + 1]);
-
-						if( selection > 0 && selection < 4 ){
-							PokerHelper.pokerPrinterType = selection;
-						}
-					}
-					
 				}
 			}
 		}
 		
-		if(serverAddress.equals("") || port == 0){
-			StringBuffer buffer = new StringBuffer();
-			try {
-				URL url = new URL("https://raw.githubusercontent.com/abbychau/ratel/master/serverlist.json");
-				URLConnection con = url.openConnection();
-				con.setUseCaches(false);
-				InputStreamReader isr = new InputStreamReader(con.getInputStream());
-				BufferedReader in = new BufferedReader(isr);
-				String s = null;
-				while ( (s = in.readLine()) != null) {
-					buffer.append(s).append("\n");
-				}
-			} catch ( Exception e ) {
-				System.out.println(e.toString());
-				buffer = null;
-			} 
-			List<String> serverAddressList = Noson.convert(buffer.toString(), new NoType<List<String>>() {});
+		if(serverAddress == null || port == 0){
+			String serverInfo = StreamUtils.convertToString(new URL("https://raw.githubusercontent.com/abbychau/ratel/master/serverlist.json"));
+			List<String> serverAddressList = Noson.convert(serverInfo, new NoType<List<String>>() {});
 			SimplePrinter.printNotice("Please select a server:");
 			for(int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i+1) + ". " + serverAddressList.get(i));
