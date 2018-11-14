@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.nico.ratel.landlords.enums.RoomStatus;
+import org.nico.ratel.landlords.enums.RoomType;
 
 public class Room{
 
@@ -14,6 +15,8 @@ public class Room{
 	private String roomOwner;
 	
 	private RoomStatus status;
+	
+	private RoomType type;
 	
 	private Map<Integer, ClientSide> clientSideMap;
 	
@@ -37,6 +40,14 @@ public class Room{
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
 		this.status = RoomStatus.BLANK;
+	}
+
+	public final RoomType getType() {
+		return type;
+	}
+
+	public final void setType(RoomType type) {
+		this.type = type;
 	}
 
 	public final PokerSell getLastPokerShell() {

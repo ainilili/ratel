@@ -1,19 +1,15 @@
 package org.nico.ratel.landlords.enums;
 
-public enum RoomStatus{
+public enum RoomType{
 
-	BLANK("空闲"),
+	PVP("玩家对战"),
 	
-	WAIT("等待"),
-	
-	STARTING("开始"),
-	
+	PVE("人机对战"),
 	
 	;
-	
 	private String msg;
 
-	private RoomStatus(String msg) {
+	private RoomType(String msg) {
 		this.msg = msg;
 	}
 

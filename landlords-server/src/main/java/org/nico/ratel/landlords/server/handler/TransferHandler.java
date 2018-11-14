@@ -6,6 +6,7 @@ import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.ServerTransferData.ServerTransferDataProtoc;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -24,6 +25,8 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 		
 		ClientSide clientSide = new ClientSide(((InetSocketAddress)ch.remoteAddress()).getPort(), ClientStatus.TO_CHOOSE, ch);
 		clientSide.setNickname(String.valueOf(clientSide.getId()));
+		clientSide.setRole(ClientRole.PLAYER);
+		
 		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
 		SimplePrinter.serverLog("Has client connect to the server：" + clientSide.getId());
 		
