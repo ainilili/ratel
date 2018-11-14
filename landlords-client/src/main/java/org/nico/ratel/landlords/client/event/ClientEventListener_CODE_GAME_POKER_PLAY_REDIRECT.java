@@ -22,7 +22,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEve
 		SimplePrinter.printNotice("\nEveryone's number of cards:\n");
 		List<Map<String, Object>> clientInfos = (List<Map<String, Object>>) map.get("clientInfos");
 		for(Map<String, Object> clientInfo: clientInfos) {
-			SimplePrinter.printNotice(clientInfo.get("clientNickname") + "\t(" + clientInfo.get("type") + "): \t : " + clientInfo.get("surplus") + " cards");
+			SimplePrinter.printNotice(clientInfo.get("clientNickname") + "\t(" + clientInfo.get("type") + "): \t " + clientInfo.get("surplus") + " cards");
 		}
 		SimplePrinter.printNotice("");
 		
