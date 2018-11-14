@@ -17,7 +17,9 @@ public class RobotDecisionMakers {
 		return null;
 	}
 	
-	public static boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> landlordPokers, List<Poker> myPokers) {
+	public static boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
+		
+		
 		
 		return true;
 	}
