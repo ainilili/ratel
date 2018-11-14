@@ -12,16 +12,15 @@ import org.nico.ratel.landlords.entity.PokerSell;
  */
 public class RobotDecisionMakers {
 	
+	private static AbstractRobotDecisionMakers decisionMakers = new SimpleRobotDecisionMakers();
+	
 	public static List<Poker> howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers){
 		
 		return null;
 	}
 	
 	public static boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
-		
-		
-		
-		return true;
+		return decisionMakers.howToChooseLandlord(leftPokers, rightPokers, myPokers);
 	}
 	
 }

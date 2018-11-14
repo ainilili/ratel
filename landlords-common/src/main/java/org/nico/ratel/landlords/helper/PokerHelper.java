@@ -13,8 +13,15 @@ import org.nico.ratel.landlords.enums.PokerType;
 import org.nico.ratel.landlords.enums.SellType;
 
 public class PokerHelper {
-
+	
+	/**
+	 * Print the type of poker style 
+	 */
 	public static int pokerPrinterType = 0;
+	
+	/**
+	 * The list of all pokers, by 54
+	 */
 	private static List<Poker> basePokers = new ArrayList<Poker>(54);
 
 	private static Comparator<Poker> pokerComparator = new Comparator<Poker>() {
@@ -368,5 +375,73 @@ public class PokerHelper {
 			}
 		}
 		return builder.toString();
+	}
+	
+	public static List<PokerSell> parsePokerSells(List<Poker> pokers){
+		List<PokerSell> allPokerSell = new ArrayList<>();
+		//single or double or three or four
+		int count = 0;
+		int lastLevel = -1;
+		List<Poker> ps = new ArrayList<>();
+		for(int index = 0; index < pokers.size(); index ++){
+			int level = pokers.get(index).getLevel().getLevel();
+			if(lastLevel == -1 || level == lastLevel){
+				++ count;
+				ps.add(pokers.get(index));
+			}else{
+				count = 0;
+				ps.clear();
+			}
+			if(count == 1){
+				allPokerSell.add(new PokerSell(level, SellType.SINGLE, ps));
+			}else if(count == 2){
+				allPokerSell.add(new PokerSell(level, SellType.DOUBLE, ps));
+			}else if(count == 3){
+				allPokerSell.add(new PokerSell(level, SellType.THREE, ps));
+			}else if(count == 4){
+				allPokerSell.add(new PokerSell(level + 999, SellType.BOMB, ps));
+			}
+		}
+		
+		
+		return null;
+	}
+	
+	public static int parsePokerColligationScore(List<Poker> pokers){
+		int score = 0;
+		int count = 0;
+		int increase = 0;
+		int lastLevel = -1;
+		if(pokers != null && ! pokers.isEmpty()){
+			for(int index = 0; index < pokers.size(); index ++){
+				int level = pokers.get(index).getLevel().getLevel();
+				if(lastLevel == -1){
+					increase ++;
+					count ++;
+					score += lastLevel;
+				}else{
+					if(level == lastLevel){
+						++ count;
+					}else{
+						count = 0;
+					}
+					if(level < PokerLevel.LEVEL_2.getLevel() && level - 1 == lastLevel){
+						++ increase;
+					}else{
+						increase = 0;
+					}
+					
+					score += (count + (increase > 4 ? increase : 0)) * level;
+				}
+				
+				if(level == PokerLevel.LEVEL_2.getLevel()){
+					score += level * 2;
+				}else if(level > PokerLevel.LEVEL_2.getLevel()){
+					score += level * 3;
+				}
+				lastLevel = level;
+			}
+		}
+		return score;
 	}
 }
