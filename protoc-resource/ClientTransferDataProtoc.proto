@@ -1,0 +1,12 @@
+syntax = "proto3";
+option java_package = "org.nico.ratel.landlords.entity";
+option java_outer_classname = "ClientTransferData";
+
+message ClientTransferDataProtoc{
+	
+	string code = 1;
+	
+	string data = 2;
+	
+	string info = 3;
+}
