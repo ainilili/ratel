@@ -15,7 +15,7 @@ public final class ClientTransferData {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface ClientTransferDataProtocOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ClientTransferDataProtoc)
+      // @@protoc_insertion_point(interface_extends:org.nico.ratel.landlords.entity.ClientTransferDataProtoc)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -49,11 +49,11 @@ public final class ClientTransferData {
         getInfoBytes();
   }
   /**
-   * Protobuf type {@code ClientTransferDataProtoc}
+   * Protobuf type {@code org.nico.ratel.landlords.entity.ClientTransferDataProtoc}
    */
   public  static final class ClientTransferDataProtoc extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ClientTransferDataProtoc)
+      // @@protoc_insertion_point(message_implements:org.nico.ratel.landlords.entity.ClientTransferDataProtoc)
       ClientTransferDataProtocOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use ClientTransferDataProtoc.newBuilder() to construct.
@@ -129,13 +129,13 @@ public final class ClientTransferData {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_ClientTransferDataProtoc_descriptor;
+      return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_ClientTransferDataProtoc_fieldAccessorTable
+      return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc.class, org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc.Builder.class);
     }
@@ -418,21 +418,21 @@ public final class ClientTransferData {
       return builder;
     }
     /**
-     * Protobuf type {@code ClientTransferDataProtoc}
+     * Protobuf type {@code org.nico.ratel.landlords.entity.ClientTransferDataProtoc}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ClientTransferDataProtoc)
+        // @@protoc_insertion_point(builder_implements:org.nico.ratel.landlords.entity.ClientTransferDataProtoc)
         org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtocOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_ClientTransferDataProtoc_descriptor;
+        return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_ClientTransferDataProtoc_fieldAccessorTable
+        return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc.class, org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc.Builder.class);
       }
@@ -467,7 +467,7 @@ public final class ClientTransferData {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_ClientTransferDataProtoc_descriptor;
+        return org.nico.ratel.landlords.entity.ClientTransferData.internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_descriptor;
       }
 
       @java.lang.Override
@@ -798,10 +798,10 @@ public final class ClientTransferData {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:ClientTransferDataProtoc)
+      // @@protoc_insertion_point(builder_scope:org.nico.ratel.landlords.entity.ClientTransferDataProtoc)
     }
 
-    // @@protoc_insertion_point(class_scope:ClientTransferDataProtoc)
+    // @@protoc_insertion_point(class_scope:org.nico.ratel.landlords.entity.ClientTransferDataProtoc)
     private static final org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc();
@@ -839,10 +839,10 @@ public final class ClientTransferData {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ClientTransferDataProtoc_descriptor;
+    internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ClientTransferDataProtoc_fieldAccessorTable;
+      internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -852,11 +852,11 @@ public final class ClientTransferData {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\036ClientTransferDataProtoc.proto\"D\n\030Clie" +
-      "ntTransferDataProtoc\022\014\n\004code\030\001 \001(\t\022\014\n\004da" +
-      "ta\030\002 \001(\t\022\014\n\004info\030\003 \001(\tB5\n\037org.nico.ratel" +
-      ".landlords.entityB\022ClientTransferDatab\006p" +
-      "roto3"
+      "\n\036ClientTransferDataProtoc.proto\022\037org.ni" +
+      "co.ratel.landlords.entity\"D\n\030ClientTrans" +
+      "ferDataProtoc\022\014\n\004code\030\001 \001(\t\022\014\n\004data\030\002 \001(" +
+      "\t\022\014\n\004info\030\003 \001(\tB5\n\037org.nico.ratel.landlo" +
+      "rds.entityB\022ClientTransferDatab\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -870,11 +870,11 @@ public final class ClientTransferData {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_ClientTransferDataProtoc_descriptor =
+    internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_ClientTransferDataProtoc_fieldAccessorTable = new
+    internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ClientTransferDataProtoc_descriptor,
+        internal_static_org_nico_ratel_landlords_entity_ClientTransferDataProtoc_descriptor,
         new java.lang.String[] { "Code", "Data", "Info", });
   }
 
