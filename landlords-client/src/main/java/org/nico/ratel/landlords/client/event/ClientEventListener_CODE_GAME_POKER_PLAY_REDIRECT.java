@@ -19,19 +19,17 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEve
 		
 		int sellClientId = (int) map.get("sellClientId");
 		
-		SimplePrinter.printNotice("");
-		SimplePrinter.printNotice("Everyone's current situation: ");
-		SimplePrinter.printNotice("");
+		SimplePrinter.printNotice("\nEveryone's number of cards:\n");
 		List<Map<String, Object>> clientInfos = (List<Map<String, Object>>) map.get("clientInfos");
 		for(Map<String, Object> clientInfo: clientInfos) {
-			SimplePrinter.printNotice(clientInfo.get("clientNickname") + "\t[" + clientInfo.get("type") + "] surplus " + clientInfo.get("surplus") + " piece of poker");
+			SimplePrinter.printNotice(clientInfo.get("clientNickname") + "\t(" + clientInfo.get("type") + "): \t : " + clientInfo.get("surplus") + " cards");
 		}
 		SimplePrinter.printNotice("");
 		
 		if(sellClientId == SimpleClient.id) {
 			get(ClientEventCode.CODE_GAME_POKER_PLAY).call(channel, data);
 		}else {
-			SimplePrinter.printNotice("Next out player is " + map.get("sellClinetNickname") + ", please wait for him to out his poker");
+			SimplePrinter.printNotice("Next player is " + map.get("sellClinetNickname") + ". Please wait for him to play his cards.");
 		}
 	}
 

@@ -24,7 +24,7 @@ public class ClientEventListener_CODE_GAME_STARTING extends ClientEventListener{
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
 		
 		SimplePrinter.printNotice("");
-		SimplePrinter.printNotice("Your pokers is");
+		SimplePrinter.printNotice("Your pokers are");
 		SimplePrinter.printPokers(pokers);
 	
 		get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(channel, data);

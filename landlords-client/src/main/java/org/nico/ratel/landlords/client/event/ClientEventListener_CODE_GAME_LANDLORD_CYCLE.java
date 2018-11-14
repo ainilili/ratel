@@ -8,7 +8,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_CYCLE extends ClientEventLis
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.printNotice("No player takes the landowner, resend poker");
+		SimplePrinter.printNotice("No player takes the landlord, so redealing cards.");
 		
 	}
 

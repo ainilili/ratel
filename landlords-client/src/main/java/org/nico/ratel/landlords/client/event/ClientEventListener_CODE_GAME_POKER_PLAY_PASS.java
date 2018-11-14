@@ -15,7 +15,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_PASS extends ClientEventLi
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice(map.get("clientNickname") + " dont out, turn next player " + map.get("nextClientNickname") + " out pokers");
+		SimplePrinter.printNotice(map.get("clientNickname") + " passed. It is now " + map.get("nextClientNickname") + "' turn.");
 		
 		int turnClientId = (int) map.get("nextClientId");
 		if(SimpleClient.id == turnClientId) {
