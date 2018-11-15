@@ -31,7 +31,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 			}
 			
 			int choose = Integer.valueOf(line);
-			if(choose >=1 && choose <= PokerHelper.totalPrinters){
+			if(choose >=1 && choose <= 5){
 				PokerHelper.pokerPrinterType = choose - 1;
 				get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 			} else {
