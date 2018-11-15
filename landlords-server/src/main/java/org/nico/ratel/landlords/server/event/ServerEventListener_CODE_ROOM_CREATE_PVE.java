@@ -51,7 +51,7 @@ public class ServerEventListener_CODE_ROOM_CREATE_PVE implements ServerEventList
 			
 			ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
 		}else {
-			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_NOT_SUPPORT, "The current difficulty coefficient is not supported, please pay attention to the following");
+			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_PVE_DIFFICULTY_NOT_SUPPORT, null);
 		}
 		
 	}

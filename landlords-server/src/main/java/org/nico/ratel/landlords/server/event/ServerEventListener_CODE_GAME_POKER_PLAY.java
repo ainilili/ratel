@@ -87,7 +87,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 											.json();
 						
 						for(ClientSide client: room.getClientSideList()) {
-							if(next.getRole() == ClientRole.PLAYER) {
+							if(client.getRole() == ClientRole.PLAYER) {
 								ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 							}
 						}

@@ -33,8 +33,9 @@ public class ClientEventListener_CODE_CLIENT_NICKNAME_SET extends ClientEventLis
 		if (nickname.trim().length() > NICKNAME_MAX_LENGTH) {
 			String result = MapHelper.newInstance().put("invalidLength", nickname.trim().length()).json();
 			get(ClientEventCode.CODE_CLIENT_NICKNAME_SET).call(channel, result);
+		}else{
+			pushToServer(channel, ServerEventCode.CODE_CLIENT_NICKNAME_SET, nickname);
 		}
-		pushToServer(channel, ServerEventCode.CODE_CLIENT_NICKNAME_SET, nickname);
 	}
 
 
