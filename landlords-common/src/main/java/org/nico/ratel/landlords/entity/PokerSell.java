@@ -56,7 +56,7 @@ public class PokerSell {
 
 	@Override
 	public String toString() {
-		return "PokerSell [sellType=" + sellType + ", sellPokers=" + sellPokers + "]";
+		return sellType + "\t\t| " + sellPokers;
 	}
 	
 }

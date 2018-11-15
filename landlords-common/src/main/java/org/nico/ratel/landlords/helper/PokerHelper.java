@@ -448,16 +448,15 @@ public class PokerHelper {
 				int level = poker.getLevel().getLevel();
 				if(lastLevel == -1) {
 					++ count;
-					sellPokers.add(poker);
 				}else {
 					if(level == lastLevel) {
 						++ count;
-						sellPokers.add(poker);
 					}else {
 						count = 1;
 						sellPokers.clear();
 					}
 				}
+				sellPokers.add(poker);
 				if(count == 1) {
 					pokerSells.add(new PokerSell(SellType.SINGLE, ListUtils.getList(sellPokers), poker.getLevel().getLevel()));
 				}else if(count == 2){
@@ -475,8 +474,8 @@ public class PokerHelper {
 		{
 			parsePokerSellStraight(pokerSells, SellType.SINGLE);
 			parsePokerSellStraight(pokerSells, SellType.DOUBLE);
-			parsePokerSellStraight(pokerSells, SellType.THREE);
-			parsePokerSellStraight(pokerSells, SellType.BOMB);
+//			parsePokerSellStraight(pokerSells, SellType.THREE);
+//			parsePokerSellStraight(pokerSells, SellType.BOMB);
 		}
 		
 		return pokerSells;
@@ -519,7 +518,7 @@ public class PokerHelper {
 					if(level - 1 == lastLevel_1 && level != PokerLevel.LEVEL_2.getLevel()) {
 						++ increase_1;
 						sellPokers_1.addAll(sell.getSellPokers());
-					}else {
+					}else{
 						if(increase_1 >= minLenght) {
 							for(int s = 0; s <= increase_1 - minLenght; s ++) {
 								int len = minLenght + s;
@@ -532,7 +531,20 @@ public class PokerHelper {
 						sellPokers_1.clear();
 					}
 				}
+				lastLevel_1 = level;
 			}
+		}
+		if(sellPokers_1 != null) {
+			if(increase_1 >= minLenght) {
+				for(int s = 0; s <= increase_1 - minLenght; s ++) {
+					int len = minLenght + s;
+					for(int subIndex = 0; subIndex <= increase_1 - len; subIndex ++) {
+						pokerSells.add(new PokerSell(targetSellType, ListUtils.getList(sellPokers_1.subList(subIndex * width, (subIndex + len) * width)), lastLevel_1));
+					}
+				}
+			}
+			increase_1 = 0;
+			sellPokers_1.clear();
 		}
 	}
 	
@@ -558,7 +570,22 @@ public class PokerHelper {
 		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.BLANK));
 		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.BLANK));
 		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.BLANK));
-		System.out.println(parsePokerSells(pokers));
+		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_9, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_9, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_9, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_9, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.BLANK));
+		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.BLANK));
 		
+		List<PokerSell> ps = parsePokerSells(pokers);
+		for(PokerSell p: ps) {
+			System.out.println(p);
+		}
 	}
 }
