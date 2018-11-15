@@ -13,20 +13,11 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 	@Override
 	public void call(Channel channel, String data) {
 		SimplePrinter.printNotice("Setting: ");
-		/*
-					case 0:
-			return buildHandStringSharp(pokers);
-			case 1:
-			return buildHandStringRounded(pokers);
-			case 2:
-			return textOnly(pokers);
-			case 3:
-			return textOnlyNoType(pokers);
-			*/
 		SimplePrinter.printNotice("1. Card with shape edges (Default)");
 		SimplePrinter.printNotice("2. Card with rounded edges");
 		SimplePrinter.printNotice("3. Text Only with types");
 		SimplePrinter.printNotice("4. Text Only without types");
+		SimplePrinter.printNotice("5. Unicode Cards");
 
 		SimplePrinter.printNotice("Please enter the number of setting (enter [BACK] return options list)");
 		String line = SimpleWriter.write("setting");
@@ -40,7 +31,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 			}
 			
 			int choose = Integer.valueOf(line);
-			if(choose > 0 && choose <= 4){
+			if(choose >=1 && choose <= PokerHelper.totalPrinters){
 				PokerHelper.pokerPrinterType = choose - 1;
 				get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 			} else {

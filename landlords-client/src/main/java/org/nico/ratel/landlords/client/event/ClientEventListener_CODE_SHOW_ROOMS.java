@@ -2,12 +2,9 @@ package org.nico.ratel.landlords.client.event;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
-import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
 

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
-import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
