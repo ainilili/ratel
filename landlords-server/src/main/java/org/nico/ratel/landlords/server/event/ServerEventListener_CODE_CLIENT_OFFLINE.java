@@ -8,11 +8,11 @@ import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
-public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener{
+public class ServerEventListener_CODE_CLIENT_OFFLINE implements ServerEventListener{
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
-
+		
 		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
 
 		if(room != null) {
@@ -23,12 +23,16 @@ public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener
 								.json();
 			for(ClientSide client: room.getClientSideList()) {
 				if(client.getRole() == ClientRole.PLAYER){
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, result);
-					client.init();
+					if(client.getId() != clientSide.getId()){
+						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, result);
+						client.init();
+					}
 				}
 			}
 			ServerContains.ROOM_MAP.remove(room.getId());
 		}
+		
+		ServerContains.CLIENT_SIDE_MAP.remove(clientSide.getId());
 	}
 
 }

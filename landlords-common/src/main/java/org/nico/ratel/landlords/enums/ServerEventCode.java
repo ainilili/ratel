@@ -6,7 +6,11 @@ public enum ServerEventCode implements Serializable{
 
 	CODE_CLIENT_EXIT("玩家退出"),
 	
+	CODE_CLIENT_OFFLINE("玩家离线"),
+	
 	CODE_CLIENT_NICKNAME_SET("设置昵称"),
+	
+	CODE_CLIENT_HEAD_BEAT("不出"),
 	
 	CODE_ROOM_CREATE("创建PVP房间"),
 	
