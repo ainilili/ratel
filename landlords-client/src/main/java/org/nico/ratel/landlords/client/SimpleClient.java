@@ -49,36 +49,7 @@ public class SimpleClient {
 				}
 			}
 		}
-		// List<Poker> pokers = new ArrayList<Poker>();
-		// Poker p = new Poker();
-		// p.setLevel(PokerLevel.LEVEL_3);
-		// p.setType(PokerType.SPADE);
-		// Poker p2 = new Poker();
-		// p2.setLevel(PokerLevel.LEVEL_K);
-		// p2.setType(PokerType.HEART);
-		// pokers.add(p);
-		// pokers.add(p2);
-
-		// System.out.println(
-
-		// 	pokers.stream().map(
-		// 		elt -> {
-		// 			int level = elt.getLevel().getLevel() - 1;
-		// 			switch (elt.getType()) {
-		// 				case SPADE:
-		// 				return String.valueOf(Character.toChars(0x1F0A1 + level));
-		// 				case HEART:
-		// 				return String.valueOf(Character.toChars(0x1F0B1 + level));
-		// 				case DIAMOND:
-		// 				return String.valueOf(Character.toChars(0x1F0C1 + level));
-		// 				case CLUB:
-		// 				return String.valueOf(Character.toChars(0x1F0D1 + level));
-		// 				default:
-		// 				return "";
-		// 			}
-		// 		}
-		// 	).collect(Collectors.joining(""))
-		// );
+		
 		if(serverAddress.equals("") || port == 0){
 			StringBuffer buffer = new StringBuffer();
 			try {
