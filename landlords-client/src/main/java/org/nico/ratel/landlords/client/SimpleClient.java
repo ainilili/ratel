@@ -5,16 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
-import org.nico.ratel.landlords.entity.Poker;
-import org.nico.ratel.landlords.enums.PokerLevel;
-import org.nico.ratel.landlords.enums.PokerType;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
