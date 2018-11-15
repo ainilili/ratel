@@ -1,11 +1,10 @@
 package org.nico.ratel.landlords.robot;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
-import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.helper.PokerHelper;
 
@@ -17,6 +16,8 @@ import org.nico.ratel.landlords.helper.PokerHelper;
 
 public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 
+	private static Random random = new Random();
+	
 	@Override
 	public PokerSell howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers) {
 		
@@ -27,7 +28,7 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		
 		List<PokerSell> sells = PokerHelper.parsePokerSells(myPokers);
 		if(lastPokerSell == null) {
-			return sells.get(0);
+			return sells.get(random.nextInt(sells.size()));
 		}
 		
 		for(PokerSell sell: sells) {
@@ -55,5 +56,6 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		List<PokerSell> rightSells = PokerHelper.parsePokerSells(rightPokers);
 		return mySells.size() > leftSells.size() && mySells.size() > rightSells.size();
 	}
+	
 
 }
