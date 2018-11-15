@@ -2,6 +2,9 @@ package org.nico.ratel.landlords.server;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.nico.ratel.landlords.entity.ClientSide;
@@ -35,4 +38,7 @@ public class ServerContains {
 	public final static int getServerId() {
 		return SERVER_ATOMIC_ID.getAndIncrement();
 	}
+	
+	public final static ThreadPoolExecutor THREAD_EXCUTER = new ThreadPoolExecutor(200, 200, 0, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>());
 }

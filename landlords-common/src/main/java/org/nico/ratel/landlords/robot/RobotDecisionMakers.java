@@ -17,8 +17,8 @@ public class RobotDecisionMakers {
 	private static Map<Integer, AbstractRobotDecisionMakers> decisionMakersMap = new HashMap<Integer, AbstractRobotDecisionMakers>() {
 		private static final long serialVersionUID = 8541568961784067309L;
 		{
-			decisionMakersMap.put(1, new SimpleRobotDecisionMakers());
-			decisionMakersMap.put(2, new MediumRobotDecisionMakers());
+			put(1, new SimpleRobotDecisionMakers());
+			put(2, new MediumRobotDecisionMakers());
 		}
 	};
 	

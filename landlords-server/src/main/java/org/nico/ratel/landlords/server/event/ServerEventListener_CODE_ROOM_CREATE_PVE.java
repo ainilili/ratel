@@ -44,6 +44,7 @@ public class ServerEventListener_CODE_ROOM_CREATE_PVE implements ServerEventList
 				room.getClientSideList().add(robot);
 				
 				preClient = robot;
+				ServerContains.CLIENT_SIDE_MAP.put(robot.getId(), robot);
 			}
 			preClient.setNext(clientSide);
 			clientSide.setPre(preClient);

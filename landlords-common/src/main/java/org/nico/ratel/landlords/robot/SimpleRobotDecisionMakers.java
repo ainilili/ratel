@@ -19,10 +19,17 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 
 	@Override
 	public PokerSell howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers) {
-		if(lastPokerSell.getSellType() == SellType.KING_BOMB) {
+		
+		
+		if(lastPokerSell != null && lastPokerSell.getSellType() == SellType.KING_BOMB) {
 			return null;
 		}
+		
 		List<PokerSell> sells = PokerHelper.parsePokerSells(myPokers);
+		if(lastPokerSell == null) {
+			return sells.get(0);
+		}
+		
 		for(PokerSell sell: sells) {
 			if(sell.getSellType() == lastPokerSell.getSellType()) {
 				if(sell.getScore() > lastPokerSell.getScore()) {
@@ -43,7 +50,10 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 
 	@Override
 	public boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
-		return true;
+		List<PokerSell> leftSells = PokerHelper.parsePokerSells(leftPokers);
+		List<PokerSell> mySells = PokerHelper.parsePokerSells(myPokers);
+		List<PokerSell> rightSells = PokerHelper.parsePokerSells(rightPokers);
+		return mySells.size() > leftSells.size() && mySells.size() > rightSells.size();
 	}
 
 }

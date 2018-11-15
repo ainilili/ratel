@@ -4,8 +4,10 @@ import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
+import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
 public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEventListener{
 
@@ -26,7 +28,13 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEven
 							.put("nextClientId", turnClient.getId())
 							.put("nextClientNickname", turnClient.getNickname())
 							.json();
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_PASS, result);
+					if(client.getRole() == ClientRole.PLAYER) {
+						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_PASS, result);
+					}else {
+						if(client.getId() == turnClient.getId()) {
+							RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(turnClient, data);
+						}
+					}
 				}
 			}else {
 				ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_CANT_PASS, null);

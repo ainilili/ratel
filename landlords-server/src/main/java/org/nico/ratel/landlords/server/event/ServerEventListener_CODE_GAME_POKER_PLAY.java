@@ -9,12 +9,14 @@ import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.server.ServerContains;
+import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
 public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventListener{
 
@@ -72,7 +74,9 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 							.put("sellClinetNickname", next.getNickname())
 							.json();
 					for(ClientSide client: room.getClientSideList()) {
-						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
+						if(client.getRole() == ClientRole.PLAYER) {
+							ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
+						}
 					}
 					
 					TimeHelper.sleep(500);
@@ -83,10 +87,16 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 											.json();
 						
 						for(ClientSide client: room.getClientSideList()) {
-							ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
+							if(next.getRole() == ClientRole.PLAYER) {
+								ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
+							}
 						}
 					}else {
-						ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT).call(next, data);
+						if(next.getRole() == ClientRole.PLAYER) {
+							ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT).call(next, result);
+						}else {
+							RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(next, data);
+						}
 					}
 				}
 			}else{

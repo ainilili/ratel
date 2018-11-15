@@ -22,6 +22,8 @@ public class PokerHelper {
 	 */
 	public static int pokerPrinterType = 0;
 
+	public static int totalPrinters = 5;
+	
 	/**
 	 * The list of all pokers, by 54
 	 */

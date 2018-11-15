@@ -17,6 +17,10 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 		Map<String, Object> map = MapHelper.parser(data);
 		int turnClientId = (int) map.get("nextClientId");
 		
+		if(map.containsKey("preClientNickname")) {
+			SimplePrinter.printNotice(map.get("preClientNickname") + " don't rob the landlord!");
+		}
+		
 		if(turnClientId == SimpleClient.id) {
 			SimplePrinter.printNotice("It's your turn. Do you want to rob the landlord? [Y/N] (enter [EXIT] to exit current room)");
 			String line = SimpleWriter.write("Y/N");

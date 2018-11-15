@@ -44,13 +44,17 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 				if(client.getRole() == ClientRole.PLAYER) {
 					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);
 				}else {
-					RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(client, result);
+					if(clientSide.getId() == client.getId()) {
+						RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(client, result);
+					}
 				}
 			}
 		}else{
 			if(clientSide.getNext().getId() == room.getLandlordId()){
 				for(ClientSide client: room.getClientSideList()){
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
+					if(client.getRole() == ClientRole.PLAYER) {
+						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
+					}
 				}
 				ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, null);
 			}else{
@@ -59,14 +63,19 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 						.put("roomId", room.getId())
 						.put("roomOwner", room.getRoomOwner())
 						.put("roomClientCount", room.getClientSideList().size())
+						.put("preClientNickname", clientSide.getNickname())
 						.put("nextClientNickname", turnClientSide.getNickname())
 						.put("nextClientId", turnClientSide.getId())
 						.json();
 				
-				if(turnClientSide.getRole() == ClientRole.PLAYER) {
-					ChannelUtils.pushToClient(turnClientSide.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
-				}else {
-					RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(turnClientSide, result);
+				for(ClientSide client: room.getClientSideList()) {
+					if(client.getRole() == ClientRole.PLAYER) {
+						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, result);
+					}else {
+						if(client.getId() == turnClientSide.getId()) {
+							RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(client, result);
+						}
+					}
 				}
 			}
 		}

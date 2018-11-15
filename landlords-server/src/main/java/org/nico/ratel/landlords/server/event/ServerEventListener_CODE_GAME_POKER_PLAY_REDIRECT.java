@@ -3,6 +3,7 @@ package org.nico.ratel.landlords.server.event;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.SynchronousQueue;
 
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;

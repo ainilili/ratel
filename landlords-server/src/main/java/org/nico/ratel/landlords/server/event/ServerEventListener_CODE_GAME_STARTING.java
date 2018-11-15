@@ -35,9 +35,10 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 
 		// Push information about the robber
 		int startGrabIndex = (int)(Math.random() * 3);
+		startGrabIndex = 1;
 		ClientSide startGrabClient = roomClientList.get(startGrabIndex);
 		room.setLandlordId(startGrabClient.getId());
-
+		
 		// Push start game messages
 		room.setStatus(RoomStatus.STARTING);
 
@@ -57,7 +58,9 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 			if(client.getRole() == ClientRole.PLAYER) {
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
 			}else {
-				RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(client, result);
+				if(startGrabClient.getId() == client.getId()) {
+					RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(client, result);
+				}
 			}
 
 		}
