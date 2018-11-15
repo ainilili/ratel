@@ -50,9 +50,11 @@ public class SimpleClient {
 			for(int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i+1) + ". " + serverAddressList.get(i));
 			}
-			int serverPick = Integer.parseInt(SimpleWriter.write("option"));
+			int serverPick = 0;
 			while(serverPick<1 || serverPick>serverAddressList.size()){
-				SimplePrinter.printNotice("Invalid Option");
+				try {
+					serverPick = Integer.parseInt(SimpleWriter.write("option"));
+				}catch(NumberFormatException e){}
 			}
 			serverAddress = serverAddressList.get(serverPick-1);
 			String[] elements = serverAddress.split(":");

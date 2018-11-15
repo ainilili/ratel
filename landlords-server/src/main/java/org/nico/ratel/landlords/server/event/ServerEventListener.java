@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.server.event;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,11 @@ public interface ServerEventListener {
 			}else{
 				String eventListener = LISTENER_PREFIX + code.name();
 				Class<ServerEventListener> listenerClass = (Class<ServerEventListener>) Class.forName(eventListener);
-				listener = listenerClass.newInstance();
+				try {
+					listener = listenerClass.getDeclaredConstructor().newInstance();
+				} catch (InvocationTargetException | NoSuchMethodException e) {
+					e.printStackTrace();
+				}
 				ServerEventListener.LISTENER_MAP.put(code, listener);
 			}
 			return listener;

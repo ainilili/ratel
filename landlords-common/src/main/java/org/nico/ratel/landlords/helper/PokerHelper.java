@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
@@ -18,6 +19,7 @@ public class PokerHelper {
 	 * Print the type of poker style 
 	 */
 	public static int pokerPrinterType = 0;
+	public static int totalPrinters = 5;
 	
 	/**
 	 * The list of all pokers, by 54
@@ -273,6 +275,8 @@ public class PokerHelper {
 			return textOnly(pokers);
 			case 3:
 			return textOnlyNoType(pokers);
+			case 4:
+			return playingCardUnicode(pokers);
 			default:
 			return buildHandStringSharp(pokers);
 
@@ -359,12 +363,43 @@ public class PokerHelper {
 		if(pokers != null && pokers.size() > 0) {
 			for(int index = 0; index < pokers.size(); index ++) {
 				String name = pokers.get(index).getLevel().getName();
-				String type = pokers.get(index).getType().getName();
-
-				builder.append(name + type);
+				builder.append(name+" ");
 			}
+			builder.append(System.lineSeparator());
+			for(int index = 0; index < pokers.size(); index ++) {
+				String type = pokers.get(index).getType().getName();
+				builder.append(type+" ".repeat(pokers.get(index).getLevel().getName().length()));
+			}
+
 		}
 		return builder.toString();
+	}
+	private static String playingCardUnicode(List<Poker> pokers){
+		return pokers.stream().map(
+			elt -> {
+				int level = elt.getLevel().getLevel();
+				if (level == 16){//s
+					return String.valueOf(Character.toChars(0x1F0DF));
+				}
+				if (level == 17){//x
+					return String.valueOf(Character.toChars(0x1F0CF));
+				}
+				if (level == 14 || level == 15){level = level - 13;}
+				level--;
+				switch (elt.getType()) {
+					case SPADE:
+					return String.valueOf(Character.toChars(0x1F0A1 + level));
+					case HEART:
+					return String.valueOf(Character.toChars(0x1F0B1 + level));
+					case DIAMOND:
+					return String.valueOf(Character.toChars(0x1F0C1 + level));
+					case CLUB:
+					return String.valueOf(Character.toChars(0x1F0D1 + level));
+					default:
+					return "";
+				}
+			}
+		).collect(Collectors.joining(""));
 	}
 	private static String textOnlyNoType(List<Poker> pokers){
 		StringBuilder builder = new StringBuilder();
