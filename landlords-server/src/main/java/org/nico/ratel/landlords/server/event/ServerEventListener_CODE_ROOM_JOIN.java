@@ -17,8 +17,8 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener{
 	@Override
 	public void call(ClientSide clientSide, String data) {
 
-		Room room = ServerContains.ROOM_MAP.get(Integer.valueOf(data));
-
+		Room room = ServerContains.getRoom(Integer.valueOf(data));
+		
 		if(room == null) {
 			String result = MapHelper.newInstance()
 								.put("roomId", data)

@@ -13,7 +13,7 @@ public class ServerEventListener_CODE_CLIENT_OFFLINE implements ServerEventListe
 	@Override
 	public void call(ClientSide clientSide, String data) {
 		
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 
 		if(room != null) {
 			String result = MapHelper.newInstance()
@@ -29,7 +29,7 @@ public class ServerEventListener_CODE_CLIENT_OFFLINE implements ServerEventListe
 					}
 				}
 			}
-			ServerContains.ROOM_MAP.remove(room.getId());
+			ServerContains.removeRoom(room.getId());
 		}
 		
 		ServerContains.CLIENT_SIDE_MAP.remove(clientSide.getId());

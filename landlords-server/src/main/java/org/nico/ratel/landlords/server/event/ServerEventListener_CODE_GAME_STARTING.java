@@ -21,7 +21,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 	@Override
 	public void call(ClientSide clientSide, String data) {
 
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 
 		LinkedList<ClientSide> roomClientList = room.getClientSideList();
 
@@ -37,7 +37,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 		int startGrabIndex = (int)(Math.random() * 3);
 		startGrabIndex = 1;
 		ClientSide startGrabClient = roomClientList.get(startGrabIndex);
-		room.setLandlordId(startGrabClient.getId());
+		room.setCurrentSellClient(startGrabClient.getId());
 		
 		// Push start game messages
 		room.setStatus(RoomStatus.STARTING);

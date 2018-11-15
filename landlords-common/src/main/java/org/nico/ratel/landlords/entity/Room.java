@@ -22,7 +22,7 @@ public class Room{
 	
 	private LinkedList<ClientSide> clientSideList;
 	
-	private int landlordId;
+	private int landlordId = -1;
 	
 	private List<Poker> landlordPokers;
 	
@@ -33,7 +33,9 @@ public class Room{
 	private int currentSellClient = -1;
 	
 	private int difficultyCoefficient;
-
+	
+	private long lastFlushTime;
+	
 	public Room() {
 	}
 
@@ -74,6 +76,14 @@ public class Room{
 
 	public final void setCurrentSellClient(int currentSellClient) {
 		this.currentSellClient = currentSellClient;
+	}
+
+	public long getLastFlushTime() {
+		return lastFlushTime;
+	}
+
+	public void setLastFlushTime(long lastFlushTime) {
+		this.lastFlushTime = lastFlushTime;
 	}
 
 	public int getLastSellClient() {

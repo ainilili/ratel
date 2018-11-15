@@ -18,7 +18,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 	@Override
 	public void call(ClientSide clientSide, String data) {
 
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 
 		boolean isY = Boolean.valueOf(data);
 		if(isY){
@@ -44,7 +44,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 				if(client.getRole() == ClientRole.PLAYER) {
 					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);
 				}else {
-					if(clientSide.getId() == client.getId()) {
+					if(currentClientId == client.getId()) {
 						RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(client, result);
 					}
 				}
@@ -59,6 +59,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 				ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, null);
 			}else{
 				ClientSide turnClientSide = clientSide.getNext();
+				room.setCurrentSellClient(turnClientSide.getId());
 				String result = MapHelper.newInstance()
 						.put("roomId", room.getId())
 						.put("roomOwner", room.getRoomOwner())

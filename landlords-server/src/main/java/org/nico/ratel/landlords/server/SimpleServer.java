@@ -1,9 +1,11 @@
 package org.nico.ratel.landlords.server;
 
 import java.net.InetSocketAddress;
+import java.util.Timer;
 
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.server.timer.RoomClearTask;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -33,6 +35,11 @@ public class SimpleServer {
 			ChannelFuture f = bootstrap .bind().sync();
 			
 			SimplePrinter.serverLog("The server was successfully started on port " + ServerContains.port);
+			
+			ServerContains.THREAD_EXCUTER.execute(() -> {
+				Timer timer=new Timer();
+				timer.schedule(new RoomClearTask(), 0L, 5000L);
+			});
 			f.channel().closeFuture().sync();
 		} finally {
 			parentGroup.shutdownGracefully();

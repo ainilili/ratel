@@ -13,7 +13,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEven
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 		
 		if(room.getCurrentSellClient() == clientSide.getId()) {
 			if(clientSide.getId() != room.getLastSellClient()) {

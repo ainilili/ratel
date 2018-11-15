@@ -29,7 +29,7 @@ public class ServerEventListener_CODE_ROOM_CREATE_PVE implements ServerEventList
 			room.setDifficultyCoefficient(difficultyCoefficient);
 			
 			clientSide.setRoomId(room.getId());
-			ServerContains.ROOM_MAP.put(room.getId(), room);
+			ServerContains.addRoom(room);
 			
 			ClientSide preClient = clientSide;
 			//Add robots

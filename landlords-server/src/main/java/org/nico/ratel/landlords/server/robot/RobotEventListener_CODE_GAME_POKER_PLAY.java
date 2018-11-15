@@ -15,7 +15,7 @@ public class RobotEventListener_CODE_GAME_POKER_PLAY implements RobotEventListen
 	@Override
 	public void call(ClientSide robot, String data) {
 		ServerContains.THREAD_EXCUTER.execute(() -> {
-			Room room = ServerContains.ROOM_MAP.get(robot.getRoomId());
+			Room room = ServerContains.getRoom(robot.getRoomId());
 
 			PokerSell lastPokerShell = null;
 			PokerSell pokerSell = null;

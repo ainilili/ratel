@@ -22,7 +22,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 		
 		if(room.getCurrentSellClient() == clientSide.getId()) {
 			Character[] options = Noson.convert(data, Character[].class);
@@ -90,6 +90,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 							if(client.getRole() == ClientRole.PLAYER) {
 								ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 							}
+							ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(client, data);
 						}
 					}else {
 						if(next.getRole() == ClientRole.PLAYER) {

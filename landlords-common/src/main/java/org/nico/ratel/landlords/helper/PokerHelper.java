@@ -386,7 +386,7 @@ public class PokerHelper {
 		if(pokers != null && pokers.size() > 0) {
 			for(int index = 0; index < pokers.size(); index ++) {
 				String name = pokers.get(index).getLevel().getName();
-				builder.append(name);
+				builder.append(name + " ");
 			}
 		}
 		return builder.toString();

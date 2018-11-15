@@ -8,6 +8,8 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_CLIENT_EXIT("客户端退出"),
 	
+	CODE_CLIENT_KICK("客户端被踢出"),
+	
 	CODE_CLIENT_CONNECT("客户端加入成功"),
 	
 	CODE_SHOW_OPTIONS("全局选项列表"),

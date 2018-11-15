@@ -13,7 +13,7 @@ public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener
 	@Override
 	public void call(ClientSide clientSide, String data) {
 
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 
 		if(room != null) {
 			String result = MapHelper.newInstance()
@@ -27,7 +27,7 @@ public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener
 					client.init();
 				}
 			}
-			ServerContains.ROOM_MAP.remove(room.getId());
+			ServerContains.removeRoom(room.getId());
 		}
 	}
 
