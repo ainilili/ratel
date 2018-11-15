@@ -31,6 +31,8 @@ public class Room{
 	private int lastSellClient = -1;
 	
 	private int currentSellClient = -1;
+	
+	private int difficultyCoefficient;
 
 	public Room() {
 	}
@@ -40,6 +42,14 @@ public class Room{
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
 		this.status = RoomStatus.BLANK;
+	}
+
+	public final int getDifficultyCoefficient() {
+		return difficultyCoefficient;
+	}
+
+	public final void setDifficultyCoefficient(int difficultyCoefficient) {
+		this.difficultyCoefficient = difficultyCoefficient;
 	}
 
 	public final RoomType getType() {

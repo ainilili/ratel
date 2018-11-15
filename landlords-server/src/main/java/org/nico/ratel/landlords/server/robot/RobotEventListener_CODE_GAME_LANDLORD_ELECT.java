@@ -1,7 +1,6 @@
 package org.nico.ratel.landlords.server.robot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventLi
 			PokerHelper.sortPoker(leftPokers);
 			PokerHelper.sortPoker(rightPokers);
 			
-			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, String.valueOf(RobotDecisionMakers.howToChooseLandlord(leftPokers, rightPokers, landlordPokers)));
+			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, String.valueOf(RobotDecisionMakers.howToChooseLandlord(room.getDifficultyCoefficient(), leftPokers, rightPokers, landlordPokers)));
 		}
 		
 	}

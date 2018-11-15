@@ -13,7 +13,7 @@ import org.nico.ratel.landlords.entity.PokerSell;
 
 public abstract	class AbstractRobotDecisionMakers {
 
-	public abstract List<Poker> howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers);
+	public abstract PokerSell howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers);
 	
 	public abstract boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers);
 }

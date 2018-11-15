@@ -55,6 +55,8 @@ public enum ClientEventCode implements Serializable{
 	CODE_GAME_POKER_PLAY_ORDER_ERROR("顺序错误"),
 	
 	CODE_GAME_OVER("游戏结束"),
+	
+	CODE_NOT_SUPPORT("不支持"),
 	;
 	
 	private String msg;

@@ -44,7 +44,7 @@ public class SimpleClient {
 		}
 		
 		if(serverAddress == null || port == 0){
-			String serverInfo = StreamUtils.convertToString(new URL("https://raw.githubusercontent.com/abbychau/ratel/master/serverlist.json"));
+			String serverInfo = StreamUtils.convertToString(new URL("https://github.com/ainilili/ratel/blob/dev-1.1.0/serverlist.json"));
 			List<String> serverAddressList = Noson.convert(serverInfo, new NoType<List<String>>() {});
 			SimplePrinter.printNotice("Please select a server:");
 			for(int i = 0; i < serverAddressList.size(); i++) {

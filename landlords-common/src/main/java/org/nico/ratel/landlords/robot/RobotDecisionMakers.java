@@ -1,6 +1,8 @@
 package org.nico.ratel.landlords.robot;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
@@ -12,15 +14,24 @@ import org.nico.ratel.landlords.entity.PokerSell;
  */
 public class RobotDecisionMakers {
 	
-	private static AbstractRobotDecisionMakers decisionMakers = new SimpleRobotDecisionMakers();
+	private static Map<Integer, AbstractRobotDecisionMakers> decisionMakersMap = new HashMap<Integer, AbstractRobotDecisionMakers>() {
+		private static final long serialVersionUID = 8541568961784067309L;
+		{
+			decisionMakersMap.put(1, new SimpleRobotDecisionMakers());
+			decisionMakersMap.put(2, new MediumRobotDecisionMakers());
+		}
+	};
 	
-	public static List<Poker> howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers){
-		
-		return null;
+	public static boolean contains(int difficultyCoefficient) {
+		return decisionMakersMap.containsKey(difficultyCoefficient);
 	}
 	
-	public static boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
-		return decisionMakers.howToChooseLandlord(leftPokers, rightPokers, myPokers);
+	public static PokerSell howToPlayPokers(int difficultyCoefficient, PokerSell lastPokerSell, List<Poker> myPokers){
+		return decisionMakersMap.get(difficultyCoefficient).howToPlayPokers(lastPokerSell, myPokers);
+	}
+	
+	public static boolean howToChooseLandlord(int difficultyCoefficient, List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
+		return decisionMakersMap.get(difficultyCoefficient).howToChooseLandlord(leftPokers, rightPokers, myPokers);
 	}
 	
 }
