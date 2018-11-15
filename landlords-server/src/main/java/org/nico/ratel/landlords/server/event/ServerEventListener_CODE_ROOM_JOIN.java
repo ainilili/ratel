@@ -3,7 +3,6 @@ package org.nico.ratel.landlords.server.event;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;

@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.entity.Poker;
+import org.nico.ratel.landlords.enums.PokerLevel;
+import org.nico.ratel.landlords.enums.PokerType;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
@@ -41,15 +46,44 @@ public class SimpleClient {
 					if(args[index].equalsIgnoreCase("-pt") || args[index].equalsIgnoreCase("-pt")) {
 						int selection =  Integer.parseInt(args[index + 1]);
 
-						if( selection > 0 && selection < 4 ){
-							PokerHelper.pokerPrinterType = selection;
+						if( selection >= 1 && selection <= PokerHelper.totalPrinters ){
+							PokerHelper.pokerPrinterType = selection - 1;
 						}
 					}
 					
 				}
 			}
 		}
-		
+		// List<Poker> pokers = new ArrayList<Poker>();
+		// Poker p = new Poker();
+		// p.setLevel(PokerLevel.LEVEL_3);
+		// p.setType(PokerType.SPADE);
+		// Poker p2 = new Poker();
+		// p2.setLevel(PokerLevel.LEVEL_K);
+		// p2.setType(PokerType.HEART);
+		// pokers.add(p);
+		// pokers.add(p2);
+
+		// System.out.println(
+
+		// 	pokers.stream().map(
+		// 		elt -> {
+		// 			int level = elt.getLevel().getLevel() - 1;
+		// 			switch (elt.getType()) {
+		// 				case SPADE:
+		// 				return String.valueOf(Character.toChars(0x1F0A1 + level));
+		// 				case HEART:
+		// 				return String.valueOf(Character.toChars(0x1F0B1 + level));
+		// 				case DIAMOND:
+		// 				return String.valueOf(Character.toChars(0x1F0C1 + level));
+		// 				case CLUB:
+		// 				return String.valueOf(Character.toChars(0x1F0D1 + level));
+		// 				default:
+		// 				return "";
+		// 			}
+		// 		}
+		// 	).collect(Collectors.joining(""))
+		// );
 		if(serverAddress.equals("") || port == 0){
 			StringBuffer buffer = new StringBuffer();
 			try {
@@ -71,9 +105,11 @@ public class SimpleClient {
 			for(int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i+1) + ". " + serverAddressList.get(i));
 			}
-			int serverPick = Integer.parseInt(SimpleWriter.write("option"));
+			int serverPick = 0;
 			while(serverPick<1 || serverPick>serverAddressList.size()){
-				SimplePrinter.printNotice("Invalid Option");
+				try {
+					serverPick = Integer.parseInt(SimpleWriter.write("option"));
+				}catch(NumberFormatException e){}
 			}
 			serverAddress = serverAddressList.get(serverPick-1);
 			String[] elements = serverAddress.split(":");
