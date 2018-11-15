@@ -18,7 +18,6 @@ public class RobotDecisionMakers {
 		private static final long serialVersionUID = 8541568961784067309L;
 		{
 			put(1, new SimpleRobotDecisionMakers());
-			put(2, new MediumRobotDecisionMakers());
 		}
 	};
 	
