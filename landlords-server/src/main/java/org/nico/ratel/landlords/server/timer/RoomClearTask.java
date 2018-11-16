@@ -3,7 +3,6 @@ package org.nico.ratel.landlords.server.timer;
 import java.util.Map;
 import java.util.TimerTask;
 
-import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
