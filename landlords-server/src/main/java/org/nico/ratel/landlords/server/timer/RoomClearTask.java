@@ -29,7 +29,7 @@ public class RoomClearTask extends TimerTask{
 	private static long waitingStatusInterval = 1000 * 100;
 
 	//The room starting destroy time is 100s
-	private static long startingStatusInterval = 1000 * 100;
+	private static long startingStatusInterval = 1000 * 10;
 
 	//The room live  time is 600s
 	private static long liveTime = 1000 * 60 * 10;
@@ -105,7 +105,7 @@ public class RoomClearTask extends TimerTask{
 
 									room.getClientSideMap().put(robot.getId(), robot);
 									room.getClientSideList().add(robot);
-									room.setCurrentSellClient(currentPlayer.getId());
+									room.setCurrentSellClient(robot.getId());
 
 									//set robot difficulty -> simple
 									room.setDifficultyCoefficient(1);
