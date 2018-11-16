@@ -21,9 +21,9 @@ public class SimpleClient {
 
 	public static int id = -1;
 	
-	public static String serverAddress = "127.0.0.1";
+	public static String serverAddress = null;
 	
-	public static int port = 1024;
+	public static int port = -1;
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
 		if(args != null && args.length > 0) {
