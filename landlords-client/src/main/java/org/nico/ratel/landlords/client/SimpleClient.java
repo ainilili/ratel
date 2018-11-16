@@ -21,9 +21,9 @@ public class SimpleClient {
 
 	public static int id = -1;
 	
-	public static String serverAddress = "127.0.0.1";
+	public static String serverAddress = null;
 	
-	public static int port = 1024;
+	public static int port = -1;
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
 		if(args != null && args.length > 0) {
@@ -40,7 +40,7 @@ public class SimpleClient {
 		}
 		
 		if(serverAddress == null || port == 0){
-			String serverInfo = StreamUtils.convertToString(new URL("https://github.com/ainilili/ratel/blob/dev-1.1.0/serverlist.json"));
+			String serverInfo = StreamUtils.convertToString(new URL("https://github.com/ainilili/ratel/blob/master/serverlist.json"));
 			List<String> serverAddressList = Noson.convert(serverInfo, new NoType<List<String>>() {});
 			SimplePrinter.printNotice("Please select a server:");
 			for(int i = 0; i < serverAddressList.size(); i++) {
