@@ -38,7 +38,7 @@ public class SimpleServer {
 			
 			ServerContains.THREAD_EXCUTER.execute(() -> {
 				Timer timer=new Timer();
-				timer.schedule(new RoomClearTask(), 0L, 5000L);
+				timer.schedule(new RoomClearTask(), 0L, 3000L);
 			});
 			f.channel().closeFuture().sync();
 		} finally {
