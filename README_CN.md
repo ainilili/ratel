@@ -86,6 +86,7 @@ sx
  - [更新日志](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
 
 ## 最后
+ - [Serverlist.json](https://github.com/ainilili/ratel/blob/master/serverlist.json) 是当前的服务器列表, 如果你的服务器部署着当前最新版本的服务端并且分享给大家，可以通过PR提交给我们!
  - 如果您想贡献代码，非常欢迎提Pull Request，我们将会合并优秀的代码
  - 如果您发现了BUG，非常欢迎提ISSUE给我们
  - 欢迎扩展其他语言的客户端

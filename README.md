@@ -83,8 +83,9 @@ sx
 ```
 ## Update
  - [Update Log](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
-
+ 
 ## End
+ - [Serverlist.json](https://github.com/ainilili/ratel/blob/master/serverlist.json) is the current server list, If your server is currently deployed with the latest version of the server and Shared with everyone, you can submit it to us through PR!
  - If you have good code, you are welcome to submit it to us and we will incorporate good code
  - If you find some bugs in use, please mention issue to us
  - Ratel designs cross-platform and welcomes client rewrite in other languages
