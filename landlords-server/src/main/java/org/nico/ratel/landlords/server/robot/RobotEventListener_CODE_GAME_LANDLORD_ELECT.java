@@ -10,6 +10,7 @@ import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
+import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.robot.RobotDecisionMakers;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.ServerEventListener;
@@ -35,6 +36,8 @@ public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventLi
 			PokerHelper.sortPoker(leftPokers);
 			PokerHelper.sortPoker(rightPokers);
 
+			TimeHelper.sleep(500);
+			
 			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, String.valueOf(RobotDecisionMakers.howToChooseLandlord(room.getDifficultyCoefficient(), leftPokers, rightPokers, landlordPokers)));
 		});
 	}

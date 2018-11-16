@@ -6,6 +6,7 @@ import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.robot.RobotDecisionMakers;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.ServerEventListener;
@@ -25,6 +26,8 @@ public class RobotEventListener_CODE_GAME_POKER_PLAY implements RobotEventListen
 			}else {
 				pokerSell = RobotDecisionMakers.howToPlayPokers(room.getDifficultyCoefficient(), null, robot.getPokers());
 			}
+			
+			TimeHelper.sleep(500);
 			
 			if(pokerSell == null || pokerSell.getSellType() == SellType.ILLEGAL) {
 				ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_PASS).call(robot, data);

@@ -24,6 +24,7 @@ public class ServerEventListener_CODE_GET_ROOMS implements ServerEventListener{
 					.put("roomId", room.getId())
 					.put("roomOwner", room.getRoomOwner())
 					.put("roomClientCount", room.getClientSideList().size())
+					.put("roomType", room.getType())
 					.map());
 		}
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_SHOW_ROOMS, Noson.reversal(roomList));

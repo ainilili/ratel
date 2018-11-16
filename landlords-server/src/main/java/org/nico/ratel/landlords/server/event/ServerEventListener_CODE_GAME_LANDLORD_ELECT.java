@@ -82,7 +82,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 				}
 			}
 		}else {
-			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_PLAY_FAIL_BY_INEXIST, null);
+//			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_PLAY_FAIL_BY_INEXIST, null);
 		}
 	}
 }

@@ -32,7 +32,7 @@ public enum ClientEventCode implements Serializable{
 	
 	CODE_ROOM_JOIN_FAIL_BY_INEXIST("加入-房间不存在"),
 	
-	CODE_ROOM_PLAY_FAIL_BY_INEXIST("出牌-房间不存在"),
+	CODE_ROOM_PLAY_FAIL_BY_INEXIST1("出牌-房间不存在"),
 	
 	CODE_GAME_STARTING("开始游戏"),
 	

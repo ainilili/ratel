@@ -36,6 +36,8 @@ public class Room{
 	
 	private long lastFlushTime;
 	
+	private long createTime;
+	
 	public Room() {
 	}
 
@@ -44,6 +46,14 @@ public class Room{
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
 		this.status = RoomStatus.BLANK;
+	}
+
+	public final long getCreateTime() {
+		return createTime;
+	}
+
+	public final void setCreateTime(long createTime) {
+		this.createTime = createTime;
 	}
 
 	public final int getDifficultyCoefficient() {

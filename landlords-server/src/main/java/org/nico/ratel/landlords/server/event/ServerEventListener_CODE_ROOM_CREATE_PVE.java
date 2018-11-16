@@ -27,6 +27,7 @@ public class ServerEventListener_CODE_ROOM_CREATE_PVE implements ServerEventList
 			room.getClientSideMap().put(clientSide.getId(), clientSide);
 			room.getClientSideList().add(clientSide);
 			room.setCurrentSellClient(clientSide.getId());
+			room.setCreateTime(System.currentTimeMillis());
 			room.setDifficultyCoefficient(difficultyCoefficient);
 			
 			clientSide.setRoomId(room.getId());
