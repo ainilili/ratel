@@ -1,0 +1,1 @@
+protoc -I=. --java_out=../landlords-common/src/main/java/ ./*.proto

@@ -2,6 +2,7 @@ package org.nico.ratel.landlords.entity;
 
 import java.util.List;
 
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.ClientType;
 
@@ -18,6 +19,8 @@ public class ClientSide{
 	private List<Poker> pokers;
 	
 	private ClientStatus status;
+	
+	private ClientRole role;
 	
 	private ClientType type;
 	
@@ -42,6 +45,14 @@ public class ClientSide{
 		type = null;
 		next = null;
 		pre = null;
+	}
+
+	public final ClientRole getRole() {
+		return role;
+	}
+
+	public final void setRole(ClientRole role) {
+		this.role = role;
 	}
 
 	public final String getNickname() {
@@ -114,6 +125,28 @@ public class ClientSide{
 
 	public final void setPre(ClientSide pre) {
 		this.pre = pre;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClientSide other = (ClientSide) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 }

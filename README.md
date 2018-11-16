@@ -81,6 +81,9 @@ sx
 333344445678
 3333444455667788
 ```
+## Update
+ - [Update Log](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
+
 ## End
  - If you have good code, you are welcome to submit it to us and we will incorporate good code
  - If you find some bugs in use, please mention issue to us

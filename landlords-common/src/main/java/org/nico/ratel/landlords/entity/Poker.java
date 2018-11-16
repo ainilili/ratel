@@ -66,7 +66,7 @@ public class Poker{
 
 	@Override
 	public String toString() {
-		return "Poker [level=" + level + ", type=" + type + "]";
+		return String.valueOf(level.getLevel()) + " ";
 	}
 	
 }

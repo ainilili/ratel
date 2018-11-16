@@ -21,9 +21,10 @@ public class ClientEventListener_CODE_CLIENT_EXIT extends ClientEventListener{
 		if(exitClientId == SimpleClient.id) {
 			role = "You";
 		}else {
-			role = (String) map.get("exitClientNickname");
+			role = String.valueOf(map.get("exitClientNickname"));
 		}
-		SimplePrinter.printNotice(role + " withdrew from the room. Room disbanded!!");
+		SimplePrinter.printNotice(role + " exit from the room. Room disbanded!!\n");
+		
 		get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 	}
 

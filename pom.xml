@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.smallnico.ratel</groupId>
 	<artifactId>landlords</artifactId>
-	<version>1.0.1</version>
+	<version>1.1.0</version>
 	<name>ratel</name>
 	<url>https://github.com/ainilili/ratel</url>
 	<packaging>pom</packaging>
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>com.smallnico</groupId>
 			<artifactId>noson</artifactId>
-			<version>1.1.5</version>
+			<version>1.1.6</version>
 		</dependency>
 	</dependencies>
 	

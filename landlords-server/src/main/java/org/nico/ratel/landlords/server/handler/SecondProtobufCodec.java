@@ -14,7 +14,6 @@ public class SecondProtobufCodec extends MessageToMessageCodec<ServerTransferDat
 	@Override
 	protected void encode(ChannelHandlerContext ctx, MessageLite msg, List<Object> out) throws Exception {
 		out.add(msg);
-		
 	}
 
 	@Override

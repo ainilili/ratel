@@ -81,6 +81,10 @@ sx
 333344445678
 3333444455667788
 ```
+
+## 更新
+ - [更新日志](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
+
 ## 最后
  - 如果您想贡献代码，非常欢迎提Pull Request，我们将会合并优秀的代码
  - 如果您发现了BUG，非常欢迎提ISSUE给我们

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.nico.ratel.landlords.enums.RoomStatus;
+import org.nico.ratel.landlords.enums.RoomType;
 
 public class Room{
 
@@ -15,11 +16,13 @@ public class Room{
 	
 	private RoomStatus status;
 	
+	private RoomType type;
+	
 	private Map<Integer, ClientSide> clientSideMap;
 	
 	private LinkedList<ClientSide> clientSideList;
 	
-	private int landlordId;
+	private int landlordId = -1;
 	
 	private List<Poker> landlordPokers;
 	
@@ -28,7 +31,11 @@ public class Room{
 	private int lastSellClient = -1;
 	
 	private int currentSellClient = -1;
-
+	
+	private int difficultyCoefficient;
+	
+	private long lastFlushTime;
+	
 	public Room() {
 	}
 
@@ -37,6 +44,22 @@ public class Room{
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
 		this.status = RoomStatus.BLANK;
+	}
+
+	public final int getDifficultyCoefficient() {
+		return difficultyCoefficient;
+	}
+
+	public final void setDifficultyCoefficient(int difficultyCoefficient) {
+		this.difficultyCoefficient = difficultyCoefficient;
+	}
+
+	public final RoomType getType() {
+		return type;
+	}
+
+	public final void setType(RoomType type) {
+		this.type = type;
 	}
 
 	public final PokerSell getLastPokerShell() {
@@ -53,6 +76,14 @@ public class Room{
 
 	public final void setCurrentSellClient(int currentSellClient) {
 		this.currentSellClient = currentSellClient;
+	}
+
+	public long getLastFlushTime() {
+		return lastFlushTime;
+	}
+
+	public void setLastFlushTime(long lastFlushTime) {
+		this.lastFlushTime = lastFlushTime;
 	}
 
 	public int getLastSellClient() {

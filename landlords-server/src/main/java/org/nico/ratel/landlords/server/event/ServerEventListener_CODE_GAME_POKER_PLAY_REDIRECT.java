@@ -9,23 +9,25 @@ import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
-import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
 public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements ServerEventListener{
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
-		Room room = ServerContains.ROOM_MAP.get(clientSide.getRoomId());
+		Room room = ServerContains.getRoom(clientSide.getRoomId());
 		
 		List<Map<String, Object>> clientInfos = new ArrayList<Map<String,Object>>(3);
 		for(ClientSide client: room.getClientSideList()){
-			clientInfos.add(MapHelper.newInstance()
-								.put("clientId", client.getId())
-								.put("clientNickname", client.getNickname())
-								.put("type", client.getType())
-								.put("surplus", client.getPokers().size())
-								.map());
+			if(clientSide.getId() != client.getId()){
+				clientInfos.add(MapHelper.newInstance()
+						.put("clientId", client.getId())
+						.put("clientNickname", client.getNickname())
+						.put("type", client.getType())
+						.put("surplus", client.getPokers().size())
+						.put("position", clientSide.getPre().getId() == client.getId() ? "UP" : "DOWN")
+						.map());
+			}
 		}
 		
 		String result = MapHelper.newInstance()

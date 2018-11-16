@@ -1,17 +1,24 @@
 package org.nico.ratel.landlords.client.event;
 
+import static org.nico.ratel.landlords.client.event.ClientEventListener_CODE_CLIENT_NICKNAME_SET.NICKNAME_MAX_LENGTH;
+
 import java.util.List;
 import java.util.Map;
 
 import org.nico.ratel.landlords.client.SimpleClient;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
+import org.nico.ratel.landlords.print.FormatPrinter;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
 public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEventListener{
 
+	private static String[] choose = new String[]{"UP", "DOWN"};
+	
+	private static String format = "\n[%-4s]%-" + NICKNAME_MAX_LENGTH + "ssurplus %-2s [%-8s]";
+	
 	@Override
 	public void call(Channel channel, String data) {
 		
@@ -19,10 +26,15 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEve
 		
 		int sellClientId = (int) map.get("sellClientId");
 		
-		SimplePrinter.printNotice("\nEveryone's number of cards:\n");
 		List<Map<String, Object>> clientInfos = (List<Map<String, Object>>) map.get("clientInfos");
-		for(Map<String, Object> clientInfo: clientInfos) {
-			SimplePrinter.printNotice(clientInfo.get("clientNickname") + "\t(" + clientInfo.get("type") + "): \t " + clientInfo.get("surplus") + " cards");
+		
+		for(int index = 0; index < 2; index ++){
+			for(Map<String, Object> clientInfo: clientInfos) {
+				String position = (String) clientInfo.get("position");
+				if(position.equalsIgnoreCase(choose[index])){
+					FormatPrinter.printNotice(format, clientInfo.get("position"), clientInfo.get("clientNickname"), clientInfo.get("surplus"), clientInfo.get("type"));
+				}
+			}
 		}
 		SimplePrinter.printNotice("");
 		

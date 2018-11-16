@@ -1,7 +1,11 @@
 package org.nico.ratel.landlords.server;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.nico.ratel.landlords.entity.ClientSide;
@@ -17,7 +21,7 @@ public class ServerContains {
 	/**
 	 * The map of server side
 	 */
-	public final static Map<Integer, Room> ROOM_MAP = new ConcurrentSkipListMap<>();
+	private final static Map<Integer, Room> ROOM_MAP = new ConcurrentSkipListMap<>();
 	
 	/**
 	 * The list of client side
@@ -34,5 +38,34 @@ public class ServerContains {
 	
 	public final static int getServerId() {
 		return SERVER_ATOMIC_ID.getAndIncrement();
+	}
+	
+	public final static ThreadPoolExecutor THREAD_EXCUTER = new ThreadPoolExecutor(200, 200, 0, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>());
+	
+	/**
+	 * Get room by id, with flush time
+	 * 
+	 * @param id room id
+	 * @return
+	 */
+	public final static Room getRoom(int id){
+		Room room = ROOM_MAP.get(id);
+		if(room != null){
+			room.setLastFlushTime(System.currentTimeMillis());
+		}
+		return room;
+	}
+	
+	public final static Map<Integer, Room> getRoomMap(){
+		return ROOM_MAP;
+	}
+	
+	public final static Room removeRoom(int id){
+		return ROOM_MAP.remove(id);
+	}
+	
+	public final static Room addRoom(Room room){
+		return ROOM_MAP.put(room.getId(), room);
 	}
 }
