@@ -11,6 +11,7 @@ import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.RoomStatus;
+import org.nico.ratel.landlords.enums.RoomType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.ServerContains;
@@ -35,7 +36,15 @@ public class RoomClearTask extends TimerTask{
 	
 	@Override
 	public void run() {
-
+		try {
+			doing();
+		}catch(Exception e) {
+			SimplePrinter.serverLog(e.getMessage());
+		}
+		
+	}
+	
+	public void doing() {
 		Map<Integer, Room> rooms = ServerContains.getRoomMap();
 		if(rooms != null && ! rooms.isEmpty()){
 			long now = System.currentTimeMillis();
@@ -57,67 +66,66 @@ public class RoomClearTask extends TimerTask{
 							ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(room.getClientSideList().get(0), null);
 						}
 					}else{
-						long interval = startingStatusInterval;
-						
-						if(diff > interval){
-							boolean allRobots = true;
-							for(ClientSide client: room.getClientSideList()) {
-								if(client.getId() != room.getCurrentSellClient() && client.getRole() == ClientRole.PLAYER) {
-									allRobots = false;
-									break;
+						if(room.getType() == RoomType.PVP) {
+							long interval = startingStatusInterval;
+							
+							if(diff > interval){
+								boolean allRobots = true;
+								for(ClientSide client: room.getClientSideList()) {
+									if(client.getId() != room.getCurrentSellClient() && client.getRole() == ClientRole.PLAYER) {
+										allRobots = false;
+										break;
+									}
 								}
-							}
-							
-							ClientSide currentPlayer = room.getClientSideMap().get(room.getCurrentSellClient());
-							
-							if(allRobots) {
-								SimplePrinter.serverLog("room " + room.getId() + " all is robots, closed!");
 								
-								ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(currentPlayer, null);
-							}else {
-								//kick this client
-								ChannelUtils.pushToClient(currentPlayer.getChannel(), ClientEventCode.CODE_CLIENT_KICK, null);
-
-								//client current player
-								room.getClientSideMap().remove(currentPlayer.getId());
-								room.getClientSideList().remove(currentPlayer);
-
-								ClientSide robot = new ClientSide(- ServerContains.getClientId(), ClientStatus.PLAYING, null);
-								robot.setNickname(currentPlayer.getNickname());
-								robot.setRole(ClientRole.ROBOT);
-								robot.setRoomId(room.getId());
-								robot.setNext(currentPlayer.getNext());
-								robot.setPre(currentPlayer.getPre());
-								robot.getNext().setPre(robot);
-								robot.getPre().setNext(robot);
-								robot.setPokers(currentPlayer.getPokers());
-								robot.setType(currentPlayer.getType());
-
-								room.getClientSideMap().put(robot.getId(), robot);
-								room.getClientSideList().add(robot);
-								room.setCurrentSellClient(currentPlayer.getId());
-
-								//set robot difficulty -> simple
-								room.setDifficultyCoefficient(1);
-
-								ServerContains.CLIENT_SIDE_MAP.put(robot.getId(), robot);
+								ClientSide currentPlayer = room.getClientSideMap().get(room.getCurrentSellClient());
 								
-								//init client
-								currentPlayer.init();
-								
-								SimplePrinter.serverLog("room " + room.getId() + " player " + currentPlayer.getNickname() + " " + startingStatusInterval + "ms not operating, automatic custody!");
-								
-								if(room.getLandlordId() == -1){
-									RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, null);
-								}else{
-									RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(robot, null);
+								if(allRobots) {
+									SimplePrinter.serverLog("room " + room.getId() + " all is robots, closed!");
+									
+									ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(currentPlayer, null);
+								}else {
+									//kick this client
+									ChannelUtils.pushToClient(currentPlayer.getChannel(), ClientEventCode.CODE_CLIENT_KICK, null);
+
+									//client current player
+									room.getClientSideMap().remove(currentPlayer.getId());
+									room.getClientSideList().remove(currentPlayer);
+
+									ClientSide robot = new ClientSide(- ServerContains.getClientId(), ClientStatus.PLAYING, null);
+									robot.setNickname(currentPlayer.getNickname());
+									robot.setRole(ClientRole.ROBOT);
+									robot.setRoomId(room.getId());
+									robot.setNext(currentPlayer.getNext());
+									robot.setPre(currentPlayer.getPre());
+									robot.getNext().setPre(robot);
+									robot.getPre().setNext(robot);
+									robot.setPokers(currentPlayer.getPokers());
+									robot.setType(currentPlayer.getType());
+
+									room.getClientSideMap().put(robot.getId(), robot);
+									room.getClientSideList().add(robot);
+									room.setCurrentSellClient(currentPlayer.getId());
+
+									//set robot difficulty -> simple
+									room.setDifficultyCoefficient(1);
+
+									ServerContains.CLIENT_SIDE_MAP.put(robot.getId(), robot);
+									
+									//init client
+									currentPlayer.init();
+									
+									SimplePrinter.serverLog("room " + room.getId() + " player " + currentPlayer.getNickname() + " " + startingStatusInterval + "ms not operating, automatic custody!");
+									
+									if(room.getLandlordId() == -1){
+										RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, null);
+									}else{
+										RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(robot, null);
+									}
 								}
 							}
 						}
 					}
-					
-					
-					
 				}
 			}
 		}
