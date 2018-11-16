@@ -40,7 +40,7 @@ public class ServerContains {
 		return SERVER_ATOMIC_ID.getAndIncrement();
 	}
 	
-	public final static ThreadPoolExecutor THREAD_EXCUTER = new ThreadPoolExecutor(200, 200, 0, TimeUnit.MILLISECONDS,
+	public final static ThreadPoolExecutor THREAD_EXCUTER = new ThreadPoolExecutor(500, 500, 0, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<Runnable>());
 	
 	/**
