@@ -21,7 +21,6 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 	@Override
 	public PokerSell howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers) {
 		
-		
 		if(lastPokerSell != null && lastPokerSell.getSellType() == SellType.KING_BOMB) {
 			return null;
 		}
@@ -45,7 +44,11 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 				}
 			}
 		}
-		
+		for(PokerSell sell: sells) {
+			if(sell.getSellType() == SellType.KING_BOMB) {
+				return sell;
+			}
+		}
 		return null;
 	}
 

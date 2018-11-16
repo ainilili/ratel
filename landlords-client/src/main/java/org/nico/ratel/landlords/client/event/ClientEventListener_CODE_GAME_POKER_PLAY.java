@@ -59,6 +59,8 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 					pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY, Noson.reversal(options.toArray(new Character[] {})));
 				}else{
 					SimplePrinter.printNotice("Invalid enter");
+					SimplePrinter.printNotice(lastSellClientNickname + "[" + lastSellClientType + "] played:");
+					SimplePrinter.printPokers(lastPokers);
 					call(channel, data);
 				}
 			}

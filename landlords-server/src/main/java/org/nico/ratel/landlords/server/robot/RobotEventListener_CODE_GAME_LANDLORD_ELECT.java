@@ -34,7 +34,7 @@ public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventLi
 			PokerHelper.sortPoker(leftPokers);
 			PokerHelper.sortPoker(rightPokers);
 
-			TimeHelper.sleep(500);
+			TimeHelper.sleep(300);
 			
 			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, String.valueOf(RobotDecisionMakers.howToChooseLandlord(room.getDifficultyCoefficient(), leftPokers, rightPokers, landlordPokers)));
 		});
