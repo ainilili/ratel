@@ -69,6 +69,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 						String result = MapHelper.newInstance()
 								.put("clientId", clientSide.getId())
 								.put("clientNickname", clientSide.getNickname())
+								.put("clientType", clientSide.getType())
 								.put("pokers", currentPokers)
 								.put("sellClinetNickname", next.getNickname())
 								.json();

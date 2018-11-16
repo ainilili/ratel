@@ -27,12 +27,7 @@ public class RobotEventListener_CODE_GAME_POKER_PLAY implements RobotEventListen
 				pokerSell = RobotDecisionMakers.howToPlayPokers(room.getDifficultyCoefficient(), null, robot.getPokers());
 			}
 			
-			if(pokerSell != null && lastPokerShell != null) {
-				System.out.println("robot sell: " + pokerSell.toString());
-				System.out.println("last sell: " + lastPokerShell.toString());
-			}
-			
-			TimeHelper.sleep(500);
+			TimeHelper.sleep(300);
 			
 			if(pokerSell == null || pokerSell.getSellType() == SellType.ILLEGAL) {
 				ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_PASS).call(robot, data);
