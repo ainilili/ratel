@@ -56,7 +56,7 @@ public class PokerSell {
 
 	@Override
 	public String toString() {
-		return sellType + "\t\t| " + coreLevel + "\t\t|" + sellPokers;
+		return sellType + "\t\t| " + score + "\t\t|" + sellPokers;
 	}
 	
 }

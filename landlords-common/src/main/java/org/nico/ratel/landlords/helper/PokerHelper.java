@@ -500,7 +500,7 @@ public class PokerHelper {
 		{
 			if(size > 1) {
 				if(pokers.get(size - 1).getLevel() == PokerLevel.LEVEL_BIG_KING && pokers.get(size - 2).getLevel() == PokerLevel.LEVEL_SMALL_KING) {
-					pokerSells.add(new PokerSell(SellType.KING_BOMB, ListUtils.getList(new Poker[] {pokers.get(size - 2), pokers.get(size - 1)}), PokerLevel.LEVEL_BIG_KING.LEVEL_10.getLevel()));
+					pokerSells.add(new PokerSell(SellType.KING_BOMB, ListUtils.getList(new Poker[] {pokers.get(size - 2), pokers.get(size - 1)}), PokerLevel.LEVEL_BIG_KING.getLevel()));
 				}
 			}
 		}
@@ -581,12 +581,13 @@ public class PokerHelper {
 							for(int s = 0; s <= increase_1 - minLenght; s ++) {
 								int len = minLenght + s;
 								for(int subIndex = 0; subIndex <= increase_1 - len; subIndex ++) {
-									pokerSells.add(new PokerSell(targetSellType, ListUtils.getList(sellPokers_1.subList(subIndex * width, (subIndex + len) * width)), level));
+									pokerSells.add(new PokerSell(targetSellType, ListUtils.getList(sellPokers_1.subList(subIndex * width, (subIndex + len) * width)), lastLevel_1));
 								}
 							}
 						}
-						increase_1 = 0;
+						increase_1 = 1;
 						sellPokers_1.clear();
+						sellPokers_1.addAll(sell.getSellPokers());
 					}
 				}
 				lastLevel_1 = level;

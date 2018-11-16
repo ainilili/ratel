@@ -79,8 +79,6 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 							}
 						}
 						
-						TimeHelper.sleep(500);
-						
 						if(clientSide.getPokers().isEmpty()) {
 							result = MapHelper.newInstance()
 												.put("winnerNickname", clientSide.getNickname())
