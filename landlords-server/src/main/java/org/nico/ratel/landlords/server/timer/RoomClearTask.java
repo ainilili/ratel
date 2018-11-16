@@ -26,10 +26,10 @@ import org.nico.ratel.landlords.server.robot.RobotEventListener;
 public class RoomClearTask extends TimerTask{
 
 	//The room wait time of after create is 100s
-	private static long waitingStatusInterval = 1000 * 60;
+	private static long waitingStatusInterval = 1000 * 100;
 
 	//The room starting destroy time is 100s
-	private static long startingStatusInterval = 1000 * 60;
+	private static long startingStatusInterval = 1000 * 100;
 
 	//The room live  time is 600s
 	private static long liveTime = 1000 * 60 * 10;
