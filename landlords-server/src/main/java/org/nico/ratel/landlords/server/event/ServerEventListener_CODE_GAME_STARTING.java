@@ -35,6 +35,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 
 		// Push information about the robber
 		int startGrabIndex = (int)(Math.random() * 3);
+		startGrabIndex = 0;
 		ClientSide startGrabClient = roomClientList.get(startGrabIndex);
 		room.setCurrentSellClient(startGrabClient.getId());
 		
