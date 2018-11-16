@@ -17,7 +17,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEve
 
 	private static String[] choose = new String[]{"UP", "DOWN"};
 	
-	private static String format = "\n[%-4s]%-" + NICKNAME_MAX_LENGTH + "ssurplus %-2s [%-8s]";
+	private static String format = "\n[%-4s] %-" + NICKNAME_MAX_LENGTH + "s  surplus %-2s [%-8s]";
 	
 	@Override
 	public void call(Channel channel, String data) {
