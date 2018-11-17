@@ -608,48 +608,4 @@ public class PokerHelper {
 			sellPokers_1.clear();
 		}
 	}
-	
-	public static void main(String[] args) {
-		
-		List<Poker> pokers = new ArrayList<>();
-		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_6, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_9, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_10, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_K, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_A, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_2, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_6, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_9, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_10, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_J, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_Q, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_K, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_A, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_2, PokerType.BLANK));
-		
-		
-		sortPoker(pokers);
-		
-		List<PokerSell> sells = parsePokerSells(pokers);
-		
-		for(PokerSell sell: sells) {
-			if(sell.getSellType() == SellType.SINGLE_STRAIGHT) {
-				System.out.println(sell);
-			}
-		}
-		
-	}
-	
 }
