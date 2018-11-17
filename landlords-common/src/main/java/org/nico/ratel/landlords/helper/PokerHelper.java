@@ -609,23 +609,4 @@ public class PokerHelper {
 		}
 	}
 	
-	
-	public static void main(String[] args) {
-		
-		List<Poker> pokers = new ArrayList<>();
-		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_4, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_6, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.BLANK));
-		pokers.add(new Poker(PokerLevel.LEVEL_8, PokerType.BLANK));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.BLANK));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.BLANK));
-//		pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.BLANK));
-		
-		List<PokerSell> sells = parsePokerSells(pokers);
-		for(PokerSell sell: sells) {
-			System.out.println(sell);
-		}
-	}
 }
