@@ -14,6 +14,10 @@ public class ClientEventListener_CODE_ROOM_JOIN_SUCCESS extends ClientEventListe
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
+		lastPokers = null;
+		lastSellClientNickname = null;
+		lastSellClientType = null;
+		
 		int joinClientId = (int) map.get("clientId");
 		if(SimpleClient.id == joinClientId) {
 			SimplePrinter.printNotice("You have joined room：" + map.get("roomId") + ". There are " + map.get("roomClientCount") + " players in the room now.");
@@ -21,8 +25,6 @@ public class ClientEventListener_CODE_ROOM_JOIN_SUCCESS extends ClientEventListe
 		}else {
 			SimplePrinter.printNotice(map.get("clientNickname") + " joined room, the current number of room player is " + map.get("roomClientCount"));
 		}
-		
-		
 		
 	}
 

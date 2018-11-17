@@ -25,12 +25,8 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 		if(line.equalsIgnoreCase("BACK")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}else {
-			while(line == null || OptionsUtils.getOptions(line) == -1) {
-				SimplePrinter.printNotice("Invalid setting, please choose again：");
-				line = SimpleWriter.write("setting");
-			}
+			int choose = OptionsUtils.getOptions(line);
 			
-			int choose = Integer.valueOf(line);
 			if(choose >=1 && choose <= 5){
 				PokerHelper.pokerPrinterType = choose - 1;
 				get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
