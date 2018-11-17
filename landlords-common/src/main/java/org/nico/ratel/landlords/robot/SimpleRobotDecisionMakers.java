@@ -32,7 +32,7 @@ public class SimpleRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		
 		for(PokerSell sell: sells) {
 			if(sell.getSellType() == lastPokerSell.getSellType()) {
-				if(sell.getScore() > lastPokerSell.getScore()) {
+				if(sell.getScore() > lastPokerSell.getScore() && sell.getSellPokers().size() == lastPokerSell.getSellPokers().size()) {
 					return sell;
 				}
 			}
