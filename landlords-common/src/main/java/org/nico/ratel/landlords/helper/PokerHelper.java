@@ -381,7 +381,7 @@ public class PokerHelper {
 		}
 		return builder.toString();
 	}
-	private static String textOnlyNoType(List<Poker> pokers){
+	public static String textOnlyNoType(List<Poker> pokers){
 		StringBuilder builder = new StringBuilder();
 		if(pokers != null && pokers.size() > 0) {
 			for(int index = 0; index < pokers.size(); index ++) {
@@ -608,5 +608,4 @@ public class PokerHelper {
 			sellPokers_1.clear();
 		}
 	}
-	
 }

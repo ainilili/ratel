@@ -6,7 +6,9 @@ import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.helper.TimeHelper;
+import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.robot.RobotDecisionMakers;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.ServerEventListener;
@@ -18,13 +20,20 @@ public class RobotEventListener_CODE_GAME_POKER_PLAY implements RobotEventListen
 		ServerContains.THREAD_EXCUTER.execute(() -> {
 			Room room = ServerContains.getRoom(robot.getRoomId());
 
-			PokerSell lastPokerShell = null;
+			PokerSell lastPokerSell = null;
 			PokerSell pokerSell = null;
 			if(room.getLastSellClient() != robot.getId()) {
-				lastPokerShell = room.getLastPokerShell();
-				pokerSell = RobotDecisionMakers.howToPlayPokers(room.getDifficultyCoefficient(), lastPokerShell, robot.getPokers());
+				lastPokerSell = room.getLastPokerShell();
+				pokerSell = RobotDecisionMakers.howToPlayPokers(room.getDifficultyCoefficient(), lastPokerSell, robot.getPokers());
 			}else {
 				pokerSell = RobotDecisionMakers.howToPlayPokers(room.getDifficultyCoefficient(), null, robot.getPokers());
+			}
+			
+			if(pokerSell != null && lastPokerSell != null) {
+				SimplePrinter.serverLog("Robot monitoring[room:" + room.getId() + "]");
+				SimplePrinter.serverLog("last  sell  -> " + lastPokerSell.toString());
+				SimplePrinter.serverLog("robot sell  -> " + pokerSell.toString());
+				SimplePrinter.serverLog("robot poker -> " + PokerHelper.textOnlyNoType(robot.getPokers()));
 			}
 			
 			TimeHelper.sleep(300);
