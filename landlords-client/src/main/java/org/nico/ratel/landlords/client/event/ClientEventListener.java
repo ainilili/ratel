@@ -24,6 +24,12 @@ public abstract class ClientEventListener {
 	protected static String lastSellClientNickname = null;
 	protected static String lastSellClientType = null;
 	
+	protected static void initLastSellInfo() {
+		lastPokers = null;
+		lastSellClientNickname = null;
+		lastSellClientType = null;
+	}
+	
 	public static ClientEventListener get(ClientEventCode code){
 		ClientEventListener listener = null;
 		try {
