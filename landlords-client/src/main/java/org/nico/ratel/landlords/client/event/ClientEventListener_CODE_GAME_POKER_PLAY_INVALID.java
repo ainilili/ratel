@@ -12,9 +12,11 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_INVALID extends ClientEven
 		
 		SimplePrinter.printNotice("Out pokers' format is invalid");
 		
-		SimplePrinter.printNotice(lastSellClientNickname + "[" + lastSellClientType + "] played:");
-		SimplePrinter.printPokers(lastPokers);
-		
+		if(lastPokers != null) {
+			SimplePrinter.printNotice(lastSellClientNickname + "[" + lastSellClientType + "] played:");
+			SimplePrinter.printPokers(lastPokers);
+		}
+
 		pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT);
 	}
 

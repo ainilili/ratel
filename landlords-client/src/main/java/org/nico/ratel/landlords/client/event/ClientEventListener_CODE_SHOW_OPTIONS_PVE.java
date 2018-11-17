@@ -22,13 +22,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 		if(line.equalsIgnoreCase("BACK")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}else {
-
-			while(line == null || OptionsUtils.getOptions(line) == -1) {
-				SimplePrinter.printNotice("Invalid option, please choose again：");
-				line = SimpleWriter.write("pve");
-			}
-			
-			int choose = Integer.valueOf(line);
+			int choose = OptionsUtils.getOptions(line);
 			
 			if(0 < choose && choose < 4) {
 				pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE_PVE, String.valueOf(choose));
