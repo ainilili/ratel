@@ -46,9 +46,10 @@ public class SimpleClient {
 			for(int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i+1) + ". " + serverAddressList.get(i));
 			}
-			int serverPick = 0;
+			int serverPick = Integer.parseInt(SimpleWriter.write("option"));
 			while(serverPick<1 || serverPick>serverAddressList.size()){
 				try {
+					SimplePrinter.printNotice("The server address does not exist!");
 					serverPick = Integer.parseInt(SimpleWriter.write("option"));
 				}catch(NumberFormatException e){}
 			}
