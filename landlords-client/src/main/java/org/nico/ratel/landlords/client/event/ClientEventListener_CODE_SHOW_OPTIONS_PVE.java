@@ -25,6 +25,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 			int choose = OptionsUtils.getOptions(line);
 			
 			if(0 < choose && choose < 4) {
+				initLastSellInfo();
 				pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE_PVE, String.valueOf(choose));
 			}else {
 				SimplePrinter.printNotice("Invalid option, please choose again：");

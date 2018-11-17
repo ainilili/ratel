@@ -14,9 +14,7 @@ public class ClientEventListener_CODE_ROOM_JOIN_SUCCESS extends ClientEventListe
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		lastPokers = null;
-		lastSellClientNickname = null;
-		lastSellClientType = null;
+		initLastSellInfo();
 		
 		int joinClientId = (int) map.get("clientId");
 		if(SimpleClient.id == joinClientId) {

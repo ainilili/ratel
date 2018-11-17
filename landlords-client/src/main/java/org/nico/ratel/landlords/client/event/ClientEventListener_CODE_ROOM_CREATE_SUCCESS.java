@@ -13,9 +13,7 @@ public class ClientEventListener_CODE_ROOM_CREATE_SUCCESS extends ClientEventLis
 		
 		Room room = Noson.convert(data, Room.class);
 		
-		lastPokers = null;
-		lastSellClientNickname = null;
-		lastSellClientType = null;
+		initLastSellInfo();
 		
 		SimplePrinter.printNotice("You have created a room with id " + room.getId());
 		SimplePrinter.printNotice("Please wait for other players to join !");
