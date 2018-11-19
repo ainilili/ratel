@@ -31,7 +31,7 @@ public class RoomClearTask extends TimerTask{
 	private static long startingStatusInterval = 1000 * 100;
 
 	//The room live  time is 600s
-	private static long liveTime = 1000 * 60 * 10;
+	private static long liveTime = 1000 * 60 * 20;
 	
 	@Override
 	public void run() {
@@ -105,6 +105,12 @@ public class RoomClearTask extends TimerTask{
 									room.getClientSideMap().put(robot.getId(), robot);
 									room.getClientSideList().add(robot);
 									room.setCurrentSellClient(robot.getId());
+									
+									//If last sell client is current client, replace it to robot id
+									if(room.getLastSellClient() == currentPlayer.getId()) {
+										room.setLastSellClient(robot.getId());
+									}
+									
 
 									//set robot difficulty -> simple
 									room.setDifficultyCoefficient(1);
