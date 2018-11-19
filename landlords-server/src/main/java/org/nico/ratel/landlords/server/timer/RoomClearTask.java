@@ -31,7 +31,7 @@ public class RoomClearTask extends TimerTask{
 	private static long startingStatusInterval = 1000 * 100;
 
 	//The room live  time is 600s
-	private static long liveTime = 1000 * 60 * 10;
+	private static long liveTime = 1000 * 60 * 20;
 	
 	@Override
 	public void run() {
