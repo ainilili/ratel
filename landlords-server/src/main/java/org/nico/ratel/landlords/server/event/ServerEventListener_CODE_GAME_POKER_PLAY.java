@@ -1,6 +1,7 @@
 package org.nico.ratel.landlords.server.event;
 
 import java.util.List;
+import java.util.Map;
 
 import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
@@ -66,13 +67,18 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 						room.setCurrentSellClient(next.getId());
 						
 						clientSide.getPokers().removeAll(currentPokers);
-						String result = MapHelper.newInstance()
+						MapHelper mapHelper = MapHelper.newInstance()
 								.put("clientId", clientSide.getId())
 								.put("clientNickname", clientSide.getNickname())
 								.put("clientType", clientSide.getType())
-								.put("pokers", currentPokers)
-								.put("sellClinetNickname", next.getNickname())
-								.json();
+								.put("pokers", currentPokers);
+						
+						if(! clientSide.getPokers().isEmpty()) {
+							mapHelper.put("sellClinetNickname", next.getNickname());
+						}
+						
+						String result = mapHelper.json();
+						
 						for(ClientSide client: room.getClientSideList()) {
 							if(client.getRole() == ClientRole.PLAYER) {
 								ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
