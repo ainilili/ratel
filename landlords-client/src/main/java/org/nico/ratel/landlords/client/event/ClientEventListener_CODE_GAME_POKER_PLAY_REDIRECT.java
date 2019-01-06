@@ -19,6 +19,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEve
 	
 	private static String format = "\n[%-4s] %-" + NICKNAME_MAX_LENGTH + "s  surplus %-2s [%-8s]";
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void call(Channel channel, String data) {
 		

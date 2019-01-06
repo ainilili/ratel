@@ -15,6 +15,7 @@ public interface ServerEventListener {
 	
 	final static String LISTENER_PREFIX = "org.nico.ratel.landlords.server.event.ServerEventListener_";
 	
+	@SuppressWarnings("unchecked")
 	public static ServerEventListener get(ServerEventCode code){
 		ServerEventListener listener = null;
 		try {

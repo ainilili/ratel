@@ -30,6 +30,7 @@ public abstract class ClientEventListener {
 		lastSellClientType = null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static ClientEventListener get(ClientEventCode code){
 		ClientEventListener listener = null;
 		try {
