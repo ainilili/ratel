@@ -1,7 +1,5 @@
 package org.nico.ratel.landlords.server.handler;
 
-import java.net.InetSocketAddress;
-
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.ServerTransferData.ServerTransferDataProtoc;
@@ -78,7 +76,13 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
     }  
 	
     private int getId(Channel channel){
-    	return ((InetSocketAddress)channel.remoteAddress()).getPort();
+    	String longId = channel.id().asLongText();
+    	Integer clientId = ServerContains.CHANNEL_ID_MAP.get(longId);
+    	if(null == clientId){
+    		clientId = ServerContains.getClientId();
+    		ServerContains.CHANNEL_ID_MAP.put(longId, clientId);
+    	}
+    	return clientId;
     }
     
     private void clientOfflineEvent(Channel channel){
