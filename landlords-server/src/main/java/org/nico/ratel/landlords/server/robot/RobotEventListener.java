@@ -15,6 +15,7 @@ public interface RobotEventListener {
 	
 	public void call(ClientSide robot, String data);
 
+	@SuppressWarnings("unchecked")
 	public static RobotEventListener get(ClientEventCode code) {
 		RobotEventListener listener = null;
 		try {

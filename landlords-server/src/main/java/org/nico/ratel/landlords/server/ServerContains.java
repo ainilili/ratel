@@ -1,6 +1,7 @@
 package org.nico.ratel.landlords.server;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -26,6 +27,8 @@ public class ServerContains {
 	 * The list of client side
 	 */
 	public final static Map<Integer, ClientSide> CLIENT_SIDE_MAP = new ConcurrentSkipListMap<>();
+	
+	public final static Map<String, Integer> CHANNEL_ID_MAP = new ConcurrentHashMap<>();
 	
 	private final static AtomicInteger CLIENT_ATOMIC_ID = new AtomicInteger(1);
 	
