@@ -5,6 +5,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
@@ -28,7 +29,7 @@ public class SimpleServer {
 		try {
 			ServerBootstrap bootstrap = new ServerBootstrap()
 			.group(parentGroup, childGroup)
-			.channel(NioServerSocketChannel.class)
+			.channel(Epoll.isAvailable() ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
 			.localAddress(new InetSocketAddress(ServerContains.port))
 			.childHandler(new DefaultChannelInitializer());
 
