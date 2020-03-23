@@ -1,92 +1,77 @@
-## What Is This?
-This is a game against landlords
+## 项目介绍
+斗地主我想大家都会玩吧，但是不知道大家有没有在命令行内玩过斗地主。
 
-The difference is
+这个项目是基于Netty实现的一款命令行斗地主游戏，在下班后或者工作闲暇之余，你都可以肆无忌惮的在命令行中玩斗地主~
 
-It is done from the command line
-## How To Begin?
-Maven packaging
-```
+## 安装
+下载打包(该项目需要一些Java基础，需要确保您的机器拥有JVM环境)
+```powershell
 git clone https://github.com/ainilili/ratel.git
 cd ratel
 mvn install package
 ```
-Then, Perform ``landlords-client`` and ``landlords-server`` jars folder inside the ``target`` directory
+接下来，运行 ``landlords-client`` 和 ``landlords-server`` 的 ``target`` 文件夹下的Jar包：
 ```
 java -jar landlords-server/target/landlords-server-#{version}.jar -p 1024
 java -jar landlords-client/target/landlords-client-#{version}.jar -p 1024 -h 127.0.0.1
 ```
-Start a fun game !
-
-## Looking For Players
-
-Join the qq group ``948365095``
-
-## How To Play?
-You can create a server by yourself, or you can connect to public server with ip ``39.105.65.8`` by your client !
+游戏开始...
+## 玩法介绍
+你可以创建一个私服, 或者加入公网服务器 ``39.105.65.8``(``-h``参数指定对应的服务器)
 
 ![demo](demo.gif)
 
-#### Choose Poker
+#### 出牌
 ```
 ┌──┐──┐──┐──┐──┐──┐──┐──┐──┐──┐──┐──┐──┐──┐──┐
 │3 |4 |5 |6 |7 |8 |9 |10|J |Q |K |A |2 |S |X |
 │♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |  |  |
 └──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘
 ```
-Above is the result of sorting the 3 to big ACES in small to big order
+这是按照从小打大的规则将3到大王排序后的结果
 
-If you want to choose **Link**
+如果你想出顺子
 ```
 ┌──┐──┐──┐──┐──┐
 │7 |8 |9 |10|J |
 │♦ |♦ |♦ |♦ |♦ |
 └──┘──┘──┘──┘──┘
 ```
-You can enter ``7890j`` or ``789tj``
+你可以输入 ``7890j`` or ``789tj``
 
-If you want to choose **The Joker Bomb**
+如果你想出王炸
 ```
 ┌──┐──┐
 │S |X |
 │  |  |
 └──┘──┘
 ```
-You can enter ``sx``
+你可以输入 ``sx``
 
-This is a table for poker alias
+这是所有牌的别名映射规则
 ```
 poker-> │3 |4 |5 |6 |7 |8 |9 |10   |J  |Q  |K  |A    |2 |S  |X  |
 alias-> │3 |4 |5 |6 |7 |8 |9 |T t 0|J j|Q q|K k|A a 1|2 |S s|X x|
 ```
-- If you don't want to play in a turn, you can enter ``pass``
-- If you want to quit during a round, you can enter ``exit``
+- 如果本回合内你不想出牌，可以输入 ``pass``
+- 如果本回合内你想退出游戏，可以输入 ``exit``
 
-#### Play the rules
-Here's the retel backed poker combination
-```
-3
-sx
-33
-333
-3334
-3333
-34567
-33344
-334455
-333345
-33344456
-33334455
-3334445566
-333344445678
-3333444455667788
-```
-## Update
- - [Update Log](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
- 
-## End
- - [Serverlist.json](https://github.com/ainilili/ratel/blob/master/serverlist.json) is the current server list, If your server is currently deployed with the latest version of the server and Shared with everyone, you can submit it to us through PR!
- - If you have good code, you are welcome to submit it to us and we will incorporate good code
- - If you find some bugs in use, please mention issue to us
- - Ratel designs cross-platform and welcomes client rewrite in other languages
- - Contact us by email ``ainililia@163.com``
+#### 游戏规则
+正统的欢乐斗地主~
+
+## 加入划水俱乐部
+QQ群 ``948365095``，寻找一起划水的玩伴！
+
+## 更新
+ - [更新日志](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
+
+## Blog
+ - [Ratel浅析] (https://github.com/HelloGitHub-Team/Article/blob/master/contents/Java/landlords/content.md)
+ - [Ratel玩法视频教学] (https://www.bilibili.com/video/av97603585)
+
+## 最后
+ - [Serverlist.json](https://github.com/ainilili/ratel/blob/master/serverlist.json) 是当前的服务器列表, 如果你的服务器部署着当前最新版本的服务端并且分享给大家，可以通过PR提交给我们!
+ - 如果您想贡献代码，非常欢迎提``PR``，我们将会合并优秀的代码.
+ - 如果您发现了``Bug``，非常欢迎提``Issue``给我们.
+ - 欢迎扩展其他语言的客户端.
+ - 联系我们请发邮件到 ``ainililia@163.com``.
