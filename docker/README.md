@@ -23,7 +23,7 @@
   + 直接使用已经编译好的服务端
     - `docker` 运行客户端，并加入公网服务器 `39.105.65.8`
       ```
-      docker run --rm -it kebyn/ratel:server
+      docker run --rm -d -p 1024:1024 kebyn/ratel:server
       ```
   + 自行编译 `docker` 客户端
     - 下载并编译
