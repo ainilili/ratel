@@ -41,6 +41,8 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 		// Push start game messages
 		room.setStatus(RoomStatus.STARTING);
 
+		// Record the first speaker
+		room.setFirstSellClient(startGrabClient.getId());
 
 		for(ClientSide client: roomClientList) {
 			client.setType(ClientType.PEASANT);

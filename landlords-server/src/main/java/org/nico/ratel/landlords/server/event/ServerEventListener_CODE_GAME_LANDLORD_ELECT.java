@@ -51,7 +51,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 					}
 				}
 			}else{
-				if(clientSide.getNext().getId() == room.getLandlordId()){
+				if(clientSide.getNext().getId() == room.getFirstSellClient()){
 					for(ClientSide client: room.getClientSideList()){
 						if(client.getRole() == ClientRole.PLAYER) {
 							ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
