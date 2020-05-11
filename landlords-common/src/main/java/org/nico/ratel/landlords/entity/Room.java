@@ -37,6 +37,8 @@ public class Room{
 	private long lastFlushTime;
 	
 	private long createTime;
+
+	private int firstSellClient;
 	
 	public Room() {
 	}
@@ -160,4 +162,11 @@ public class Room{
 		this.clientSideMap = clientSideMap;
 	}
 
+	public int getFirstSellClient() {
+		return firstSellClient;
+	}
+
+	public void setFirstSellClient(int firstSellClient) {
+		this.firstSellClient = firstSellClient;
+	}
 }
