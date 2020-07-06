@@ -65,6 +65,9 @@ QQ群 ``948365095``，寻找一起划水的玩伴！
 ## 更新
  - [更新日志](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
 
+## 相关
+ - [go-ratel-client](https://github.com/ZuoFuhong/go-ratel)
+ 
 ## Blog
  - [Ratel浅析] (https://github.com/HelloGitHub-Team/Article/blob/master/contents/Java/landlords/content.md)
  - [Ratel玩法视频教学] (https://www.bilibili.com/video/av97603585)
