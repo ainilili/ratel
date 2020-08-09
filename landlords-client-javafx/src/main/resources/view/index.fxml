@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="116.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="欢迎登录ratel客户端" />
+      <Text layoutX="248.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="version: 1.2.2" />
+   </children>
+</AnchorPane>

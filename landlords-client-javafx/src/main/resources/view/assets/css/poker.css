@@ -1,0 +1,13 @@
+.horizontal-poker {
+    -fx-pref-width: 120;
+    -fx-pref-height: 140;
+    -fx-border-color: black;
+    /*-fx-background-color: #dddbd8;*/
+    -fx-background-color: red;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.vertical-poker {
+
+}

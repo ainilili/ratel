@@ -1,0 +1,172 @@
+@import "poker.css";
+
+#waitingPane {
+    -fx-background-color: silver;
+    -fx-opacity: 0.8;
+}
+
+#waitingTips {
+    -fx-font-size: 20;
+}
+
+#prevPlayerPane,
+#nextPlayerPane {
+    -fx-pref-height: 510;
+    -fx-pref-width: 220;
+}
+
+#surplusPokersPane {
+    -fx-pref-height: 140;
+    -fx-pref-width: 500;
+    -fx-background-color: silver;
+    -fx-background-radius: 0 0 10 10;
+    -fx-border-radius: 0 0 10 10;
+}
+
+#quitButton {
+    -fx-alignment: center;
+    -fx-pref-width: 80;
+    -fx-background-size: 43px 43px;
+    -fx-background-color: #40b1f5;
+    -fx-cursor: hand;
+    -fx-border-width: 1px;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+#robButton,
+#notRobButton,
+#submitButton,
+#passButton {
+    -fx-alignment: center;
+    -fx-pref-width: 60;
+    -fx-pref-height: 30;
+    -fx-background-color: #40b1f5;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+#prevPlayerRole,
+#nextPlayerRole,
+#playerRole {
+    -fx-alignment: center;
+    -fx-pref-width: 50;
+    -fx-pref-height: 25;
+    -fx-background-color: #a58a65;
+    -fx-text-fill: black;
+    -fx-border-color: #afadab;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+#prevPlayerNickname,
+#nextPlayerNickname,
+#playerNickname {
+    -fx-alignment: center;
+    -fx-pref-width: 100;
+    -fx-pref-height: 25;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0;
+}
+
+.top {
+    -fx-pref-height: 150;
+    -fx-pref-width: 1020;
+}
+
+.middle {
+    -fx-pref-height: 570;
+    -fx-pref-width: 1020;
+}
+
+.bottom {
+    -fx-pref-height: 230;
+    -fx-pref-width: 1020;
+}
+
+.cards {
+    -fx-alignment: center;
+    -fx-pref-width: 870;
+    -fx-pref-height: 180;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.otherCards {
+    -fx-pref-width: 170;
+    -fx-pref-height: 510;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.tips {
+    -fx-alignment: center;
+    -fx-pref-height: 30;
+    -fx-pref-width: 70;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.horizontal-poker {
+    -fx-pref-width: 110;
+    -fx-pref-height: 140;
+    -fx-border-color: #afadab;
+    -fx-background-color: #dddbd8;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+}
+
+.horizontal-poker > .level {
+    -fx-font-size: 35;
+    -fx-text-fill: black;
+}
+
+.horizontal-poker > .joker-level {
+    -fx-font-size: 22;
+}
+
+.horizontal-poker > .type-small {
+    -fx-font-size: 35;
+    -fx-text-fill: black;
+}
+
+.horizontal-poker > .type-big {
+    -fx-font-size: 70;
+    -fx-text-fill: black;
+}
+
+.vertical-poker {
+    -fx-pref-width: 140;
+    -fx-pref-height: 90;
+    -fx-border-color: #716f6d;
+    -fx-background-image: url("../image/rear.png");
+    -fx-background-color: transparent;
+}
+
+.surplus-poker {
+    -fx-pref-width: 110;
+    -fx-pref-height: 140;
+    -fx-border-color: #716f6d;
+    -fx-background-image: url("../image/rear.png");
+}
+
+.timer {
+    -fx-alignment: center;
+    -fx-font-size: 20;
+    -fx-pref-width: 60;
+    -fx-pref-height: 50;
+    -fx-border-color: #afadab;
+    -fx-background-color: #dddbd8;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}

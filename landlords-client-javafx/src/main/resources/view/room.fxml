@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+<AnchorPane prefHeight="890.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@assets/css/room.css">
+    <children>
+        <!-- 等待游戏开始pane -->
+        <Pane fx:id="waitingPane" prefHeight="890.0" prefWidth="1020.0" visible="true">
+           <children>
+               <Text fx:id="waitingTips" layoutX="350.0" layoutY="330.0">正在等待其它玩家进入房间，请稍候...</Text>
+           </children>
+        </Pane>
+
+        <!-- 游戏pane -->
+        <Pane fx:id="playingPane" prefHeight="890.0" prefWidth="1020.0" visible="true" disable="true">
+            <Pane styleClass="top">
+                <!-- 底牌pane -->
+                <Pane fx:id="surplusPokersPane" layoutX="260" layoutY="0" />
+
+                <!-- 退出按钮 -->
+                <Button fx:id="quitButton" layoutX="850" />
+            </Pane>
+
+            <Pane layoutX="0" layoutY="150" styleClass="middle">
+                <!-- 上游玩家pane -->
+                <Pane fx:id="prevPlayerPane">
+                    <!-- 上游玩家角色 -->
+                    <Label fx:id="prevPlayerRole" layoutY="-25" />
+
+                    <!-- 上游玩家昵称 -->
+                    <Label fx:id="prevPlayerNickname" layoutX="60" layoutY="-25" />
+
+                    <!-- 牌显示pane -->
+                    <Pane fx:id="prevPokersPane" styleClass="otherCards" />
+
+                    <!-- 倒计时显示框 -->
+                    <Label styleClass="timer" layoutX="180" layoutY="175" visible="false" />
+
+                    <!-- 提示pane -->
+                    <Label styleClass="tips" layoutX="180" layoutY="145" />
+                </Pane>
+
+                <!-- 出牌pane -->
+                <Pane fx:id="showPokersPane" layoutX="220" layoutY="0" />
+
+                <!-- 下游玩家pane -->
+                <Pane fx:id="nextPlayerPane" layoutX="800" layoutY="0">
+                    <!-- 下游玩家角色 -->
+                    <Label fx:id="nextPlayerRole" layoutX="50" layoutY="-25" />
+
+                    <!-- 下游玩家昵称 -->
+                    <Label fx:id="nextPlayerNickname" layoutX="110" layoutY="-25" />
+
+                    <!-- 牌显示pane -->
+                    <Pane fx:id="nextPokersPane" styleClass="otherCards" layoutX="50" />
+
+                    <!-- 倒计时显示框 -->
+                    <Label styleClass="timer" layoutX="-20" layoutY="175" visible="false" />
+
+                    <!-- 提示pane -->
+                    <Label styleClass="tips" layoutX="-30" layoutY="145" />
+                </Pane>
+            </Pane>
+
+            <Pane layoutX="0" layoutY="660" styleClass="bottom">
+                <!-- 当前玩家pane -->
+                <Pane fx:id="playerPane">
+                    <!-- 抢地主按钮 -->
+                    <Button fx:id="robButton" layoutX="395" layoutY="5" />
+                    <!-- 不抢地主按钮 -->
+                    <Button fx:id="notRobButton" layoutX="565" layoutY="5" />
+                    <!-- 出牌按钮 -->
+                    <Button fx:id="submitButton" layoutX="395" layoutY="5" visible="false">出牌</Button>
+                    <!-- 不出牌按钮 -->
+                    <Button fx:id="passButton" layoutX="565" layoutY="5" visible="false">不出</Button>
+
+                    <!-- 倒计时显示框 -->
+                    <Label styleClass="timer" layoutX="480" layoutY="-5" visible="false" />
+
+                    <!-- 提示pane -->
+                    <Label styleClass="tips" layoutX="475" layoutY="-5" visible="false" />
+
+                    <!-- 当前玩家角色 -->
+                    <Label fx:id="playerRole" layoutX="75" layoutY="25" />
+                    <Label fx:id="playerNickname" layoutX="135" layoutY="25" />
+
+                    <!-- 牌显示pane -->
+                    <Pane fx:id="pokersPane" styleClass="cards" layoutX="75" layoutY="50" />
+                </Pane>
+            </Pane>
+        </Pane>
+    </children>
+</AnchorPane>
