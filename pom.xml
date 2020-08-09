@@ -95,6 +95,7 @@
 		<module>landlords-client</module>
 		<module>landlords-server</module>
 		<module>landlords-common</module>
+		<module>landlords-client-javafx</module>
 	</modules>
 
 
