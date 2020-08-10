@@ -80,7 +80,7 @@
                     <Label styleClass="timer" layoutX="480" layoutY="-5" visible="false" />
 
                     <!-- 提示pane -->
-                    <Label styleClass="tips" layoutX="475" layoutY="-5" visible="false" />
+                    <Label styleClass="primary-tips" layoutX="440" layoutY="-5" visible="false" />
 
                     <!-- 当前玩家角色 -->
                     <Label fx:id="playerRole" layoutX="75" layoutY="25" />

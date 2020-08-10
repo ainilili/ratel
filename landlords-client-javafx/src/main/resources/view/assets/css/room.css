@@ -116,6 +116,15 @@
     -fx-background-radius: 8;
 }
 
+.primary-tips {
+    -fx-alignment: center;
+    -fx-pref-height: 30;
+    -fx-pref-width: 140;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
 .horizontal-poker {
     -fx-pref-width: 110;
     -fx-pref-height: 140;

@@ -8,6 +8,8 @@ import javafx.scene.text.Text;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.PokerType;
+import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
 
 public class PokerPane {
     private static final double MARGIN_LEFT = 40;
@@ -31,7 +33,19 @@ public class PokerPane {
 
         pane.setOnMouseClicked(e -> {
             double y = pane.getLayoutY();
-            pane.setLayoutY(y == 20 ? y - 20 :  y + 20);
+            boolean alreadyChecked = y == 0;
+            CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+            // 取消选中
+            if (alreadyChecked) {
+                pane.setLayoutY(y + 20);
+                currentRoomInfo.removeUncheckedPoker(poker);
+            }
+            // 选中
+            else {
+                pane.setLayoutY(y - 20);
+                currentRoomInfo.addCheckedPoker(poker);
+            }
         });
     }
 

@@ -45,6 +45,12 @@ public class User {
                                  .collect(Collectors.toList());
     }
 
+    public void removePokers(List<Poker> sellPokerList) {
+        for (Poker sellPoker : sellPokerList) {
+            pokers.remove(sellPoker);
+        }
+    }
+
     public List<Poker> getPokers() {
         return pokers;
     }

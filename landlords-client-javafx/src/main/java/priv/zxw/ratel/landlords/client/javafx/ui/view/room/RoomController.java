@@ -2,6 +2,7 @@ package priv.zxw.ratel.landlords.client.javafx.ui.view.room;
 
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,24 +66,11 @@ public class RoomController extends UIObject implements RoomMethod {
 
     private void initPokers(List<Poker> pokers) {
         // 己方牌pane
-        Pane pokersPane = $("pokersPane", Pane.class);
-
-        // 可能之前有牌，先清理再填充
-        pokersPane.getChildren().clear();
-        for (int i = 0, size = pokers.size(); i < size; i++) {
-            pokersPane.getChildren().add(new PokerPane(i, pokers.get(i)).getPane());
-        }
+        refreshPlayPokers(pokers);
 
         // 上下游牌pane
-        Pane prevPokersPane = $("prevPokersPane", Pane.class);
-        Pane nextPokersPane = $("nextPokersPane", Pane.class);
-
-        prevPokersPane.getChildren().clear();
-        nextPokersPane.getChildren().clear();
-        for (int j = 0; j < PER_PLAYER_DEFAULT_POKER_COUNT; j++) {
-            prevPokersPane.getChildren().add(new RearPokerPane(j).getPane());
-            nextPokersPane.getChildren().add(new RearPokerPane(j).getPane());
-        }
+        refreshPrevPlayerPokers(PER_PLAYER_DEFAULT_POKER_COUNT);
+        refreshNextPlayerPokers(PER_PLAYER_DEFAULT_POKER_COUNT);
 
         // 底牌
         Pane surplusPokersPane = $("surplusPokersPane", Pane.class);
@@ -92,6 +80,38 @@ public class RoomController extends UIObject implements RoomMethod {
             surplusPokersPane.getChildren().add(new SurplusPokerPane(n).getPane());
         }
     }
+
+    @Override
+    public void refreshPlayPokers(List<Poker> pokers) {
+        Pane pokersPane = $("pokersPane", Pane.class);
+
+        // 可能之前有牌，先清理再填充
+        pokersPane.getChildren().clear();
+        for (int i = 0, size = pokers.size(); i < size; i++) {
+            pokersPane.getChildren().add(new PokerPane(i, pokers.get(i)).getPane());
+        }
+    }
+
+    @Override
+    public void refreshPrevPlayerPokers(int pokerCount) {
+        Pane prevPokersPane = $("prevPokersPane", Pane.class);
+
+        prevPokersPane.getChildren().clear();
+        for (int j = 0; j < pokerCount; j++) {
+            prevPokersPane.getChildren().add(new RearPokerPane(j).getPane());
+        }
+    }
+
+    @Override
+    public void refreshNextPlayerPokers(int pokerCount) {
+        Pane nextPokersPane = $("nextPokersPane", Pane.class);
+
+        nextPokersPane.getChildren().clear();
+        for (int j = 0; j < pokerCount; j++) {
+            nextPokersPane.getChildren().add(new RearPokerPane(j).getPane());
+        }
+    }
+
 
     @Override
     public void showRobButtons() {
@@ -124,28 +144,16 @@ public class RoomController extends UIObject implements RoomMethod {
         // 1，为地主加底牌（重新洗牌）
         CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
         if (ClientType.LANDLORD.equals(currentRoomInfo.getPrevPlayerRole())) {
-            Pane prevPokersPane = $("prevPokersPane", Pane.class);
-
-            prevPokersPane.getChildren().clear();
-            for (int j = 0; j < PER_PLAYER_DEFAULT_POKER_COUNT + SURPLUS_POKER_COUNT; j++) {
-                prevPokersPane.getChildren().add(new RearPokerPane(j).getPane());
-            }
+            currentRoomInfo.setPrevPlayerSurplusPokerCount(PER_PLAYER_DEFAULT_POKER_COUNT + SURPLUS_POKER_COUNT);
+            currentRoomInfo.setNextPlayerSurplusPokerCount(PER_PLAYER_DEFAULT_POKER_COUNT);
+            refreshPrevPlayerPokers(PER_PLAYER_DEFAULT_POKER_COUNT + SURPLUS_POKER_COUNT);
         } else if (ClientType.LANDLORD.equals(currentRoomInfo.getNextPlayerRole())) {
-            Pane nextPokersPane = $("nextPokersPane", Pane.class);
-
-            nextPokersPane.getChildren().clear();
-            for (int j = 0; j < PER_PLAYER_DEFAULT_POKER_COUNT + SURPLUS_POKER_COUNT; j++) {
-                nextPokersPane.getChildren().add(new RearPokerPane(j).getPane());
-            }
+            currentRoomInfo.setNextPlayerSurplusPokerCount(PER_PLAYER_DEFAULT_POKER_COUNT + SURPLUS_POKER_COUNT);
+            currentRoomInfo.setPrevPlayerSurplusPokerCount(PER_PLAYER_DEFAULT_POKER_COUNT);
+            refreshNextPlayerPokers(PER_PLAYER_DEFAULT_POKER_COUNT + SURPLUS_POKER_COUNT);
         } else {
-            Pane pokersPane = $("pokersPane", Pane.class);
             User user = BeanUtil.getBean("user");
-            List<Poker> pokerList = user.getPokers();
-
-            pokersPane.getChildren().clear();
-            for (int i = 0, size = pokerList.size(); i < size; i++) {
-                pokersPane.getChildren().add(new PokerPane(i, pokerList.get(i)).getPane());
-            }
+            refreshPlayPokers(user.getPokers());
         }
 
         // 2，显示每个人的角色（地主|农民）和姓名
@@ -178,15 +186,16 @@ public class RoomController extends UIObject implements RoomMethod {
         } else if (playerName.equals(currentRoomInfo.getNextPlayerName())) {
             tips = ((Label) $("nextPlayerPane", Pane.class).lookup(".tips"));
         } else {
-            tips = ((Label) $("playerPane", Pane.class).lookup(".tips"));
+            tips = ((Label) $("playerPane", Pane.class).lookup(".primary-tips"));
         }
 
         tips.setText(message);
         tips.setVisible(true);
+        delayHidden(tips, 3);
     }
 
     @Override
-    public void showTimer(String playerName, int secondTime) {
+    public Node getTimer(String playerName) {
         CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
 
         Label timer;
@@ -198,8 +207,19 @@ public class RoomController extends UIObject implements RoomMethod {
             timer = ((Label) $("playerPane", Pane.class).lookup(".timer"));
         }
 
-        timer.setText(String.valueOf(secondTime));
-        timer.setVisible(true);
+        return timer;
+    }
+
+    @Override
+    public void showPokerPlayButtons() {
+        $("submitButton", Button.class).setVisible(true);
+        $("passButton", Button.class).setVisible(true);
+    }
+
+    @Override
+    public void hidePokerPlayButtons() {
+        $("submitButton", Button.class).setVisible(false);
+        $("passButton", Button.class).setVisible(false);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package priv.zxw.ratel.landlords.client.javafx.ui.view.room;
 
 
+import javafx.scene.Node;
 import org.nico.ratel.landlords.entity.Poker;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.Method;
 
@@ -12,6 +13,12 @@ public interface RoomMethod extends Method {
     void joinRoom();
 
     void startGame(List<Poker> pokers);
+
+    void refreshPlayPokers(List<Poker> pokers);
+
+    void refreshPrevPlayerPokers(int pokerCount);
+
+    void refreshNextPlayerPokers(int pokerCount);
 
     void showRobButtons();
 
@@ -25,5 +32,9 @@ public interface RoomMethod extends Method {
 
     void showPlayerMessage(String playerName, String message);
 
-    void showTimer(String playerName, int secondTime);
+    Node getTimer(String playerName);
+
+    void showPokerPlayButtons();
+
+    void hidePokerPlayButtons();
 }

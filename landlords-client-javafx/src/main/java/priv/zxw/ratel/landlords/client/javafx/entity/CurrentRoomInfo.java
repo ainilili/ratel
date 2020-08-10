@@ -3,6 +3,7 @@ package priv.zxw.ratel.landlords.client.javafx.entity;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CurrentRoomInfo {
@@ -12,15 +13,20 @@ public class CurrentRoomInfo {
     private User player;
     private String prevPlayerName;
     private ClientType prevPlayerRole;
+    private int prevPlayerSurplusPokerCount;
     private String nextPlayerName;
     private ClientType nextPlayerRole;
+    private int nextPlayerSurplusPokerCount;
 
     private String recentPlayerName;
     private List<Poker> recentPokers;
 
+    private List<Poker> checkedPokers;
+
     public CurrentRoomInfo(int roomId, String roomOwner) {
         this.roomId = roomId;
         this.roomOwner = roomOwner;
+        this.checkedPokers = new ArrayList<>();
     }
 
     public void setLandlord(String landlordName) {
@@ -84,5 +90,36 @@ public class CurrentRoomInfo {
 
     public ClientType getNextPlayerRole() {
         return nextPlayerRole;
+    }
+
+    public void addCheckedPoker(Poker poker) {
+        checkedPokers.add(poker);
+    }
+
+    public void removeUncheckedPoker(Poker poker) {
+        checkedPokers.remove(poker);
+    }
+
+    public List<Poker> pollCheckedPokers() {
+        List<Poker> pokers = new ArrayList<>(checkedPokers);
+        checkedPokers.clear();
+
+        return pokers;
+    }
+
+    public int getPrevPlayerSurplusPokerCount() {
+        return prevPlayerSurplusPokerCount;
+    }
+
+    public void setPrevPlayerSurplusPokerCount(int prevPlayerSurplusPokerCount) {
+        this.prevPlayerSurplusPokerCount = prevPlayerSurplusPokerCount;
+    }
+
+    public int getNextPlayerSurplusPokerCount() {
+        return nextPlayerSurplusPokerCount;
+    }
+
+    public void setNextPlayerSurplusPokerCount(int nextPlayerSurplusPokerCount) {
+        this.nextPlayerSurplusPokerCount = nextPlayerSurplusPokerCount;
     }
 }
