@@ -6,10 +6,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@assets/css/login.css">
    <children>
-      <TextField fx:id="input" layoutX="50.0" layoutY="9.0" promptText="输入昵称" />
-      <Label layoutX="10.0" layoutY="9.0" text="昵称：" />
-      <Button fx:id="submitBtn" layoutX="126.0" layoutY="47.0" mnemonicParsing="false" text="提交" />
+      <Label layoutX="150" layoutY="170" styleClass="forLabel">昵称：</Label>
+      <TextField fx:id="nicknameInput" layoutX="200" layoutY="170" promptText="输入昵称" />
+      <Label layoutX="150" layoutY="210" styleClass="tips" >在开始游戏前，您需要先设置昵称</Label>
+      <Button fx:id="submitButton" layoutX="400" layoutY="240">提交</Button>
    </children>
 </AnchorPane>

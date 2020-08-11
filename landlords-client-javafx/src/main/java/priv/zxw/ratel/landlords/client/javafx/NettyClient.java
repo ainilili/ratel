@@ -5,19 +5,18 @@ import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.nico.noson.util.string.StringUtils;
 import priv.zxw.ratel.landlords.client.javafx.listener.ClientListenerUtils;
 import priv.zxw.ratel.landlords.client.javafx.handler.DefaultChannelInitializer;
 import priv.zxw.ratel.landlords.client.javafx.ui.UIService;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
+import java.util.concurrent.*;
 
 
 public class NettyClient {
-    private static String host = "127.0.0.1";
-    private static int port = 1024;
+    private String host;
+    private int port;
 
     private ExecutorService executorService;
 
@@ -33,10 +32,39 @@ public class NettyClient {
         ClientListenerUtils.setUIService(uiService);
     }
 
-    public void start() {
-        // 直接启动netty会别javafx阻塞消息接受
-        // 使用线程池启动则可以正常运行，why !!!!
-        executorService.submit(new ClientThread());
+    public void start(String host, int port) throws Exception {
+        if (StringUtils.isBlank(host)) {
+            throw new IllegalArgumentException("不合法的host：" + host);
+        }
+
+        if (port < 0) {
+            throw new IllegalArgumentException("不合法的端口：" + port);
+        }
+
+        this.host = host;
+        this.port = port;
+
+        try {
+            // 直接启动netty会别javafx阻塞消息接受
+            // 使用线程池启动则可以正常运行，why !!!!
+            Future<Channel> channelFuture = executorService.submit(new ClientThread());
+            Channel channel = channelFuture.get();
+
+            if (!channel.isActive()) {
+                Exception gotoCatch = new Exception();
+                throw gotoCatch;
+            }
+        } catch (Exception e) {
+            // 清理资源
+            if (channel != null) {
+                channel.close().syncUninterruptibly();
+            }
+            workerGroup.shutdownGracefully().syncUninterruptibly();
+
+            throw new IOException(String.format("连接netty服务端(%s:%d)失败", host, port), e);
+        }
+
+        BeanUtil.addBean("channel", channel);
     }
 
     private class ClientThread implements Callable<Channel> {
@@ -49,8 +77,6 @@ public class NettyClient {
                     .channel(NioSocketChannel.class)
                     .handler(new DefaultChannelInitializer());
             channel = bootstrap.connect(host, port).syncUninterruptibly().channel();
-            BeanUtil.addBean("channel", channel);
-            BeanUtil.addBean("nettyClient", NettyClient.this);
 
             return channel;
         }

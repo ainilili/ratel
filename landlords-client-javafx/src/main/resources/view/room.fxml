@@ -8,9 +8,14 @@
     <children>
         <!-- 等待游戏开始pane -->
         <Pane fx:id="waitingPane" prefHeight="890.0" prefWidth="1020.0" visible="true">
-           <children>
-               <Text fx:id="waitingTips" layoutX="350.0" layoutY="330.0">正在等待其它玩家进入房间，请稍候...</Text>
-           </children>
+           <Text fx:id="waitingTips" layoutX="350.0" layoutY="330.0">正在等待其它玩家进入房间，请稍候...</Text>
+        </Pane>
+
+        <!-- 游戏结束pane -->
+        <Pane fx:id="gameOverPane" prefHeight="890" prefWidth="1020" visible="false">
+            <!-- 胜利者信息 -->
+           <Text fx:id="winnerInfo" layoutX="400.0" layoutY="330.0"></Text>
+           <Button fx:id="backLobbyButton" layoutX="445" layoutY="350">返回大厅</Button>
         </Pane>
 
         <!-- 游戏pane -->

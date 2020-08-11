@@ -3,6 +3,7 @@ package priv.zxw.ratel.landlords.client.javafx.ui.view.room;
 
 import javafx.scene.Node;
 import org.nico.ratel.landlords.entity.Poker;
+import org.nico.ratel.landlords.enums.ClientType;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.Method;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface RoomMethod extends Method {
     void joinRoom();
 
     void startGame(List<Poker> pokers);
+
+    void gameOver(String winnerName, ClientType winnerType);
 
     void refreshPlayPokers(List<Poker> pokers);
 

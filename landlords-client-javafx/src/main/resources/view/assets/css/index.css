@@ -1,0 +1,93 @@
+#appInfoPane {
+    -fx-pref-width: 280;
+    -fx-pref-height: 80;
+}
+
+#welcomeTips,
+#version {
+    -fx-font-size: 16;
+    -fx-font-family: "微软雅黑";
+}
+
+#connectPane {
+    -fx-pref-width: 280;
+    -fx-pref-height: 240;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+#connectButton {
+    -fx-background-color: #40b1f5;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #40b1f5;
+    -fx-text-fill: #000000;
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
+#remoteServerInfoPane {
+    -fx-pref-width: 280;
+    -fx-pref-height: 340;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+#remoteServerListPane {
+    -fx-pref-width: 280;
+    -fx-pref-height: 300;
+    -fx-background-color: white;
+}
+
+#fetchServerAddressErrorTips {
+    -fx-pref-width: 260;
+    -fx-pref-height: 100;
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+}
+
+.title {
+    -fx-font-size: 24;
+    -fx-alignment: center;
+    -fx-font-family: "微软雅黑";
+}
+
+.hostPortInput {
+    -fx-border-width: 0;
+    -fx-background-color: #dbd9d8;
+    -fx-background-radius: 8;
+    -fx-font-family: "微软雅黑";
+    -fx-text-fill: #000000;
+    -fx-font-size: 14;
+}
+
+.hostPortInput:focused {
+    -fx-border-width: 2;
+    -fx-border-color: #dbd9d8;
+    -fx-border-radius: 8;
+    -fx-background-color: #f6f6f5;
+}
+
+.forLabel {
+    -fx-text-alignment: center;
+    -fx-font-size: 20;
+}
+
+.remoteServerOption {
+    -fx-alignment: center;
+    -fx-pref-width: 260;
+    -fx-pref-height: 30;
+    -fx-background-color: silver;
+    -fx-border-color: #dbd9d8;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.remoteServerOption:hover {
+    -fx-background-color: #716f6d;
+}

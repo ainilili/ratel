@@ -1,11 +1,13 @@
-@import "poker.css";
+@import "./poker.css";
 
-#waitingPane {
+#waitingPane,
+#gameOverPane {
     -fx-background-color: silver;
     -fx-opacity: 0.8;
 }
 
-#waitingTips {
+#waitingTips,
+#winnerInfo {
     -fx-font-size: 20;
 }
 
@@ -26,6 +28,19 @@
 #quitButton {
     -fx-alignment: center;
     -fx-pref-width: 80;
+    -fx-background-size: 43px 43px;
+    -fx-background-color: #40b1f5;
+    -fx-cursor: hand;
+    -fx-border-width: 1px;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+#backLobbyButton {
+    -fx-alignment: center;
+    -fx-pref-width: 100;
     -fx-background-size: 43px 43px;
     -fx-background-color: #40b1f5;
     -fx-cursor: hand;

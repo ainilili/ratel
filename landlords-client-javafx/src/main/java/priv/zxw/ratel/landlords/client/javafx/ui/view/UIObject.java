@@ -37,7 +37,9 @@ public abstract class UIObject extends Stage {
 
         // 关闭netty
         NettyClient nettyClient = BeanUtil.getBean("nettyClient");
-        nettyClient.destroy();
+        if (nettyClient != null) {
+            nettyClient.destroy();
+        }
     }
 
     public <T> T $(String id, Class<T> clazz) {

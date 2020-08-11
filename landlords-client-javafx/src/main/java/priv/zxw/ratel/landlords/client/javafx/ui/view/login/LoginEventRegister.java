@@ -25,18 +25,15 @@ public class LoginEventRegister implements EventRegister {
     }
 
     private void submitNickname() {
-        TextField field = uiObject.$("input", TextField.class);
+        TextField field = uiObject.$("nicknameInput", TextField.class);
 
-        uiObject.$("submitBtn", Button.class).setOnAction(e -> {
+        uiObject.$("submitButton", Button.class).setOnAction(e -> {
             String nickname = field.getText().trim();
             loginEvent.setNickname(nickname);
         });
     }
 
     private void verifyNickname() {
-        uiObject.$("input", TextField.class).setOnAction(e -> {
-            TextField field = (TextField) e.getSource();
-            String nickname = field.getText().trim();
-        });
+        uiObject.$("input", TextField.class).setOnAction(e -> {});
     }
 }

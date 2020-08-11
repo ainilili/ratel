@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientType;
 import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
@@ -59,6 +60,15 @@ public class RoomController extends UIObject implements RoomMethod {
         $("quitButton", Button.class).setText("退出");
 
         initPokers(pokers);
+    }
+
+    @Override
+    public void gameOver(String winnerName, ClientType winnerType) {
+        $("playingPane", Pane.class).setDisable(true);
+        Pane gameOverPane = $("gameOverPane", Pane.class);
+        gameOverPane.setVisible(true);
+        Text text = (Text) gameOverPane.lookup("#winnerInfo");
+        text.setText(String.format("游戏结束，%s胜利", ClientType.LANDLORD.equals(winnerType) ? "地主" : "农民"));
     }
 
     private static final int PER_PLAYER_DEFAULT_POKER_COUNT = 17;

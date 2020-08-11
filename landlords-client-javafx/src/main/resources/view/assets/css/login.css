@@ -1,0 +1,39 @@
+#nicknameInput {
+    -fx-pref-width: 260;
+    -fx-border-width: 0;
+    -fx-background-color: #dbd9d8;
+    -fx-background-radius: 8;
+    -fx-font-family: "微软雅黑";
+    -fx-text-fill: #000000;
+    -fx-font-size: 14;
+}
+
+#nicknameInput:focused {
+    -fx-border-width: 2;
+    -fx-border-color: #dbd9d8;
+    -fx-border-radius: 8;
+    -fx-background-color: #f6f6f5;
+}
+
+#submitButton {
+    -fx-background-color: #40b1f5;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #40b1f5;
+    -fx-text-fill: #000000;
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
+.forLabel {
+    -fx-text-alignment: center;
+    -fx-font-size: 20;
+}
+
+.tips {
+    -fx-font-size: 17;
+    -fx-text-fill: brown;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
+}
