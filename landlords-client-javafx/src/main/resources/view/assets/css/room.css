@@ -11,8 +11,14 @@
 
 #prevPlayerPane,
 #nextPlayerPane {
-    -fx-pref-height: 510;
-    -fx-pref-width: 220;
+    -fx-pref-height: 140;
+    -fx-pref-width: 600;
+}
+
+#prevPlayerShowPane,
+#nextPlayerShowPane {
+    -fx-pref-width: 380;
+    -fx-pref-height: 140;
 }
 
 #surplusPokersPane {
@@ -90,17 +96,17 @@
 
 .top {
     -fx-pref-height: 150;
-    -fx-pref-width: 1020;
+    -fx-pref-width: 1200;
 }
 
 .middle {
-    -fx-pref-height: 570;
-    -fx-pref-width: 1020;
+    -fx-pref-height: 140;
+    -fx-pref-width: 1200;
 }
 
 .bottom {
-    -fx-pref-height: 230;
-    -fx-pref-width: 1020;
+    -fx-pref-height: 310;
+    -fx-pref-width: 1200;
 }
 
 .cards {
@@ -112,18 +118,12 @@
     -fx-background-radius: 8;
 }
 
-.otherCards {
-    -fx-pref-width: 170;
-    -fx-pref-height: 510;
-    -fx-background-color: silver;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-}
-
 .tips {
     -fx-alignment: center;
     -fx-pref-height: 30;
     -fx-pref-width: 70;
+    -fx-font-size: 20;
+    -fx-text-fill: black;
     -fx-background-color: silver;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
@@ -167,6 +167,21 @@
     -fx-text-fill: black;
 }
 
+.rearPoker {
+    -fx-pref-width: 55;
+    -fx-pref-height: 70;
+    -fx-border-color: #716f6d;
+    -fx-background-image: url("../image/rear.png");
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.rearPoker > .pokerCount {
+    -fx-font-size: 25;
+    -fx-text-fill: #000000;
+}
+
 .vertical-poker {
     -fx-pref-width: 140;
     -fx-pref-height: 90;
@@ -191,4 +206,32 @@
     -fx-background-color: #dddbd8;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
+}
+
+.showPoker {
+    -fx-pref-width: 40;
+    -fx-pref-height: 50;
+    -fx-border-color: #afadab;
+    -fx-background-color: #dddbd8;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.showPoker > .level {
+    -fx-font-size: 20;
+    -fx-text-fill: black;
+}
+
+.showPoker > .joker-level {
+    -fx-font-size: 15;
+}
+
+.showPoker > .type-small {
+    -fx-font-size: 20;
+    -fx-text-fill: black;
+}
+
+.showPoker > .type-big {
+    -fx-font-size: 40;
+    -fx-text-fill: black;
 }

@@ -4,82 +4,148 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Label?>
-<AnchorPane prefHeight="890.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@assets/css/room.css">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Circle?>
+<AnchorPane prefHeight="600.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@assets/css/room.css">
     <children>
         <!-- 等待游戏开始pane -->
-        <Pane fx:id="waitingPane" prefHeight="890.0" prefWidth="1020.0" visible="true">
-           <Text fx:id="waitingTips" layoutX="350.0" layoutY="330.0">正在等待其它玩家进入房间，请稍候...</Text>
+        <Pane fx:id="waitingPane" prefHeight="600.0" prefWidth="1200.0" visible="false">
+           <Text fx:id="waitingTips" layoutX="440.0" layoutY="300.0">正在等待其它玩家进入房间，请稍候...</Text>
         </Pane>
 
         <!-- 游戏结束pane -->
-        <Pane fx:id="gameOverPane" prefHeight="890" prefWidth="1020" visible="false">
+        <Pane fx:id="gameOverPane" prefHeight="600.0" prefWidth="1200.0" visible="false">
             <!-- 胜利者信息 -->
            <Text fx:id="winnerInfo" layoutX="400.0" layoutY="330.0"></Text>
            <Button fx:id="backLobbyButton" layoutX="445" layoutY="350">返回大厅</Button>
         </Pane>
 
         <!-- 游戏pane -->
-        <Pane fx:id="playingPane" prefHeight="890.0" prefWidth="1020.0" visible="true" disable="true">
+        <Pane fx:id="playingPane" prefHeight="600.0" prefWidth="1200.0" visible="true" disable="true">
             <Pane styleClass="top">
                 <!-- 底牌pane -->
-                <Pane fx:id="surplusPokersPane" layoutX="260" layoutY="0" />
+                <Pane fx:id="surplusPokersPane" layoutX="350" layoutY="0" />
 
                 <!-- 退出按钮 -->
-                <Button fx:id="quitButton" layoutX="850" />
+                <Button fx:id="quitButton" layoutX="1000" />
             </Pane>
 
             <Pane layoutX="0" layoutY="150" styleClass="middle">
                 <!-- 上游玩家pane -->
                 <Pane fx:id="prevPlayerPane">
                     <!-- 上游玩家角色 -->
-                    <Label fx:id="prevPlayerRole" layoutY="-25" />
+                    <Label fx:id="prevPlayerRole" layoutY="110" />
 
                     <!-- 上游玩家昵称 -->
-                    <Label fx:id="prevPlayerNickname" layoutX="60" layoutY="-25" />
+                    <Label fx:id="prevPlayerNickname" layoutX="60" layoutY="110" />
 
-                    <!-- 牌显示pane -->
-                    <Pane fx:id="prevPokersPane" styleClass="otherCards" />
+                    <!-- 上游玩家头像 -->
+                    <ImageView layoutX="60">
+                        <Image backgroundLoading="true" url="@assets/image/profile/profile_9.jpg"/>
+                        <fitWidth>100</fitWidth>
+                        <fitHeight>100</fitHeight>
+                        <clip>
+                            <Circle fill="aqua" centerX="50" centerY="50">
+                                <radius>50</radius>
+                            </Circle>
+                        </clip>
+                    </ImageView>
 
-                    <!-- 倒计时显示框 -->
-                    <Label styleClass="timer" layoutX="180" layoutY="175" visible="false" />
+                    <Pane layoutX="180" layoutY="20" styleClass="rearPoker">
+                        <Label layoutX="15" layoutY="18" styleClass="pokerCount">17</Label>
+                    </Pane>
 
-                    <!-- 提示pane -->
-                    <Label styleClass="tips" layoutX="180" layoutY="145" />
+                    <Pane fx:id="prevPlayerShowPane" layoutX="240">
+                        <!-- 倒计时显示框 -->
+                        <Label styleClass="timer" layoutY="35" visible="true">25</Label>
+
+                        <!-- 提示pane -->
+                        <Label styleClass="tips" layoutY="35" visible="false" />
+
+                        <Pane>
+                            <Pane styleClass="showPoker">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutX="30">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutX="60">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutX="90">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutY="40">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutX="30" layoutY="40">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutX="60" layoutY="40">
+                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
+                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
+                            </Pane>
+                            <Pane styleClass="showPoker" layoutX="90" layoutY="40">
+                                <Label layoutX="6" layoutY="0" styleClass="joker-level">J</Label>
+                                <Label layoutX="4" layoutY="13" styleClass="joker-level">O</Label>
+                                <Label layoutX="5" layoutY="26" styleClass="joker-level">K</Label>
+                            </Pane>
+                        </Pane>
+                    </Pane>
                 </Pane>
 
-                <!-- 出牌pane -->
-                <Pane fx:id="showPokersPane" layoutX="220" layoutY="0" />
-
                 <!-- 下游玩家pane -->
-                <Pane fx:id="nextPlayerPane" layoutX="800" layoutY="0">
+                <Pane fx:id="nextPlayerPane" layoutX="600" layoutY="0">
                     <!-- 下游玩家角色 -->
-                    <Label fx:id="nextPlayerRole" layoutX="50" layoutY="-25" />
+                    <Label fx:id="nextPlayerRole" layoutX="430" layoutY="110" />
 
                     <!-- 下游玩家昵称 -->
-                    <Label fx:id="nextPlayerNickname" layoutX="110" layoutY="-25" />
+                    <Label fx:id="nextPlayerNickname" layoutX="490" layoutY="110" />
 
-                    <!-- 牌显示pane -->
-                    <Pane fx:id="nextPokersPane" styleClass="otherCards" layoutX="50" />
+                    <!-- 下游玩家头像 -->
+                    <ImageView layoutX="490">
+                        <Image backgroundLoading="true" url="@assets/image/profile/profile_2.jpg"/>
+                        <fitWidth>100</fitWidth>
+                        <fitHeight>100</fitHeight>
+                        <clip>
+                            <Circle fill="aqua" centerX="50" centerY="50">
+                                <radius>50</radius>
+                            </Circle>
+                        </clip>
+                    </ImageView>
 
-                    <!-- 倒计时显示框 -->
-                    <Label styleClass="timer" layoutX="-20" layoutY="175" visible="false" />
+                    <Pane layoutX="380" layoutY="20" styleClass="rearPoker">
+                        <Label layoutX="15" layoutY="18" styleClass="pokerCount">17</Label>
+                    </Pane>
 
-                    <!-- 提示pane -->
-                    <Label styleClass="tips" layoutX="-30" layoutY="145" />
+                    <Pane fx:id="nextPlayerShowPane">
+                        <!-- 倒计时显示框 -->
+                        <Label styleClass="timer" layoutX="315" layoutY="35" visible="false" />
+
+                        <!-- 提示pane -->
+                        <Label styleClass="tips" layoutX="305" layoutY="35" visible="true">不出</Label>
+                    </Pane>
                 </Pane>
             </Pane>
 
-            <Pane layoutX="0" layoutY="660" styleClass="bottom">
+            <Pane layoutX="0" layoutY="290" styleClass="bottom">
                 <!-- 当前玩家pane -->
                 <Pane fx:id="playerPane">
                     <!-- 抢地主按钮 -->
-                    <Button fx:id="robButton" layoutX="395" layoutY="5" />
+                    <Button fx:id="robButton" layoutX="555" layoutY="85" visible="false" />
                     <!-- 不抢地主按钮 -->
-                    <Button fx:id="notRobButton" layoutX="565" layoutY="5" />
+                    <Button fx:id="notRobButton" layoutX="655" layoutY="85" visible="false" />
                     <!-- 出牌按钮 -->
-                    <Button fx:id="submitButton" layoutX="395" layoutY="5" visible="false">出牌</Button>
+                    <Button fx:id="submitButton" layoutX="555" layoutY="85" visible="false">出牌</Button>
                     <!-- 不出牌按钮 -->
-                    <Button fx:id="passButton" layoutX="565" layoutY="5" visible="false">不出</Button>
+                    <Button fx:id="passButton" layoutX="655" layoutY="85" visible="false">不出</Button>
 
                     <!-- 倒计时显示框 -->
                     <Label styleClass="timer" layoutX="480" layoutY="-5" visible="false" />
@@ -88,11 +154,23 @@
                     <Label styleClass="primary-tips" layoutX="440" layoutY="-5" visible="false" />
 
                     <!-- 当前玩家角色 -->
-                    <Label fx:id="playerRole" layoutX="75" layoutY="25" />
-                    <Label fx:id="playerNickname" layoutX="135" layoutY="25" />
+                    <Label fx:id="playerRole" layoutX="25" layoutY="270" />
+                    <Label fx:id="playerNickname" layoutX="75" layoutY="270" />
+
+                    <!-- 当前玩家头像 -->
+                    <ImageView layoutX="75" layoutY="160">
+                        <Image backgroundLoading="true" url="@assets/image/profile/profile_5.jpg"/>
+                        <fitWidth>100</fitWidth>
+                        <fitHeight>100</fitHeight>
+                        <clip>
+                            <Circle fill="aqua" centerX="50" centerY="50">
+                                <radius>50</radius>
+                            </Circle>
+                        </clip>
+                    </ImageView>
 
                     <!-- 牌显示pane -->
-                    <Pane fx:id="pokersPane" styleClass="cards" layoutX="75" layoutY="50" />
+                    <Pane fx:id="pokersPane" styleClass="cards" layoutX="200" layoutY="130" />
                 </Pane>
             </Pane>
         </Pane>
