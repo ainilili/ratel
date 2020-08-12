@@ -3,7 +3,7 @@ package priv.zxw.ratel.landlords.client.javafx.listener;
 import io.netty.channel.Channel;
 import javafx.application.Platform;
 import org.nico.ratel.landlords.enums.ClientEventCode;
-import priv.zxw.ratel.landlords.client.javafx.ui.view.AlertUtils;
+import priv.zxw.ratel.landlords.client.javafx.ui.view.util.AlertUtils;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.Method;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.lobby.LobbyController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomController;

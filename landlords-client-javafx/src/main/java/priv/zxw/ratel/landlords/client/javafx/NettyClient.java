@@ -9,6 +9,7 @@ import org.nico.noson.util.string.StringUtils;
 import priv.zxw.ratel.landlords.client.javafx.listener.ClientListenerUtils;
 import priv.zxw.ratel.landlords.client.javafx.handler.DefaultChannelInitializer;
 import priv.zxw.ratel.landlords.client.javafx.ui.UIService;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 
 import java.io.IOException;
 import java.util.concurrent.*;

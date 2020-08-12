@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@assets/css/lobby.css">
     <children>
         <!-- 对战模式选择 -->
         <Pane fx:id="modalPane" visible="true">
-            <Button fx:id="pvpButton" layoutX="80.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">P v P</Button>
-            <Button fx:id="pveButton" layoutX="350.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">P v E</Button>
+            <Button fx:id="pvpModalButton" layoutX="80.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">P v P</Button>
+            <Button fx:id="pveModalButton" layoutX="350.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">P v E</Button>
         </Pane>
 
         <!-- PVP菜单 -->
         <Pane fx:id="pvpMenuPane" visible="false">
-            <children>
-                <Pane fx:id="buttonsPane" visible="true">
-                    <Button fx:id="createRoomButton" layoutX="80.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">创建房间</Button>
-                    <Button fx:id="listRoomsButton" layoutX="350.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">房间列表</Button>
+            <Pane fx:id="roomsPane" prefHeight="400.0" prefWidth="600.0">
+                <Pane styleClass="title">
+                    <Label layoutX="5" layoutY="5" styleClass="roomListTitle">房间列表</Label>
+                    <Button fx:id="createRoomButton" layoutX="540" layoutY="5"/>
                 </Pane>
-
-                <Pane fx:id="roomsPane" visible="false">
-                </Pane>
-            </children>
+            </Pane>
         </Pane>
 
         <!-- PVE菜单 -->

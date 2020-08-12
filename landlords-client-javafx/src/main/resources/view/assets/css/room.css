@@ -1,5 +1,3 @@
-@import "./poker.css";
-
 #waitingPane,
 #gameOverPane {
     -fx-background-color: silver;

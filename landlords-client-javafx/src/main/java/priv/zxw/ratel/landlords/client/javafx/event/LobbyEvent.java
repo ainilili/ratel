@@ -5,7 +5,7 @@ import io.netty.channel.Channel;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.listener.ClientListener;
 import priv.zxw.ratel.landlords.client.javafx.listener.ClientListenerUtils;
 import priv.zxw.ratel.landlords.client.javafx.ui.event.ILobbyEvent;

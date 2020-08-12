@@ -1,0 +1,57 @@
+#createRoomButton {
+    -fx-pref-width: 30;
+    -fx-pref-height: 30;
+    -fx-background-color: #dbd9d8;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #dbd9d8;
+    -fx-cursor: hand;
+    -fx-background-image: url("../image/add_0.png");
+}
+
+.title {
+    -fx-pref-width: 600;
+    -fx-pref-height: 40;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0;
+}
+
+.roomListTitle {
+    -fx-font-size: 20;
+}
+
+.roomPane {
+    -fx-pref-width: 150;
+    -fx-pref-height: 120;
+    -fx-border-color: #afadab;
+    -fx-background-color: #dddbd8;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+}
+
+.roomPane:hover {
+    -fx-border-color: #3f91af;
+}
+
+.roomPane > .idLabel {
+    -fx-font-size: 16;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0;
+}
+
+.roomPane > .roomOwnerLabel {
+    -fx-pref-width: 30;
+    -fx-pref-height: 30;
+    -fx-background-image: url("../image/face_0.png");
+}
+
+.roomPane > .modalLabel {
+    -fx-font-size: 30;
+    -fx-text-fill: silver;
+    -fx-opacity: 0.8;
+}
+
+.roomPane > .playerCountLabel {
+}

@@ -1,6 +1,6 @@
 package priv.zxw.ratel.landlords.client.javafx.event;
 
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.NettyClient;
 import priv.zxw.ratel.landlords.client.javafx.ui.event.IIndexEvent;
 

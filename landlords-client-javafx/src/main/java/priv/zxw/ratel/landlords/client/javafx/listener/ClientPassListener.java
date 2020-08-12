@@ -8,10 +8,10 @@ import javafx.scene.control.Label;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.NettyClient;
 import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
-import priv.zxw.ratel.landlords.client.javafx.ui.view.CountDownTask;
+import priv.zxw.ratel.landlords.client.javafx.ui.view.util.CountDownTask;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomMethod;
 

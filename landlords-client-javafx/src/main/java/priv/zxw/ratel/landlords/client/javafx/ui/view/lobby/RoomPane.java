@@ -2,57 +2,57 @@ package priv.zxw.ratel.landlords.client.javafx.ui.view.lobby;
 
 
 import javafx.collections.ObservableList;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import priv.zxw.ratel.landlords.client.javafx.entity.RoomInfo;
-import priv.zxw.ratel.landlords.client.javafx.ui.event.ILobbyEvent;
 
 public class RoomPane {
+    private static final int MARGIN_TOP = 25;
+    private static final int MARGIN_LEFT = 40;
+
     private Pane pane;
 
-    private Label idLabel;
-    private Label roomOwnerLabel;
-    private Label modalLabel;
-    private Label clientCountLabel;
-
-    public RoomPane(RoomInfo roomInfo, ILobbyEvent lobbyEvent) {
+    public RoomPane(RoomInfo roomInfo, int index) {
         pane = new Pane();
-        pane.setId("roomPane" + roomInfo.getRoomId());
-        pane.setPrefSize(200, 150);
-        pane.setStyle("-fx-border-color: black");
-        pane.setCursor(Cursor.HAND);
-        pane.setOnMouseClicked(e -> lobbyEvent.joinRoom(roomInfo.getRoomId()));
-        ObservableList<Node> children = pane.getChildren();
+        pane.getStyleClass().add("roomPane");
+        pane.setLayoutX(35 + (index % 3) * (150 + MARGIN_LEFT));
+        pane.setLayoutY(65 + ((index / 3) * (120 + MARGIN_TOP)));
 
-        // 房间id label
-        idLabel = new Label();
-        idLabel.setLayoutX(14);
-        idLabel.setLayoutY(14);
+        Label idLabel = new Label();
+        idLabel.setLayoutX(6);
+        idLabel.setLayoutY(3);
+        idLabel.getStyleClass().add("idLabel");
         idLabel.setText(roomInfo.getRoomId().toString());
+
+        Label roomOwnerLabel = new Label();
+        roomOwnerLabel.setLayoutX(0);
+        roomOwnerLabel.setLayoutY(22);
+        roomOwnerLabel.getStyleClass().add("roomOwnerLabel");
+
+        Label roomOwnerNameLabel = new Label();
+        roomOwnerNameLabel.setLayoutX(34);
+        roomOwnerNameLabel.setLayoutY(32);
+        roomOwnerNameLabel.setText(roomInfo.getRoomOwner());
+
+        Label modalLabel = new Label();
+        modalLabel.setLayoutX(54);
+        modalLabel.setLayoutY(60);
+        modalLabel.getStyleClass().add("modalLabel");
+        modalLabel.setText(roomInfo.getRoomType());
+
+        Label playerCountLabel = new Label();
+        playerCountLabel.setLayoutX(60);
+        playerCountLabel.setLayoutY(100);
+        playerCountLabel.getStyleClass().add("playerCountLabel");
+        playerCountLabel.setText("当前人数：" + roomInfo.getRoomClientCount() + "/3");
+
+        ObservableList<Node> children = pane.getChildren();
         children.add(idLabel);
-
-        // 房主label
-        roomOwnerLabel = new Label();
-        roomOwnerLabel.setLayoutX(14);
-        roomOwnerLabel.setLayoutY(40);
-        roomOwnerLabel.setText("房主:" + roomInfo.getRoomOwner());
         children.add(roomOwnerLabel);
-
-        // 模式label
-        modalLabel = new Label();
-        modalLabel.setLayoutX(14);
-        modalLabel.setLayoutY(112);
-        modalLabel.setText(roomInfo.getRoomType() + "模式");
+        children.add(roomOwnerNameLabel);
         children.add(modalLabel);
-
-        // 当前人数
-        clientCountLabel = new Label();
-        clientCountLabel.setLayoutX(136);
-        clientCountLabel.setLayoutY(112);
-        clientCountLabel.setText(roomInfo.getRoomClientCount() + "/3人");
-        children.add(clientCountLabel);
+        children.add(playerCountLabel);
     }
 
     public Pane getPane() {

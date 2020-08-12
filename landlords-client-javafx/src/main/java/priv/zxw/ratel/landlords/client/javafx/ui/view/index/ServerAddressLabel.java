@@ -11,8 +11,6 @@ public class ServerAddressLabel {
         label.setText(serverAddress);
         label.setLayoutY(index * 30);
         label.getStyleClass().add("remoteServerOption");
-
-
     }
 
     public Label getLabel() {

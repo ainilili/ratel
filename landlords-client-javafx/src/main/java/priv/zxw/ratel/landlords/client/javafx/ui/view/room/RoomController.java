@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientType;
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
 import priv.zxw.ratel.landlords.client.javafx.entity.User;
 import priv.zxw.ratel.landlords.client.javafx.ui.event.IRoomEvent;

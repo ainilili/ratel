@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import priv.zxw.ratel.landlords.client.javafx.entity.RoomInfo;
 import priv.zxw.ratel.landlords.client.javafx.ui.event.ILobbyEvent;
-import priv.zxw.ratel.landlords.client.javafx.ui.view.AlertUtils;
+import priv.zxw.ratel.landlords.client.javafx.ui.view.util.AlertUtils;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.UIObject;
 
 import java.io.IOException;
@@ -52,14 +52,15 @@ public class LobbyController extends UIObject implements LobbyMethod {
 
     @Override
     public void showRoomList(List<RoomInfo> roomInfoList) {
-        Pane buttonsPane = $("buttonsPane", Pane.class);
-        buttonsPane.setVisible(false);
-
         Pane roomsPane = $("roomsPane", Pane.class);
-        roomsPane.setVisible(true);
 
-        ObservableList<Node> children = roomsPane.getChildren();
-        roomInfoList.forEach(roomInfo -> children.add(new RoomPane(roomInfo, lobbyEvent).getPane()));
+        for (int i = 0, size = roomInfoList.size(); i < size; i++) {
+            RoomInfo roomInfo = roomInfoList.get(i);
+            Pane roomPane = new RoomPane(roomInfo, i).getPane();
+            roomPane.setOnMouseClicked(e -> lobbyEvent.joinRoom(roomInfo.getRoomId()));
+
+            roomsPane.getChildren().add(roomPane);
+        }
     }
 
     @Override

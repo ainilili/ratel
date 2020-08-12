@@ -2,17 +2,13 @@ package priv.zxw.ratel.landlords.client.javafx.listener;
 
 import io.netty.channel.Channel;
 import javafx.application.Platform;
+import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ServerEventCode;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.lobby.LobbyController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.lobby.LobbyMethod;
 
-/**
- * @ClassName ClientShowOptionsPVPListener
- * @Desc TODO
- * @Author zxw
- * @Date 2020/8/7 10:13
- * @Version 1.0
- */
+
 public class ClientShowOptionsPVPListener extends AbstractClientListener {
 
     public ClientShowOptionsPVPListener() {
@@ -24,5 +20,6 @@ public class ClientShowOptionsPVPListener extends AbstractClientListener {
         LobbyMethod lobbyMethod = (LobbyMethod) uiService.getMethod(LobbyController.METHOD_NAME);
 
         Platform.runLater(lobbyMethod::toggleToPVPMenu);
+        ChannelUtils.pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
     }
 }

@@ -1,12 +1,9 @@
 package priv.zxw.ratel.landlords.client.javafx;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.nico.noson.Noson;
-import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.utils.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +17,11 @@ import priv.zxw.ratel.landlords.client.javafx.ui.view.index.IndexMethod;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.lobby.LobbyController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.login.LoginController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomController;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class SimpleClient extends Application {

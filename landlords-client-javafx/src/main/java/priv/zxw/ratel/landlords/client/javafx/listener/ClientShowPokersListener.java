@@ -3,14 +3,13 @@ package priv.zxw.ratel.landlords.client.javafx.listener;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.Channel;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientEventCode;
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
 import priv.zxw.ratel.landlords.client.javafx.entity.User;
-import priv.zxw.ratel.landlords.client.javafx.ui.view.CountDownTask;
+import priv.zxw.ratel.landlords.client.javafx.ui.view.util.CountDownTask;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomMethod;
 

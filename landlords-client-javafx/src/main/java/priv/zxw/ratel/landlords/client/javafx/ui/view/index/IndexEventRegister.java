@@ -10,8 +10,6 @@ import priv.zxw.ratel.landlords.client.javafx.ui.event.IIndexEvent;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.EventRegister;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.UIObject;
 
-import java.io.IOException;
-
 public class IndexEventRegister implements EventRegister {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexEventRegister.class);
 

@@ -23,22 +23,17 @@ public class LobbyEventRegister implements EventRegister {
         selectPVPModal();
         selectPVEModal();
         createPVPRoom();
-        showRooms();
     }
 
     private void selectPVPModal() {
-        uiObject.$("pvpButton", Button.class).setOnAction(e -> lobbyEvent.selectPVPModal());
+        uiObject.$("pvpModalButton", Button.class).setOnAction(e -> lobbyEvent.selectPVPModal());
     }
 
     private void selectPVEModal() {
-        uiObject.$("pveButton", Button.class).setOnAction(e -> lobbyEvent.selectPVEModal());
+        uiObject.$("pveModalButton", Button.class).setOnAction(e -> lobbyEvent.selectPVEModal());
     }
 
     private void createPVPRoom() {
         uiObject.$("createRoomButton", Button.class).setOnAction(e -> lobbyEvent.createPVPRoom());
-    }
-
-    private void showRooms() {
-        uiObject.$("listRoomsButton", Button.class).setOnAction(e -> lobbyEvent.showRooms());
     }
 }

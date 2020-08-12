@@ -6,7 +6,7 @@ import javafx.application.Platform;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientEventCode;
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
 import priv.zxw.ratel.landlords.client.javafx.entity.User;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.Method;

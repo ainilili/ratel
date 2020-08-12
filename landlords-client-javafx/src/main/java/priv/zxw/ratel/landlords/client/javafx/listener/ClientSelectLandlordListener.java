@@ -6,7 +6,7 @@ import javafx.application.Platform;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import priv.zxw.ratel.landlords.client.javafx.BeanUtil;
+import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.NettyClient;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomController;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.room.RoomMethod;
