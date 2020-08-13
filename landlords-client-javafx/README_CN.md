@@ -1,6 +1,6 @@
 ## 介绍
 本项目是一个使用 `javafx` + `netty` 技术构建的一个桌面应用，
-是对ratel应用命令行客户端的扩展，为ratel应用提供可视化界面操作方式。
+是对`ratel`应用命令行客户端的扩展，为`ratel`应用提供可视化界面操作方式。
 
 ### 系统架构
 * 使用`netty`构建和**ratel**服务端的通讯
@@ -44,14 +44,11 @@ java -jar landlords-client-javafx/target/landlords-client-javafx-#{version}.jar
 -[] 页面切换  
 -[] 挂机检测
 
-## 反馈与贡献
- - 如果您想贡献代码，非常欢迎提``PR``，我们将会合并优秀的代码.
- - 如果您发现了``Bug``或想提问，非常欢迎提[issue](https://github.com/marmot-z/ratel/issues)给我们.
-
-## 联系方式
-* [zhangxunweia@gmail.com](zhangxunweia@gmail.com)
-* [15870664270@163.com](15870664270@163.com)
+## 反馈
+如果你发现此客户端的bug或有任何疑问，欢迎提[issue](https://github.com/ainilili/ratel/issues)，
+或者你也可以直接联系我（[zhangxunweia@gmail.com](zhangxunweia@gmail.com)）
 
 ## 参考
 * [NaiveChat](https://github.com/fuzhengwei/NaiveChat)
 * [ratel部分协议](https://github.com/ainilili/ratel/blob/master/PROTOCO_CN.md)
+* [javafx和netty间的通信](https://github.com/ainilili/ratel/landlords-client-javafx/javafx-netty-communication.md)
