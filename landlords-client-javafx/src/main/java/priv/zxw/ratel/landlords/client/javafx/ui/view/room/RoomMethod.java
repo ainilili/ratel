@@ -31,7 +31,7 @@ public interface RoomMethod extends Method {
 
     void setLandLord(String landlordName);
 
-    void showRecentPokers(List<Poker> recentPokers);
+    void showRecentPokers(String recentUsername, List<Poker> recentPokers);
 
     void showPlayerMessage(String playerName, String message);
 

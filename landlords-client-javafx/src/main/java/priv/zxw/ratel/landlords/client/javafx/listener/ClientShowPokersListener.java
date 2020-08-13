@@ -32,15 +32,15 @@ public class ClientShowPokersListener extends AbstractClientListener {
             future.cancel();
         }
 
+        // 把当前玩家的出牌和不出牌按钮隐藏掉
         User user = BeanUtil.getBean("user");
         CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
         RoomMethod method = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
 
-        // 把当前玩家的出牌和不出牌按钮隐藏掉
-        // 更新玩家手中的牌
         List<Poker> sellPokerList = jsonObject.getJSONArray("pokers").toJavaList(Poker.class);
         user.removePokers(sellPokerList);
 
+        // 更新玩家手中的牌
         if (user.getNickname().equals(clientNickname)) {
             Platform.runLater(() -> {
                 method.hidePokerPlayButtons();
@@ -63,8 +63,7 @@ public class ClientShowPokersListener extends AbstractClientListener {
         currentRoomInfo.setRecentPokers(sellPokerList);
 
         Platform.runLater(() -> {
-            method.showRecentPokers(currentRoomInfo.getRecentPokers());
-            method.showPlayerMessage(currentRoomInfo.getRecentPlayerName(), "出牌");
+            method.showRecentPokers(currentRoomInfo.getRecentPlayerName(), currentRoomInfo.getRecentPokers());
         });
 
         // 找到下一个出牌玩家设置其定时器

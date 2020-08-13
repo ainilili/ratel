@@ -17,6 +17,7 @@ import priv.zxw.ratel.landlords.client.javafx.ui.event.IRoomEvent;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.UIObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomController extends UIObject implements RoomMethod {
@@ -62,15 +63,6 @@ public class RoomController extends UIObject implements RoomMethod {
         initPokers(pokers);
     }
 
-    @Override
-    public void gameOver(String winnerName, ClientType winnerType) {
-        $("playingPane", Pane.class).setDisable(true);
-        Pane gameOverPane = $("gameOverPane", Pane.class);
-        gameOverPane.setVisible(true);
-        Text text = (Text) gameOverPane.lookup("#winnerInfo");
-        text.setText(String.format("游戏结束，%s胜利", ClientType.LANDLORD.equals(winnerType) ? "地主" : "农民"));
-    }
-
     private static final int PER_PLAYER_DEFAULT_POKER_COUNT = 17;
     private static final int SURPLUS_POKER_COUNT = 3;
 
@@ -79,6 +71,8 @@ public class RoomController extends UIObject implements RoomMethod {
         refreshPlayPokers(pokers);
 
         // 上下游牌pane
+        $("prevPlayerPokersPane", Pane.class).setVisible(true);
+        $("nextPlayerPokersPane", Pane.class).setVisible(true);
         refreshPrevPlayerPokers(PER_PLAYER_DEFAULT_POKER_COUNT);
         refreshNextPlayerPokers(PER_PLAYER_DEFAULT_POKER_COUNT);
 
@@ -92,34 +86,41 @@ public class RoomController extends UIObject implements RoomMethod {
     }
 
     @Override
+    public void gameOver(String winnerName, ClientType winnerType) {
+        $("playingPane", Pane.class).setDisable(true);
+        Pane gameOverPane = $("gameOverPane", Pane.class);
+        gameOverPane.setVisible(true);
+        Text text = (Text) gameOverPane.lookup("#winnerInfo");
+        text.setText(String.format("游戏结束，%s胜利", ClientType.LANDLORD.equals(winnerType) ? "地主" : "农民"));
+    }
+
+    @Override
     public void refreshPlayPokers(List<Poker> pokers) {
+        final int pokersPaneWidth = 870;
+        final int pokerPaneWidth = 110;
+        int size = pokers.size();
+        // 第一张牌的x轴偏移量
+        int firstPokerPaneOffsetX = ((pokersPaneWidth - pokerPaneWidth) - PokerPane.MARGIN_LEFT * (size -1)) / 2;
+
         Pane pokersPane = $("pokersPane", Pane.class);
 
         // 可能之前有牌，先清理再填充
         pokersPane.getChildren().clear();
-        for (int i = 0, size = pokers.size(); i < size; i++) {
-            pokersPane.getChildren().add(new PokerPane(i, pokers.get(i)).getPane());
+        for (int i = 0; i < size; i++) {
+            pokersPane.getChildren().add(new PokerPane(i, firstPokerPaneOffsetX, pokers.get(i)).getPane());
         }
     }
 
     @Override
     public void refreshPrevPlayerPokers(int pokerCount) {
-        Pane prevPokersPane = $("prevPokersPane", Pane.class);
-
-        prevPokersPane.getChildren().clear();
-        for (int j = 0; j < pokerCount; j++) {
-            prevPokersPane.getChildren().add(new RearPokerPane(j).getPane());
-        }
+        Pane prevPlayerPokersPane = $("prevPlayerPokersPane", Pane.class);
+        ((Label) prevPlayerPokersPane.lookup(".pokerCount")).setText(String.valueOf(pokerCount));
     }
 
     @Override
     public void refreshNextPlayerPokers(int pokerCount) {
-        Pane nextPokersPane = $("nextPokersPane", Pane.class);
-
-        nextPokersPane.getChildren().clear();
-        for (int j = 0; j < pokerCount; j++) {
-            nextPokersPane.getChildren().add(new RearPokerPane(j).getPane());
-        }
+        Pane nextPlayerPokersPane = $("nextPlayerPokersPane", Pane.class);
+        ((Label) nextPlayerPokersPane.lookup(".pokerCount")).setText(String.valueOf(pokerCount));
     }
 
 
@@ -141,7 +142,7 @@ public class RoomController extends UIObject implements RoomMethod {
 
         surplusPokersPane.getChildren().clear();
         for (int n = 0, size = surplusPokers.size(); n < size; n++) {
-            Pane surplusPokerPane = new PokerPane(n, surplusPokers.get(n)).getPane();
+            Pane surplusPokerPane = new PokerPane(n, 0, surplusPokers.get(n)).getPane();
             surplusPokerPane.setLayoutX(45 + n * (SurplusPokerPane.MARGIN_LEFT + 110));
             surplusPokerPane.setLayoutY(0);
 
@@ -177,12 +178,52 @@ public class RoomController extends UIObject implements RoomMethod {
     }
 
     @Override
-    public void showRecentPokers(List<Poker> recentPokers) {
-        Pane showPokersPane = $("showPokersPane", Pane.class);
+    public void showRecentPokers(String recentUsername, List<Poker> recentPokers) {
+        final int maxPerRowPokerCount = 8;
 
-        showPokersPane.getChildren().clear();
-        for (int i = 0, size = recentPokers.size(); i < size; i++) {
-            showPokersPane.getChildren().add(new PokerPane(i, recentPokers.get(i)).getPane());
+        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+        Pane showPokersPane;
+        if (recentUsername.equals(currentRoomInfo.getPrevPlayerName())) {
+            showPokersPane = (Pane) $("prevPlayerShowPane", Pane.class).lookup("#prevPlayerShowPokersPane");
+
+            for (int i = 0, size = recentPokers.size(); i < size; i++) {
+                ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
+                if (i < maxPerRowPokerCount) {
+                    pokerPane.setLayout(i * ShowPokerPane.MARGIN_LEFT, 0);
+                } else {
+                    pokerPane.setLayout((i - maxPerRowPokerCount) * ShowPokerPane.MARGIN_LEFT, ShowPokerPane.MARGIN_TOP);
+                }
+                showPokersPane.getChildren().add(pokerPane.getPane());
+            }
+        } else if (recentUsername.equals(currentRoomInfo.getNextPlayerName())) {
+            final int parentPaneWidth = 380;
+            final int showPokerPaneWidth = 40;
+
+            showPokersPane = (Pane) $("nextPlayerShowPane", Pane.class).lookup("#nextPlayerShowPokersPane");
+
+            for (int i = 0, size = recentPokers.size(); i < size; i++) {
+                ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
+                if (i < maxPerRowPokerCount) {
+                    pokerPane.setLayout(parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount)), 0);
+                } else {
+                    pokerPane.setLayout(parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount)), ShowPokerPane.MARGIN_TOP);
+                }
+                showPokersPane.getChildren().add(pokerPane.getPane());
+            }
+        } else {
+            final int parentPaneWidth = 870;
+            final int showPokerPaneWidth = 40;
+            int size = recentPokers.size();
+            int offset = (parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (size - 1))) / 2;
+
+            showPokersPane = (Pane) $("playerShowPane", Pane.class).lookup("#playerShowPokersPane");
+
+            for (int i = 0; i < size; i++) {
+                ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
+                pokerPane.setLayout(offset + i * ShowPokerPane.MARGIN_LEFT, 0);
+                showPokersPane.getChildren().add(pokerPane.getPane());
+            }
         }
     }
 

@@ -12,17 +12,19 @@ import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
 
 public class PokerPane {
-    private static final double MARGIN_LEFT = 40;
+    public static final int MARGIN_LEFT = 40;
 
     private Poker poker;
     // start at 0
     private int index;
+    private int offsetX;
 
     private Pane pane;
 
-    public PokerPane(int index, Poker poker) {
+    public PokerPane(int index, int offsetX, Poker poker) {
         this.poker = poker;
         this.index = index;
+        this.offsetX = offsetX;
 
         if (PokerLevel.LEVEL_SMALL_KING.equals(poker.getLevel()) ||
                 PokerLevel.LEVEL_BIG_KING.equals(poker.getLevel())) {
@@ -52,7 +54,7 @@ public class PokerPane {
     private void createNormalPokerPane() {
         pane = new Pane();
         pane.getStyleClass().add("horizontal-poker");
-        pane.setLayoutX(index * MARGIN_LEFT);
+        pane.setLayoutX(index * MARGIN_LEFT + offsetX);
         pane.setLayoutY(20);
 
         Text level = new Text();
@@ -92,7 +94,7 @@ public class PokerPane {
     private void createJokerPokerPane() {
         pane = new Pane();
         pane.getStyleClass().add("horizontal-poker");
-        pane.setLayoutX(index * MARGIN_LEFT);
+        pane.setLayoutX(index * MARGIN_LEFT + offsetX);
         pane.setLayoutY(20);
 
         Text text1 = new Text();

@@ -21,6 +21,11 @@
     -fx-pref-height: 140;
 }
 
+#playerShowPane {
+    -fx-pref-width: 870;
+    -fx-pref-height: 130;
+}
+
 #surplusPokersPane {
     -fx-pref-height: 140;
     -fx-pref-width: 500;
@@ -105,11 +110,11 @@
 }
 
 .bottom {
-    -fx-pref-height: 310;
+    -fx-pref-height: 355;
     -fx-pref-width: 1200;
 }
 
-.cards {
+.pokers {
     -fx-alignment: center;
     -fx-pref-width: 870;
     -fx-pref-height: 180;
