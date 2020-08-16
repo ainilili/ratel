@@ -17,7 +17,7 @@
         <!-- 游戏结束pane -->
         <Pane fx:id="gameOverPane" prefHeight="645.0" prefWidth="1200.0" visible="false">
             <!-- 胜利者信息 -->
-           <Text fx:id="winnerInfo" layoutX="400.0" layoutY="330.0"></Text>
+           <Text fx:id="winnerInfo" layoutX="500.0" layoutY="230.0"></Text>
            <Button fx:id="backLobbyButton" layoutX="445" layoutY="350">返回大厅</Button>
         </Pane>
 
@@ -63,41 +63,7 @@
                         <!-- 提示pane -->
                         <Label styleClass="tips" layoutY="35" visible="false" />
 
-                        <Pane fx:id="prevPlayerShowPokersPane">
-                            <!--<Pane styleClass="showPoker">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="30">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="60">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="90">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutY="40">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="30" layoutY="40">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="60" layoutY="40">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="90" layoutY="40">
-                                <Label layoutX="6" layoutY="0" styleClass="joker-level">J</Label>
-                                <Label layoutX="4" layoutY="13" styleClass="joker-level">O</Label>
-                                <Label layoutX="5" layoutY="26" styleClass="joker-level">K</Label>
-                            </Pane>-->
-                        </Pane>
+                        <Pane fx:id="prevPlayerShowPokersPane"></Pane>
                     </Pane>
                 </Pane>
 

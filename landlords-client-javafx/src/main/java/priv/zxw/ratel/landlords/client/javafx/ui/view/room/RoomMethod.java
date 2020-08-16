@@ -40,4 +40,6 @@ public interface RoomMethod extends Method {
     void showPokerPlayButtons();
 
     void hidePokerPlayButtons();
+
+    void hidePlayerRecentPokers(String playerName);
 }

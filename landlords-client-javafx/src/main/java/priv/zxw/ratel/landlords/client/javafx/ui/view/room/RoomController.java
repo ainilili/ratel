@@ -192,7 +192,7 @@ public class RoomController extends UIObject implements RoomMethod {
                 if (i < maxPerRowPokerCount) {
                     pokerPane.setLayout(i * ShowPokerPane.MARGIN_LEFT, 0);
                 } else {
-                    pokerPane.setLayout((i - maxPerRowPokerCount) * ShowPokerPane.MARGIN_LEFT, ShowPokerPane.MARGIN_TOP);
+                    pokerPane.setLayout((i % maxPerRowPokerCount) * ShowPokerPane.MARGIN_LEFT, ShowPokerPane.MARGIN_TOP);
                 }
                 showPokersPane.getChildren().add(pokerPane.getPane());
             }
@@ -202,12 +202,14 @@ public class RoomController extends UIObject implements RoomMethod {
 
             showPokersPane = (Pane) $("nextPlayerShowPane", Pane.class).lookup("#nextPlayerShowPokersPane");
 
-            for (int i = 0, size = recentPokers.size(); i < size; i++) {
+            // 从右至左渲染牌
+            for (int i = recentPokers.size() - 1; i >= 0; i--) {
                 ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
+                int layoutX = parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount));
                 if (i < maxPerRowPokerCount) {
-                    pokerPane.setLayout(parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount)), 0);
+                    pokerPane.setLayout(layoutX, 0);
                 } else {
-                    pokerPane.setLayout(parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount)), ShowPokerPane.MARGIN_TOP);
+                    pokerPane.setLayout(layoutX, ShowPokerPane.MARGIN_TOP);
                 }
                 showPokersPane.getChildren().add(pokerPane.getPane());
             }
@@ -242,7 +244,8 @@ public class RoomController extends UIObject implements RoomMethod {
 
         tips.setText(message);
         tips.setVisible(true);
-        delayHidden(tips, 3);
+        // 定时隐藏
+        // delayHidden(tips, 3);
     }
 
     @Override
@@ -271,6 +274,22 @@ public class RoomController extends UIObject implements RoomMethod {
     public void hidePokerPlayButtons() {
         $("submitButton", Button.class).setVisible(false);
         $("passButton", Button.class).setVisible(false);
+    }
+
+    @Override
+    public void hidePlayerRecentPokers(String playerName) {
+        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+        Pane showPokersPane;
+        if (playerName.equals(currentRoomInfo.getPrevPlayerName())) {
+            showPokersPane = (Pane) $("prevPlayerShowPane", Pane.class).lookup("#prevPlayerShowPokersPane");
+        } else if (playerName.equals(currentRoomInfo.getNextPlayerName())) {
+            showPokersPane = (Pane) $("nextPlayerShowPane", Pane.class).lookup("#nextPlayerShowPokersPane");
+        } else {
+            showPokersPane = (Pane) $("playerShowPane", Pane.class).lookup("#playerShowPokersPane");
+        }
+
+        showPokersPane.getChildren().clear();
     }
 
     @Override

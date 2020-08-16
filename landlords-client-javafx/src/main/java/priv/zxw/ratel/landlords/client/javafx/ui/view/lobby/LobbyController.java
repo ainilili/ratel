@@ -48,7 +48,13 @@ public class LobbyController extends UIObject implements LobbyMethod {
     }
 
     @Override
-    public void toggleToPVEMenu() {}
+    public void toggleToPVEMenu() {
+        Pane modalPane = $("modalPane", Pane.class);
+        modalPane.setVisible(false);
+
+        Pane pveMenuPane = $("pveMenuPane", Pane.class);
+        pveMenuPane.setVisible(true);
+    }
 
     @Override
     public void showRoomList(List<RoomInfo> roomInfoList) {

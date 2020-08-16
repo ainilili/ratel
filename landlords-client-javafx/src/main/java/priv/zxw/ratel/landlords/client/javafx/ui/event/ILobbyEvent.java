@@ -9,6 +9,8 @@ public interface ILobbyEvent {
 
     void createPVPRoom();
 
+    void createPVERoom(int modal);
+
     void showRooms();
 
     void joinRoom(int roomId);

@@ -26,11 +26,17 @@ public class ClientPassListener extends AbstractClientListener {
     @Override
     public void handle(Channel channel, String json) {
         JSONObject jsonObject = JSONObject.parseObject(json);
-
-        // 如果上一个出牌玩家是本玩家，则隐藏其出牌按钮
         RoomMethod method = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
         CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+        // 隐藏上一个玩家的倒计时定时器，显示其信息
         String clientNickname = jsonObject.getString("clientNickname");
+        CountDownTask.CountDownFuture future = BeanUtil.getBean(clientNickname);
+        if (future != null && !future.isDone()) {
+            future.cancel();
+        }
+
+        // 如果上一个出牌玩家是本玩家，则隐藏其出牌按钮
         if (clientNickname.equals(currentRoomInfo.getPlayer().getNickname())) {
             Platform.runLater(() -> method.hidePokerPlayButtons());
         }
@@ -38,21 +44,17 @@ public class ClientPassListener extends AbstractClientListener {
         // 设置上一个出牌的玩家和牌
         currentRoomInfo.setRecentPlayerName(clientNickname);
         currentRoomInfo.setRecentPokers(Collections.emptyList());
-
-        // 隐藏上一个玩家的倒计时定时器，显示其信息
-        CountDownTask.CountDownFuture future = BeanUtil.getBean(clientNickname);
-        if (future != null && !future.isDone()) {
-            future.cancel();
-        }
-
-        Platform.runLater(() -> method.showPlayerMessage(clientNickname, "过"));
-
-        // 显示下一个玩家的倒计时定时器
         String nextClientNickname = jsonObject.getString("nextClientNickname");
 
-        Label timer = (Label) method.getTimer(nextClientNickname);
-        CountDownTask task = new CountDownTask(timer, 30, n -> {}, i -> Platform.runLater(() -> timer.setText(i.toString())));
-        BeanUtil.addBean(nextClientNickname, task.start());
+        Platform.runLater(() -> {
+            method.hidePlayerRecentPokers(clientNickname);
+            method.showPlayerMessage(clientNickname, "过");
+
+            // 显示下一个玩家的倒计时定时器
+            Label timer = (Label) method.getTimer(nextClientNickname);
+            CountDownTask task = new CountDownTask(timer, 30, n -> {}, i -> Platform.runLater(() -> timer.setText(i.toString())));
+            BeanUtil.addBean(nextClientNickname, task.start());
+        });
 
         // 如果下一个出牌的是本玩家进行出牌重定向
         int turnClientId = jsonObject.getIntValue("nextClientId");

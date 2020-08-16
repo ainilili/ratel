@@ -31,6 +31,7 @@ public class RoomEventRegister implements EventRegister {
         notRobLandlord();
         submitPokers();
         passRound();
+        back2Lobby();
     }
 
     private void robLandlord() {
@@ -65,24 +66,14 @@ public class RoomEventRegister implements EventRegister {
         });
     }
 
-    private void hidePlayButtonsAndCancelCountDownTask() {
-        // 取消CountDownFuture，如果CountDownFuture已经结束（代表用户已经操作超时）则什么都不做
-        User user = BeanUtil.getBean("user");
-        CountDownTask.CountDownFuture future = BeanUtil.getBean(user.getNickname());
-        if (future.isDone()) {
-            return;
-        }
-
-        future.cancel();
-
-        // 隐藏对应的 buttons 和 timer
-        RoomController roomController = (RoomController) uiObject;
-        roomController.hidePokerPlayButtons();
-    }
-
     private void passRound() {
         uiObject.$("passButton", Button.class).setOnAction(e -> {
             roomEvent.passRound();
+        });
+    }
+
+    private void back2Lobby() {
+        uiObject.$("backLobbyButton", Button.class).setOnAction(e -> {
         });
     }
 }

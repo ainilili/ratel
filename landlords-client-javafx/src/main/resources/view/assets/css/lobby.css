@@ -1,3 +1,19 @@
+#pveMenuPane {
+    -fx-pref-width: 400;
+    -fx-pref-height: 600;
+}
+
+#pvpModalButton,
+#pveModalButton {
+    -fx-pref-width: 200;
+    -fx-pref-height: 100;
+}
+
+#roomsPane {
+    -fx-pref-height: 400;
+    -fx-pref-width: 600;
+}
+
 #createRoomButton {
     -fx-pref-width: 30;
     -fx-pref-height: 30;
@@ -54,4 +70,10 @@
 }
 
 .roomPane > .playerCountLabel {
+}
+
+.pveModalButton {
+    -fx-pref-width: 200;
+    -fx-pref-height: 40;
+    -fx-font-size: 20;
 }

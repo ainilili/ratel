@@ -24,6 +24,8 @@ public class ClientShowPokersListener extends AbstractClientListener {
     @Override
     public void handle(Channel channel, String json) {
         JSONObject jsonObject = JSONObject.parseObject(json);
+        RoomMethod method = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
+        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
 
         // 找到上一个玩家的倒计时定时器将其关闭
         String clientNickname = jsonObject.getString("clientNickname");
@@ -34,9 +36,6 @@ public class ClientShowPokersListener extends AbstractClientListener {
 
         // 把当前玩家的出牌和不出牌按钮隐藏掉
         User user = BeanUtil.getBean("user");
-        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
-        RoomMethod method = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
-
         List<Poker> sellPokerList = jsonObject.getJSONArray("pokers").toJavaList(Poker.class);
         user.removePokers(sellPokerList);
 
@@ -58,20 +57,29 @@ public class ClientShowPokersListener extends AbstractClientListener {
             }
         }
 
-        // 显示上一把牌和上一个出牌玩家
+        // 显示上一把牌，下一个玩家最近出的牌隐藏
+        String nextPlayerName = jsonObject.getString("sellClinetNickname");
         currentRoomInfo.setRecentPlayerName(clientNickname);
         currentRoomInfo.setRecentPokers(sellPokerList);
 
         Platform.runLater(() -> {
+            // 当前玩家以前出的牌隐藏，然后再渲染成最新出的牌
+            method.hidePlayerRecentPokers(currentRoomInfo.getRecentPlayerName());
             method.showRecentPokers(currentRoomInfo.getRecentPlayerName(), currentRoomInfo.getRecentPokers());
-        });
+            method.hidePlayerRecentPokers(nextPlayerName);
 
-        // 找到下一个出牌玩家设置其定时器
-        String nextPlayerName = jsonObject.getString("sellClinetNickname");
-        if (nextPlayerName != null && !user.getNickname().equals(nextPlayerName)) {
-            Label timer = (Label) method.getTimer(nextPlayerName);
-            CountDownTask task = new CountDownTask(timer, 30, n -> {}, i -> Platform.runLater(() -> timer.setText(i.toString())));
-            BeanUtil.addBean(nextPlayerName, task.start());
-        }
+            // 下一个出牌玩家设置其定时器
+            if (nextPlayerName != null && !user.getNickname().equals(nextPlayerName)) {
+                Label timer = (Label) method.getTimer(nextPlayerName);
+                CountDownTask task = new CountDownTask(timer, 30, n -> {}, i -> Platform.runLater(() -> timer.setText(i.toString())));
+                BeanUtil.addBean(nextPlayerName, task.start());
+            }
+        });
     }
+
+    private void updatePrevPlayerView() {}
+
+    private void updatePlayerView() {}
+
+    private void updateNextPlayerView() {}
 }

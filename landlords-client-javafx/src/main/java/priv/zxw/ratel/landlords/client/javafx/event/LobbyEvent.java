@@ -35,6 +35,13 @@ public class LobbyEvent implements ILobbyEvent {
     }
 
     @Override
+    public void createPVERoom(int modal) {
+        Channel channel = BeanUtil.getBean("channel");
+
+        ChannelUtils.pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE_PVE, String.valueOf(modal));
+    }
+
+    @Override
     public void showRooms() {
         Channel channel = BeanUtil.getBean("channel");
 

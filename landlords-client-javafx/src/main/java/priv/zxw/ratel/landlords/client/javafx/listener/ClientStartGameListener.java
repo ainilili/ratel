@@ -34,6 +34,8 @@ public class ClientStartGameListener extends AbstractClientListener {
         CurrentRoomInfo currentRoomInfo = new CurrentRoomInfo(jsonObject.getIntValue("roomId"),
                                                               jsonObject.getString("roomOwner"));
         currentRoomInfo.setPlayer(user);
+        currentRoomInfo.setPrevPlayerSurplusPokerCount(17);
+        currentRoomInfo.setNextPlayerSurplusPokerCount(17);
         BeanUtil.addBean("currentRoomInfo", currentRoomInfo);
 
         // 计算出玩家的顺序

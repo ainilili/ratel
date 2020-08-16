@@ -18,12 +18,17 @@ public class ClientPokerPlayListener extends AbstractClientListener {
 
     @Override
     public void handle(Channel channel, String json) {
-        // 1，展示按钮
-        RoomMethod roomMethod = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
-        Platform.runLater(() -> roomMethod.showPokerPlayButtons());
-
-        // 2，设置倒计时定时器
         User user = BeanUtil.getBean("user");
+
+        // 隐藏出牌玩家之前出的牌
+        // 展示按钮
+        RoomMethod roomMethod = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
+        Platform.runLater(() -> {
+            roomMethod.hidePlayerRecentPokers(user.getNickname());
+            roomMethod.showPokerPlayButtons();
+        });
+
+        // 设置倒计时定时器
         Label timer = (Label) roomMethod.getTimer(user.getNickname());
 
         // 在倒计时任务最终被执行后，隐藏页面元素，

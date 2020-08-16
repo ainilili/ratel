@@ -8,13 +8,13 @@
     <children>
         <!-- 对战模式选择 -->
         <Pane fx:id="modalPane" visible="true">
-            <Button fx:id="pvpModalButton" layoutX="80.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">P v P</Button>
-            <Button fx:id="pveModalButton" layoutX="350.0" layoutY="80" prefHeight="100.0" prefWidth="200.0">P v E</Button>
+            <Button fx:id="pvpModalButton" layoutX="80.0" layoutY="80">P v P</Button>
+            <Button fx:id="pveModalButton" layoutX="350.0" layoutY="80">P v E</Button>
         </Pane>
 
         <!-- PVP菜单 -->
         <Pane fx:id="pvpMenuPane" visible="false">
-            <Pane fx:id="roomsPane" prefHeight="400.0" prefWidth="600.0">
+            <Pane fx:id="roomsPane">
                 <Pane styleClass="title">
                     <Label layoutX="5" layoutY="5" styleClass="roomListTitle">房间列表</Label>
                     <Button fx:id="createRoomButton" layoutX="540" layoutY="5"/>
@@ -24,6 +24,9 @@
 
         <!-- PVE菜单 -->
         <Pane fx:id="pveMenuPane" visible="false">
+            <Button fx:id="simpleModalButton" layoutX="200" layoutY="100" styleClass="pveModalButton">简单模式</Button>
+            <Button fx:id="normalModalButton" layoutX="200" layoutY="180" styleClass="pveModalButton">普通模式</Button>
+            <Button fx:id="difficultModalButton" layoutX="200" layoutY="260" styleClass="pveModalButton">困难模式</Button>
         </Pane>
     </children>
 </AnchorPane>

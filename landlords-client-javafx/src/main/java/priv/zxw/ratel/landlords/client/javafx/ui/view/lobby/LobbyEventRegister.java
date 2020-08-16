@@ -23,6 +23,7 @@ public class LobbyEventRegister implements EventRegister {
         selectPVPModal();
         selectPVEModal();
         createPVPRoom();
+        createPVERoom();
     }
 
     private void selectPVPModal() {
@@ -35,5 +36,15 @@ public class LobbyEventRegister implements EventRegister {
 
     private void createPVPRoom() {
         uiObject.$("createRoomButton", Button.class).setOnAction(e -> lobbyEvent.createPVPRoom());
+    }
+
+    private static final int SIMPLE_MODAL = 1;
+    private static final int NORMAL_MODAL = 2;
+    private static final int DIFFICULT_MODAL = 3;
+
+    private void createPVERoom() {
+        uiObject.$("simpleModalButton", Button.class).setOnAction(e -> lobbyEvent.createPVERoom(SIMPLE_MODAL));
+        uiObject.$("normalModalButton", Button.class).setOnAction(e -> lobbyEvent.createPVERoom(NORMAL_MODAL));
+        uiObject.$("difficultModalButton", Button.class).setOnAction(e -> lobbyEvent.createPVERoom(DIFFICULT_MODAL));
     }
 }

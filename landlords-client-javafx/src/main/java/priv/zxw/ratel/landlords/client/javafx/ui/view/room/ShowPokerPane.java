@@ -2,6 +2,7 @@ package priv.zxw.ratel.landlords.client.javafx.ui.view.room;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.PokerType;
@@ -41,6 +42,14 @@ public class ShowPokerPane {
         type.setText(poker.getType().getName());
         type.getStyleClass().add("type-small");
 
+        if (PokerType.CLUB.equals(poker.getType()) || PokerType.SPADE.equals(poker.getType())) {
+            level.setStyle("-fx-text-fill: black");
+            type.setStyle("-fx-text-fill: black");
+        } else if (PokerType.DIAMOND.equals(poker.getType()) || PokerType.HEART.equals(poker.getType())) {
+            level.setStyle("-fx-text-fill: #9c2023");
+            type.setStyle("-fx-text-fill: #9c2023");
+        }
+
         pane.getChildren().add(level);
         pane.getChildren().add(type);
     }
@@ -67,10 +76,14 @@ public class ShowPokerPane {
         label3.setText("K");
         label3.getStyleClass().add("joker-level");
 
-        if (PokerType.CLUB.equals(poker.getType()) || PokerType.SPADE.equals(poker.getType())) {
-            pane.setStyle("-fx-text-fill: black");
-        } else if (PokerType.DIAMOND.equals(poker.getType()) || PokerType.HEART.equals(poker.getType())) {
-            pane.setStyle("-fx-text-fill: #9c2023");
+        if (PokerLevel.LEVEL_SMALL_KING.equals(poker.getLevel())) {
+            label1.setStyle("-fx-text-fill: black");
+            label2.setStyle("-fx-text-fill: black");
+            label3.setStyle("-fx-text-fill: black");
+        } else if (PokerLevel.LEVEL_BIG_KING.equals(poker.getLevel())) {
+            label1.setStyle("-fx-text-fill: #9c2023");
+            label2.setStyle("-fx-text-fill: #9c2023");
+            label3.setStyle("-fx-text-fill: #9c2023");
         }
 
         pane.getChildren().add(label1);
