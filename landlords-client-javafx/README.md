@@ -56,4 +56,4 @@ java -jar landlords-client-javafx/target/landlords-client-javafx-#{version}.jar
 ## 参考
 * [NaiveChat](https://github.com/fuzhengwei/NaiveChat)
 * [ratel部分协议](https://github.com/ainilili/ratel/blob/master/PROTOCO_CN.md)
-* [javafx和netty之间的通信](https://github.com/ainilili/ratel/landlords-client-javafx/javafx-netty-communication.md)
+* [javafx和netty之间的通信](./javafx-netty-communication.md)
