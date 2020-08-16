@@ -43,11 +43,11 @@ java -jar landlords-client-javafx/target/landlords-client-javafx-#{version}.jar
 ![开始游戏](images/play.png)  
 
 ## TODO List
--[X] PVE模式  
--[] PVP模式  
--[] 优化界面    
--[] 页面切换  
--[] 挂机检测
+- [X] PVE模式  
+- [ ] PVP模式  
+- [ ] 优化界面    
+- [ ] 页面切换  
+- [ ] 挂机检测
 
 ## 反馈
 如果你发现此客户端的bug或有任何疑问，欢迎提[issue](https://github.com/ainilili/ratel/issues)，
