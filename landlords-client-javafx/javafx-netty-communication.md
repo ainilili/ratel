@@ -7,7 +7,7 @@
 * `IEvent`：定义事件可以进行的操作
 
 ### ui类结构
-![ui类结构UML图](ui-class-struct.png)  
+![ui类结构UML图](images/ui-class-struct.png)  
 1. `Controller`通过`EventRegister`进行页面元素的事件注册  
 2. `EventRegister`将`IEvent`注册为页面元素上的事件回调函数
 3. `IEvent`的实现类`DemoEvent`可以操纵`channel`和`netty`服务端进行通信
