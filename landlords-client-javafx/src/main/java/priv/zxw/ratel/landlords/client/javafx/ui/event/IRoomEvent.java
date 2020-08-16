@@ -12,4 +12,6 @@ public interface IRoomEvent {
     void submitPokers(List<Poker> pokerList);
 
     void passRound();
+
+    void exit();
 }

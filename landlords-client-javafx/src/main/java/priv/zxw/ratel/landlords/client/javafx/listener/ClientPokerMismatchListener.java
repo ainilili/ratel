@@ -1,6 +1,7 @@
 package priv.zxw.ratel.landlords.client.javafx.listener;
 
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.Channel;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -19,11 +20,12 @@ public class ClientPokerMismatchListener extends AbstractClientListener {
     @Override
     public void handle(Channel channel, String json) {
         // 出牌不匹配，不允许出牌，即简单的不响应用户操作即可
+        JSONObject jsonObject = JSONObject.parseObject(json);
         RoomController roomController = (RoomController) uiService.getMethod(RoomController.METHOD_NAME);
         Platform.runLater(() -> {
-            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".primary-tips"));
+            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".error-tips"));
             tips.setVisible(true);
-            tips.setText("牌不符合规则");
+            tips.setText("您需要出" + jsonObject.getIntValue("preCount") + "张牌");
             roomController.delayHidden(tips, 2);
         });
 

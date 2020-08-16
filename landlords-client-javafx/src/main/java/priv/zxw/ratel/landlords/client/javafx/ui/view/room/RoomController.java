@@ -1,6 +1,7 @@
 package priv.zxw.ratel.landlords.client.javafx.ui.view.room;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientType;
+import priv.zxw.ratel.landlords.client.javafx.ui.view.util.CountDownTask;
 import priv.zxw.ratel.landlords.client.javafx.util.BeanUtil;
 import priv.zxw.ratel.landlords.client.javafx.entity.CurrentRoomInfo;
 import priv.zxw.ratel.landlords.client.javafx.entity.User;
@@ -28,6 +30,10 @@ public class RoomController extends UIObject implements RoomMethod {
     private IRoomEvent roomEvent;
     private RoomEventRegister roomEventDefine;
 
+    private PlayerPaneOperator prevPlayerPaneOperator;
+    private PlayerPaneOperator nextPlayerPaneOperator;
+    private PlayerPaneOperator playerPaneOperator;
+
     public RoomController(IRoomEvent roomEvent) throws IOException {
         super();
 
@@ -37,6 +43,10 @@ public class RoomController extends UIObject implements RoomMethod {
         this.roomEvent = roomEvent;
 
         registerEvent();
+
+        prevPlayerPaneOperator = new PrevPlayerPaneOperator();
+        nextPlayerPaneOperator = new NextPlayerPaneOperator();
+        playerPaneOperator = new CurrentPlayerPaneOperator();
     }
 
     @Override
@@ -92,6 +102,35 @@ public class RoomController extends UIObject implements RoomMethod {
         gameOverPane.setVisible(true);
         Text text = (Text) gameOverPane.lookup("#winnerInfo");
         text.setText(String.format("游戏结束，%s胜利", ClientType.LANDLORD.equals(winnerType) ? "地主" : "农民"));
+    }
+
+    @Override
+    public void showPokers(String playerName, List<Poker> pokers) {
+        getPlayerPaneOperatorByPlayerName(playerName).showPokers(pokers);
+    }
+
+    private PlayerPaneOperator getPlayerPaneOperatorByPlayerName(String playerName) {
+        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+        if (playerName.equals(currentRoomInfo.getPrevPlayerName())) {
+            return prevPlayerPaneOperator;
+        } else if (playerName.equals(currentRoomInfo.getNextPlayerName())) {
+            return nextPlayerPaneOperator;
+        } else if (playerName.equals(currentRoomInfo.getPlayer().getNickname())) {
+            return playerPaneOperator;
+        }
+
+        throw new IllegalStateException("当前房间没有 " + playerName + " 用户");
+    }
+
+    @Override
+    public void showMessage(String playerName, String message) {
+        getPlayerPaneOperatorByPlayerName(playerName).showMessage(message);
+    }
+
+    @Override
+    public void play(String playerName) {
+        getPlayerPaneOperatorByPlayerName(playerName).play();
     }
 
     @Override
@@ -178,93 +217,6 @@ public class RoomController extends UIObject implements RoomMethod {
     }
 
     @Override
-    public void showRecentPokers(String recentUsername, List<Poker> recentPokers) {
-        final int maxPerRowPokerCount = 8;
-
-        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
-
-        Pane showPokersPane;
-        if (recentUsername.equals(currentRoomInfo.getPrevPlayerName())) {
-            showPokersPane = (Pane) $("prevPlayerShowPane", Pane.class).lookup("#prevPlayerShowPokersPane");
-
-            for (int i = 0, size = recentPokers.size(); i < size; i++) {
-                ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
-                if (i < maxPerRowPokerCount) {
-                    pokerPane.setLayout(i * ShowPokerPane.MARGIN_LEFT, 0);
-                } else {
-                    pokerPane.setLayout((i % maxPerRowPokerCount) * ShowPokerPane.MARGIN_LEFT, ShowPokerPane.MARGIN_TOP);
-                }
-                showPokersPane.getChildren().add(pokerPane.getPane());
-            }
-        } else if (recentUsername.equals(currentRoomInfo.getNextPlayerName())) {
-            final int parentPaneWidth = 380;
-            final int showPokerPaneWidth = 40;
-
-            showPokersPane = (Pane) $("nextPlayerShowPane", Pane.class).lookup("#nextPlayerShowPokersPane");
-
-            // 从右至左渲染牌
-            for (int i = recentPokers.size() - 1; i >= 0; i--) {
-                ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
-                int layoutX = parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount));
-                if (i < maxPerRowPokerCount) {
-                    pokerPane.setLayout(layoutX, 0);
-                } else {
-                    pokerPane.setLayout(layoutX, ShowPokerPane.MARGIN_TOP);
-                }
-                showPokersPane.getChildren().add(pokerPane.getPane());
-            }
-        } else {
-            final int parentPaneWidth = 870;
-            final int showPokerPaneWidth = 40;
-            int size = recentPokers.size();
-            int offset = (parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (size - 1))) / 2;
-
-            showPokersPane = (Pane) $("playerShowPane", Pane.class).lookup("#playerShowPokersPane");
-
-            for (int i = 0; i < size; i++) {
-                ShowPokerPane pokerPane = new ShowPokerPane(recentPokers.get(i));
-                pokerPane.setLayout(offset + i * ShowPokerPane.MARGIN_LEFT, 0);
-                showPokersPane.getChildren().add(pokerPane.getPane());
-            }
-        }
-    }
-
-    @Override
-    public void showPlayerMessage(String playerName, String message) {
-        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
-
-        Label tips;
-        if (playerName.equals(currentRoomInfo.getPrevPlayerName())) {
-            tips = ((Label) $("prevPlayerPane", Pane.class).lookup(".tips"));
-        } else if (playerName.equals(currentRoomInfo.getNextPlayerName())) {
-            tips = ((Label) $("nextPlayerPane", Pane.class).lookup(".tips"));
-        } else {
-            tips = ((Label) $("playerPane", Pane.class).lookup(".primary-tips"));
-        }
-
-        tips.setText(message);
-        tips.setVisible(true);
-        // 定时隐藏
-        // delayHidden(tips, 3);
-    }
-
-    @Override
-    public Node getTimer(String playerName) {
-        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
-
-        Label timer;
-        if (playerName.equals(currentRoomInfo.getPrevPlayerName())) {
-            timer = ((Label) $("prevPlayerPane", Pane.class).lookup(".timer"));
-        } else if (playerName.equals(currentRoomInfo.getNextPlayerName())) {
-            timer = ((Label) $("nextPlayerPane", Pane.class).lookup(".timer"));
-        } else {
-            timer = ((Label) $("playerPane", Pane.class).lookup(".timer"));
-        }
-
-        return timer;
-    }
-
-    @Override
     public void showPokerPlayButtons() {
         $("submitButton", Button.class).setVisible(true);
         $("passButton", Button.class).setVisible(true);
@@ -274,22 +226,6 @@ public class RoomController extends UIObject implements RoomMethod {
     public void hidePokerPlayButtons() {
         $("submitButton", Button.class).setVisible(false);
         $("passButton", Button.class).setVisible(false);
-    }
-
-    @Override
-    public void hidePlayerRecentPokers(String playerName) {
-        CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
-
-        Pane showPokersPane;
-        if (playerName.equals(currentRoomInfo.getPrevPlayerName())) {
-            showPokersPane = (Pane) $("prevPlayerShowPane", Pane.class).lookup("#prevPlayerShowPokersPane");
-        } else if (playerName.equals(currentRoomInfo.getNextPlayerName())) {
-            showPokersPane = (Pane) $("nextPlayerShowPane", Pane.class).lookup("#nextPlayerShowPokersPane");
-        } else {
-            showPokersPane = (Pane) $("playerShowPane", Pane.class).lookup("#playerShowPokersPane");
-        }
-
-        showPokersPane.getChildren().clear();
     }
 
     @Override
@@ -320,5 +256,197 @@ public class RoomController extends UIObject implements RoomMethod {
     @Override
     public String getName() {
         return METHOD_NAME;
+    }
+
+    interface PlayerPaneOperator {
+        void showPokers(List<Poker> pokers);
+
+        void showMessage(String message);
+
+        void play();
+    }
+
+    private abstract class AbstractPlayerPaneOperator implements PlayerPaneOperator {
+        protected Pane playerShowPane;
+        protected Label timer;
+        protected Label tips;
+        protected Pane playerShowPokersPane;
+
+        protected Pane playerPokersPane;
+
+        protected CountDownTask.CountDownFuture future;
+
+        AbstractPlayerPaneOperator(String parentPaneId) {
+            this.playerShowPane = $(parentPaneId, Pane.class);
+            this.timer = (Label) playerShowPane.lookup(".timer");
+        }
+
+        @Override
+        public synchronized void showMessage(String message) {
+            if (future != null && !future.isDone()) {
+                future.cancel();
+            }
+
+            playerShowPokersPane.getChildren().clear();
+
+            tips.setText(message);
+            tips.setVisible(true);
+        }
+
+        @Override
+        public synchronized void play() {
+            playerShowPokersPane.getChildren().clear();
+
+            tips.setVisible(false);
+
+            if (future == null || future.isDone()) {
+                CountDownTask task = new CountDownTask(timer, 30,
+                        node -> Platform.runLater(() -> hidePokerPlayButtons()),
+                        surplusTime -> Platform.runLater(() -> timer.setText(surplusTime.toString())));
+
+                future = task.start();
+            }
+        }
+
+        @Override
+        public synchronized void showPokers(List<Poker> pokers) {
+            if (future != null && !future.isDone()) {
+                future.cancel();
+            }
+
+            tips.setVisible(false);
+
+            renderPokers(pokers);
+            refreshPlayerPokers(pokers);
+        }
+
+        protected abstract void renderPokers(List<Poker> pokers);
+        protected abstract void refreshPlayerPokers(List<Poker> pokers);
+    }
+
+    private class PrevPlayerPaneOperator extends AbstractPlayerPaneOperator {
+
+        PrevPlayerPaneOperator() {
+            super("prevPlayerShowPane");
+
+            this.tips = (Label) playerShowPane.lookup(".tips");
+            this.playerShowPokersPane = (Pane) playerShowPane.lookup("#prevPlayerShowPokersPane");
+
+            this.playerPokersPane = $("prevPlayerPokersPane", Pane.class);
+        }
+
+        @Override
+        public void renderPokers(List<Poker> pokers) {
+            final int maxPerRowPokerCount = 8;
+
+            for (int i = 0, size = pokers.size(); i < size; i++) {
+                ShowPokerPane pokerPane = new ShowPokerPane(pokers.get(i));
+                if (i < maxPerRowPokerCount) {
+                    pokerPane.setLayout(i * ShowPokerPane.MARGIN_LEFT, 0);
+                } else {
+                    pokerPane.setLayout((i % maxPerRowPokerCount) * ShowPokerPane.MARGIN_LEFT, ShowPokerPane.MARGIN_TOP);
+                }
+                playerShowPokersPane.getChildren().add(pokerPane.getPane());
+            }
+        }
+
+        @Override
+        protected void refreshPlayerPokers(List<Poker> pokers) {
+            CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+            refreshPrevPlayerPokers(currentRoomInfo.getPrevPlayerSurplusPokerCount());
+        }
+    }
+
+    private class NextPlayerPaneOperator extends AbstractPlayerPaneOperator {
+
+        NextPlayerPaneOperator() {
+            super("nextPlayerShowPane");
+
+            this.tips = (Label) playerShowPane.lookup(".tips");
+            this.playerShowPokersPane = (Pane) playerShowPane.lookup("#nextPlayerShowPokersPane");
+
+            this.playerPokersPane = $("nextPlayerPokersPane", Pane.class);
+        }
+
+        @Override
+        public void renderPokers(List<Poker> pokers) {
+            final int maxPerRowPokerCount = 8;
+            final int parentPaneWidth = 380;
+            final int showPokerPaneWidth = 40;
+
+            // 从右至左渲染牌
+            for (int i = pokers.size() - 1; i >= 0; i--) {
+                ShowPokerPane pokerPane = new ShowPokerPane(pokers.get(i));
+                int layoutX = parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (i % maxPerRowPokerCount));
+                if (i < maxPerRowPokerCount) {
+                    pokerPane.setLayout(layoutX, 0);
+                } else {
+                    pokerPane.setLayout(layoutX, ShowPokerPane.MARGIN_TOP);
+                }
+                playerShowPokersPane.getChildren().add(pokerPane.getPane());
+            }
+        }
+
+        @Override
+        protected void refreshPlayerPokers(List<Poker> pokers) {
+            CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
+
+            refreshNextPlayerPokers(currentRoomInfo.getNextPlayerSurplusPokerCount());
+        }
+    }
+
+    private class CurrentPlayerPaneOperator extends AbstractPlayerPaneOperator {
+
+        CurrentPlayerPaneOperator() {
+            super("playerShowPane");
+
+            this.tips = (Label) playerShowPane.lookup(".primary-tips");
+            this.playerShowPokersPane = (Pane) playerShowPane.lookup("#playerShowPokersPane");
+
+            this.playerPokersPane = $("pokersPane", Pane.class);
+        }
+
+        @Override
+        public void showMessage(String message) {
+            hidePokerPlayButtons();
+
+            super.showMessage(message);
+        }
+
+        @Override
+        public void showPokers(List<Poker> pokers) {
+            hidePokerPlayButtons();
+
+            super.showPokers(pokers);
+        }
+
+        @Override
+        public void play() {
+            super.play();
+
+            showPokerPlayButtons();
+        }
+
+        @Override
+        public void renderPokers(List<Poker> pokers) {
+            final int parentPaneWidth = 870;
+            final int showPokerPaneWidth = 40;
+            int size = pokers.size();
+            int offset = (parentPaneWidth - (showPokerPaneWidth + ShowPokerPane.MARGIN_LEFT * (size - 1))) / 2;
+
+            for (int i = 0; i < size; i++) {
+                ShowPokerPane pokerPane = new ShowPokerPane(pokers.get(i));
+                pokerPane.setLayout(offset + i * ShowPokerPane.MARGIN_LEFT, 0);
+                playerShowPokersPane.getChildren().add(pokerPane.getPane());
+            }
+        }
+
+        @Override
+        protected void refreshPlayerPokers(List<Poker> pokers) {
+            User user = BeanUtil.getBean("user");
+
+            refreshPlayPokers(user.getPokers());
+        }
     }
 }

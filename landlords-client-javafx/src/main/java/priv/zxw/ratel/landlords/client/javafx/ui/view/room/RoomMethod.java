@@ -1,7 +1,6 @@
 package priv.zxw.ratel.landlords.client.javafx.ui.view.room;
 
 
-import javafx.scene.Node;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.ClientType;
 import priv.zxw.ratel.landlords.client.javafx.ui.view.Method;
@@ -17,6 +16,12 @@ public interface RoomMethod extends Method {
 
     void gameOver(String winnerName, ClientType winnerType);
 
+    void showPokers(String playerName, List<Poker> pokers);
+
+    void showMessage(String playerName, String message);
+
+    void play(String playerName);
+
     void refreshPlayPokers(List<Poker> pokers);
 
     void refreshPrevPlayerPokers(int pokerCount);
@@ -31,15 +36,7 @@ public interface RoomMethod extends Method {
 
     void setLandLord(String landlordName);
 
-    void showRecentPokers(String recentUsername, List<Poker> recentPokers);
-
-    void showPlayerMessage(String playerName, String message);
-
-    Node getTimer(String playerName);
-
     void showPokerPlayButtons();
 
     void hidePokerPlayButtons();
-
-    void hidePlayerRecentPokers(String playerName);
 }

@@ -21,9 +21,9 @@ public class ClientPokerLessListener extends AbstractClientListener {
         // 出牌太少，不允许出牌，即简单的不响应用户操作即可
         RoomController roomController = (RoomController) uiService.getMethod(RoomController.METHOD_NAME);
         Platform.runLater(() -> {
-            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".primary-tips"));
+            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".error-tips"));
             tips.setVisible(true);
-            tips.setText("牌不符合规则");
+            tips.setText("您的出牌应该大于上家的牌");
             roomController.delayHidden(tips, 2);
         });
 

@@ -29,31 +29,16 @@ public class ClientPassListener extends AbstractClientListener {
         RoomMethod method = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
         CurrentRoomInfo currentRoomInfo = BeanUtil.getBean("currentRoomInfo");
 
-        // 隐藏上一个玩家的倒计时定时器，显示其信息
+        // 更新当前玩家和出牌信息
         String clientNickname = jsonObject.getString("clientNickname");
-        CountDownTask.CountDownFuture future = BeanUtil.getBean(clientNickname);
-        if (future != null && !future.isDone()) {
-            future.cancel();
-        }
-
-        // 如果上一个出牌玩家是本玩家，则隐藏其出牌按钮
-        if (clientNickname.equals(currentRoomInfo.getPlayer().getNickname())) {
-            Platform.runLater(() -> method.hidePokerPlayButtons());
-        }
-
-        // 设置上一个出牌的玩家和牌
         currentRoomInfo.setRecentPlayerName(clientNickname);
         currentRoomInfo.setRecentPokers(Collections.emptyList());
+
+        // 视图更新
         String nextClientNickname = jsonObject.getString("nextClientNickname");
-
         Platform.runLater(() -> {
-            method.hidePlayerRecentPokers(clientNickname);
-            method.showPlayerMessage(clientNickname, "过");
-
-            // 显示下一个玩家的倒计时定时器
-            Label timer = (Label) method.getTimer(nextClientNickname);
-            CountDownTask task = new CountDownTask(timer, 30, n -> {}, i -> Platform.runLater(() -> timer.setText(i.toString())));
-            BeanUtil.addBean(nextClientNickname, task.start());
+            method.play(nextClientNickname);
+            method.showMessage(clientNickname, "不出");
         });
 
         // 如果下一个出牌的是本玩家进行出牌重定向

@@ -23,22 +23,12 @@ public class ClientPokerPlayRedirectListener extends AbstractClientListener {
     @Override
     public void handle(Channel channel, String json) {
         JSONObject jsonObject = JSONObject.parseObject(json);
-
         NettyClient nettyClient = BeanUtil.getBean("nettyClient");
         int sellClientId = jsonObject.getIntValue("sellClientId");
-        String sellClientNickname = jsonObject.getString("sellClinetNickname");
 
         // 通知下一个玩家出牌
         if (sellClientId == nettyClient.getId()) {
             ClientListenerUtils.getListener(ClientEventCode.CODE_GAME_POKER_PLAY).handle(channel, json);
-        }
-        // 为下一个出牌的玩家设置倒计时定时器
-        else {
-            RoomMethod method = (RoomMethod) uiService.getMethod(RoomController.METHOD_NAME);
-
-            Label timer = (Label) method.getTimer(sellClientNickname);
-            CountDownTask task = new CountDownTask(timer, 30, n -> {}, i -> Platform.runLater(() -> timer.setText(i.toString())));
-            BeanUtil.addBean(sellClientNickname, task.start());
         }
     }
 }

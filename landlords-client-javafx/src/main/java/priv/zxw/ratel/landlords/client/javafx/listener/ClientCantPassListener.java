@@ -21,9 +21,9 @@ public class ClientCantPassListener extends AbstractClientListener {
         RoomController roomController = (RoomController) uiService.getMethod(RoomController.METHOD_NAME);
 
         Platform.runLater(() -> {
-            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".primary-tips"));
+            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".error-tips"));
             tips.setVisible(true);
-            tips.setText("不能跳过");
+            tips.setText("此回合不能不出牌");
             roomController.delayHidden(tips, 2);
         });
 

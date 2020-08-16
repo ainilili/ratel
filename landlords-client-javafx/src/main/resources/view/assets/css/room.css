@@ -118,7 +118,6 @@
     -fx-alignment: center;
     -fx-pref-width: 870;
     -fx-pref-height: 180;
-    -fx-background-color: silver;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
 }
@@ -138,6 +137,15 @@
     -fx-alignment: center;
     -fx-pref-height: 30;
     -fx-pref-width: 140;
+    -fx-background-color: silver;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.error-tips {
+    -fx-alignment: center;
+    -fx-pref-height: 30;
+    -fx-pref-width: 200;
     -fx-background-color: silver;
     -fx-border-radius: 8;
     -fx-background-radius: 8;

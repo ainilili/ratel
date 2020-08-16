@@ -21,7 +21,7 @@ public abstract class UIObject extends Stage {
     private ExecutorService animationExecutorService = Executors.newFixedThreadPool(2);
 
     public UIObject() {
-        setTitle("ratel javafx客户端v1.0.0");
+        setTitle("ratel javafx客户端");
 
         // 退出程序
         setOnCloseRequest(e -> closeApplication());

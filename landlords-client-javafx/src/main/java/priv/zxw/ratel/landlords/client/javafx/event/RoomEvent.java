@@ -35,7 +35,11 @@ public class RoomEvent implements IRoomEvent {
 
         String[] chars = pokerList.stream()
                                   .sorted(Comparator.comparingInt(poker -> poker.getLevel().getLevel()))
-                                  .map(p -> p.getLevel().getName())
+                                  .map(p -> {
+                                      String name = p.getLevel().getName();
+                                      // 10 实际出牌值为 0
+                                      return name.length() > 1 ? name.substring(1, 2) : name;
+                                  })
                                   .collect(Collectors.toList())
                                   .toArray(new String[] {});
         ChannelUtils.pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY, JSONObject.toJSONString(chars));
@@ -46,5 +50,12 @@ public class RoomEvent implements IRoomEvent {
         Channel channel = BeanUtil.getBean("channel");
 
         ChannelUtils.pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_PASS, null);
+    }
+
+    @Override
+    public void exit() {
+        Channel channel = BeanUtil.getBean("channel");
+
+        ChannelUtils.pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT, null);
     }
 }

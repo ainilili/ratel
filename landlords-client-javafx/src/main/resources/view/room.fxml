@@ -18,7 +18,7 @@
         <Pane fx:id="gameOverPane" prefHeight="645.0" prefWidth="1200.0" visible="false">
             <!-- 胜利者信息 -->
            <Text fx:id="winnerInfo" layoutX="500.0" layoutY="230.0"></Text>
-           <Button fx:id="backLobbyButton" layoutX="445" layoutY="350">返回大厅</Button>
+           <Button fx:id="backLobbyButton" layoutX="550" layoutY="260">返回大厅</Button>
         </Pane>
 
         <!-- 游戏pane -->
@@ -98,45 +98,7 @@
                         <!-- 提示pane -->
                         <Label styleClass="tips" layoutX="305" layoutY="35" visible="false">不出</Label>
 
-                        <Pane fx:id="nextPlayerShowPokersPane">
-                            <!--<Pane styleClass="showPoker" layoutX="130">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="160">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="190">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="220">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="250">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="280">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="310">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="340">
-                                <Label layoutX="6" layoutY="0" styleClass="joker-level">J</Label>
-                                <Label layoutX="4" layoutY="13" styleClass="joker-level">O</Label>
-                                <Label layoutX="5" layoutY="26" styleClass="joker-level">K</Label>
-                            </Pane>
-                            <Pane styleClass="showPoker" layoutX="130" layoutY="40">
-                                <Label layoutX="2" layoutY="-2" styleClass="level">9</Label>
-                                <Label layoutX="2" layoutY="12" styleClass="type-small">♣</Label>
-                            </Pane>-->
-                        </Pane>
+                        <Pane fx:id="nextPlayerShowPokersPane"></Pane>
                     </Pane>
                 </Pane>
             </Pane>
@@ -156,6 +118,8 @@
                     <Pane fx:id="playerShowPane" layoutX="200">
                         <!-- 倒计时显示框 -->
                         <Label styleClass="timer" layoutX="405" layoutY="35" visible="false" />
+
+                        <Label styleClass="error-tips" layoutX="330" layoutY="100" visible="false"/>
 
                         <!-- 提示pane -->
                         <Label styleClass="primary-tips" layoutX="365" layoutY="0" visible="false" />

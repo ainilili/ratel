@@ -22,9 +22,9 @@ public class ClientPokerInvalidListener extends AbstractClientListener {
         RoomController roomController = (RoomController) uiService.getMethod(RoomController.METHOD_NAME);
 
         Platform.runLater(() -> {
-            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".primary-tips"));
+            Label tips = ((Label) roomController.$("playerPane", Pane.class).lookup(".error-tips"));
             tips.setVisible(true);
-            tips.setText("牌不符合规则");
+            tips.setText("您的出牌不符合规则");
             roomController.delayHidden(tips, 2);
         });
 
