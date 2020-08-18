@@ -67,6 +67,7 @@ QQ群 ``948365095``，寻找一起划水的玩伴！
 
 ## 相关
  - [go-ratel-client](https://github.com/ZuoFuhong/go-ratel)
+ - [javafx-ratel-client](https://github.com/marmot-z/javafx-ratel-client)
  
 ## Blog
  - [Ratel浅析] (https://github.com/HelloGitHub-Team/Article/blob/master/contents/Java/landlords/content.md)
