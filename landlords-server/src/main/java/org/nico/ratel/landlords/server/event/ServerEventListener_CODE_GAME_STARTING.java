@@ -54,6 +54,8 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("nextClientNickname", startGrabClient.getNickname())
 					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
+					// this key-value use to client order to show
+					.put("clientOrderList", roomClientList)
 					.json();
 
 			if(client.getRole() == ClientRole.PLAYER) {
