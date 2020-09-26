@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.entity;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,9 @@ public class Room{
 	private long createTime;
 
 	private int firstSellClient;
+
+	/** 观战者列表 */
+	private List<ClientSide> watcherList = new ArrayList<>(5);
 	
 	public Room() {
 	}
@@ -168,5 +172,9 @@ public class Room{
 
 	public void setFirstSellClient(int firstSellClient) {
 		this.firstSellClient = firstSellClient;
+	}
+
+	public List<ClientSide> getWatcherList() {
+		return watcherList;
 	}
 }
