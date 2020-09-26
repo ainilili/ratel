@@ -87,6 +87,8 @@ public class RoomClearTask extends TimerTask{
 									//kick this client
 									ChannelUtils.pushToClient(currentPlayer.getChannel(), ClientEventCode.CODE_CLIENT_KICK, null);
 
+									notifyWatcherClientKick(room, currentPlayer);
+
 									//client current player
 									room.getClientSideMap().remove(currentPlayer.getId());
 									room.getClientSideList().remove(currentPlayer);
@@ -136,4 +138,15 @@ public class RoomClearTask extends TimerTask{
 		}
 	}
 
+	/**
+	 * 通知观战者玩家被提出房间
+	 *
+	 * @param room	房间
+	 * @param player	被提出的玩家
+	 */
+	private void notifyWatcherClientKick(Room room, ClientSide player) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_CLIENT_KICK, player.getNickname());
+		}
+	}
 }
