@@ -7,10 +7,7 @@ import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.Room;
-import org.nico.ratel.landlords.enums.ClientEventCode;
-import org.nico.ratel.landlords.enums.ClientRole;
-import org.nico.ratel.landlords.enums.ClientType;
-import org.nico.ratel.landlords.enums.RoomStatus;
+import org.nico.ratel.landlords.enums.*;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.server.ServerContains;
@@ -68,7 +65,28 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 
 		}
 
+		notifyWatcherGameStart(room);
+	}
 
+
+	/**
+	 * 通知房间内的观战人员游戏开始
+	 *
+	 * @param room	房间
+	 */
+	private void notifyWatcherGameStart(Room room) {
+		for (ClientSide clientSide : room.getWatcherList()) {
+			String result = MapHelper.newInstance()
+					.put("player1", room.getClientSideList().getFirst().getNickname())
+					.put("pokers1", room.getClientSideList().getFirst().getPokers())
+					.put("player2", room.getClientSideList().getFirst().getNext().getNickname())
+					.put("pokers2", room.getClientSideList().getFirst().getNext().getPokers())
+					.put("player3", room.getClientSideList().getLast().getNickname())
+					.put("pokers3", room.getClientSideList().getLast().getPokers())
+					.json();
+
+			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
+		}
 	}
 
 }

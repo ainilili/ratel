@@ -13,6 +13,8 @@ import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
+import java.util.Map;
+
 public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEventListener{
 
 	@Override
@@ -50,6 +52,8 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 						}
 					}
 				}
+
+				notifyWatcherConfirmLandlord(room, clientSide);
 			}else{
 				if(clientSide.getNext().getId() == room.getFirstSellClient()){
 					for(ClientSide client: room.getClientSideList()){
@@ -57,6 +61,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 							ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
 						}
 					}
+
 					ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, null);
 				}else{
 					ClientSide turnClientSide = clientSide.getNext();
@@ -79,10 +84,40 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 							}
 						}
 					}
+
+					notifyWatcherRobLandlord(room, clientSide);
 				}
 			}
 		}else {
 //			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_PLAY_FAIL_BY_INEXIST, null);
+		}
+	}
+
+	/**
+	 * 通知房间内的观战人员谁是地主
+	 *
+	 * @param room	房间
+	 * @param landlord 地主
+	 */
+	private void notifyWatcherConfirmLandlord(Room room, ClientSide landlord) {
+		String json = MapHelper.newInstance()
+							.put("landlord", landlord.getNickname())
+							.put("additionalPokers", room.getLandlordPokers())
+							.json();
+
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, json);
+		}
+	}
+
+	/**
+	 * 通知房间内的观战人员抢地主情况
+	 *
+	 * @param room	房间
+	 */
+	private void notifyWatcherRobLandlord(Room room, ClientSide player) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, player.getNickname());
 		}
 	}
 }
