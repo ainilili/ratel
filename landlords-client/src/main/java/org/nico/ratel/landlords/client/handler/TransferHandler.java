@@ -1,6 +1,8 @@
 package org.nico.ratel.landlords.client.handler;
 
+import org.nico.noson.Noson;
 import org.nico.ratel.landlords.channel.ChannelUtils;
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.client.event.ClientEventListener;
 import org.nico.ratel.landlords.entity.ClientTransferData.ClientTransferDataProtoc;
 import org.nico.ratel.landlords.enums.ClientEventCode;
@@ -11,6 +13,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TransferHandler extends ChannelInboundHandlerAdapter{
 
@@ -24,7 +29,15 @@ public class TransferHandler extends ChannelInboundHandlerAdapter{
 			}
 			ClientEventCode code = ClientEventCode.valueOf(clientTransferData.getCode());
 			if(code != null) {
-				ClientEventListener.get(code).call(ctx.channel(), clientTransferData.getData());
+				if (User.INSTANCE.isWatching()) {
+					Map<String, Object> wrapMap = new HashMap<>(3);
+					wrapMap.put("code", code);
+					wrapMap.put("data", clientTransferData.getData());
+
+					ClientEventListener.get(ClientEventCode.CODE_GAME_WATCH).call(ctx.channel(), Noson.reversal(wrapMap));
+				} else {
+					ClientEventListener.get(code).call(ctx.channel(), clientTransferData.getData());
+				}
 			}
 		}
 	}
