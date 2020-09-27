@@ -16,6 +16,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 		SimplePrinter.printNotice("1. Create Room");
 		SimplePrinter.printNotice("2. Room List");
 		SimplePrinter.printNotice("3. Join Room");
+		SimplePrinter.printNotice("4. Watch Game");
 		SimplePrinter.printNotice("Please enter the number of options (enter [BACK] return options list)");
 		String line = SimpleWriter.write("pvp");
 		
@@ -43,7 +44,22 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 						pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
 					}
 				}
-			}else {
+			} else if (choose == 4) {
+				SimplePrinter.printNotice("Please enter the room id you want to watch (enter [BACK] return options list)");
+				line = SimpleWriter.write("roomid");
+
+				if(line.equalsIgnoreCase("BACK")) {
+					call(channel, data);
+				}else {
+					int option = OptionsUtils.getOptions(line);
+					if(line == null || option < 1) {
+						SimplePrinter.printNotice("Invalid options, please choose again：");
+						call(channel, data);
+					}else{
+						pushToServer(channel, ServerEventCode.CODE_GAME_WATCH, String.valueOf(option));
+					}
+				}
+			} else {
 				SimplePrinter.printNotice("Invalid option, please choose again：");
 				call(channel, data);
 			}

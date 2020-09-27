@@ -27,8 +27,22 @@ public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener
 					client.init();
 				}
 			}
+
+			notifyWatcherClientExit(room, clientSide);
+
 			ServerContains.removeRoom(room.getId());
 		}
 	}
 
+	/**
+	 * 通知所有观战者玩家退出游戏
+	 *
+	 * @param room 房间
+	 * @param player 退出游戏玩家
+	 */
+	private void notifyWatcherClientExit(Room room, ClientSide player) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, player.getNickname());
+		}
+	}
 }

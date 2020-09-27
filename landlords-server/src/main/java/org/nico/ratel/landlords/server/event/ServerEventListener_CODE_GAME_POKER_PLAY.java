@@ -83,6 +83,8 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 								ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
 							}
 						}
+
+						notifyWatcherPlayPoker(room, result);
 						
 						if(clientSide.getPokers().isEmpty()) {
 							result = MapHelper.newInstance()
@@ -95,6 +97,9 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 									ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 								}
 							}
+
+							notifyWatcherGameOver(room, result);
+
 							ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(clientSide, data);
 						}else {
 							if(next.getRole() == ClientRole.PLAYER) {
@@ -115,4 +120,27 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 		}
 	}
 
+	/**
+	 * 通知观战者出牌信息
+	 *
+	 * @param room	房间
+	 * @param result	出牌信息
+	 */
+	private void notifyWatcherPlayPoker(Room room, String result) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_SHOW_POKERS, result);
+		}
+	}
+
+	/**
+	 * 通知观战者游戏结束
+	 *
+	 * @param room	房间
+	 * @param result	出牌信息
+	 */
+	private void notifyWatcherGameOver(Room room, String  result) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
+		}
+	}
 }

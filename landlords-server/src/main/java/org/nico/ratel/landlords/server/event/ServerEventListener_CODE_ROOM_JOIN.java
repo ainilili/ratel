@@ -64,15 +64,22 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener{
 					for(ClientSide client: roomClientMap.values()) {
 						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_ROOM_JOIN_SUCCESS, result);
 					}
+
+					notifyWatcherJoinRoom(room, clientSide);
 				}
 			}
-
-
 		}
 	}
 
-
-
-
-
+	/**
+	 * 通知观战者玩家加入房间
+	 *
+	 * @param room	房间
+	 * @param clientSide	玩家
+	 */
+	private void notifyWatcherJoinRoom(Room room, ClientSide clientSide) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_ROOM_JOIN_SUCCESS, clientSide.getNickname());
+		}
+	}
 }

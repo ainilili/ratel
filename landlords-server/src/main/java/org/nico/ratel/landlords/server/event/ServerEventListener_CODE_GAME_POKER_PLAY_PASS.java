@@ -37,6 +37,8 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEven
 							}
 						}
 					}
+
+					notifyWatcherPlayPass(room, clientSide);
 				}else {
 					ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_CANT_PASS, null);
 				}
@@ -48,4 +50,15 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEven
 		}
 	}
 
+	/**
+	 * 通知观战者玩家不出牌
+	 *
+	 * @param room	房间
+	 * @param player	不出牌的玩家
+	 */
+	private void notifyWatcherPlayPass(Room room, ClientSide player) {
+		for (ClientSide watcher : room.getWatcherList()) {
+			ChannelUtils.pushToClient(watcher.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_PASS, player.getNickname());
+		}
+	}
 }
