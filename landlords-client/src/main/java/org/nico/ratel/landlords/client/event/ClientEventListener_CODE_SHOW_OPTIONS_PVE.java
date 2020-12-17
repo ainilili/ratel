@@ -13,9 +13,9 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 	@Override
 	public void call(Channel channel, String data) {
 		SimplePrinter.printNotice("PVE: ");
-		SimplePrinter.printNotice("1. Simple Model");
-		SimplePrinter.printNotice("2. Medium Model");
-		SimplePrinter.printNotice("3. Difficulty Model");
+		SimplePrinter.printNotice("1. Easy Mode");
+		SimplePrinter.printNotice("2. Medium Mode");
+		SimplePrinter.printNotice("3. Hard Mode");
 		SimplePrinter.printNotice("Please enter the number of options (enter [BACK] return options list)");
 		String line = SimpleWriter.write("pve");
 		
