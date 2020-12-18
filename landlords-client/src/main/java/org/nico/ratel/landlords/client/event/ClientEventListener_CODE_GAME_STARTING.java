@@ -19,12 +19,12 @@ public class ClientEventListener_CODE_GAME_STARTING extends ClientEventListener{
 		
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice("Game starting !!");
+		SimplePrinter.printNotice("Game starting!");
 		
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
 		
 		SimplePrinter.printNotice("");
-		SimplePrinter.printNotice("Your pokers are");
+		SimplePrinter.printNotice("Your cards are");
 		SimplePrinter.printPokers(pokers);
 	
 		get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(channel, data);

@@ -26,7 +26,7 @@ public class ClientEventListener_CODE_SHOW_POKERS extends ClientEventListener{
 		SimplePrinter.printPokers(lastPokers);
 		
 		if(map.containsKey("sellClinetNickname")) {
-			SimplePrinter.printNotice("Next player is " + map.get("sellClinetNickname") + ". Please wait for him to play his pokers.");
+			SimplePrinter.printNotice("Next player is " + map.get("sellClinetNickname") + ". Please wait for him to play his combination.");
 		}
 	}
 

@@ -23,7 +23,7 @@ public class ClientEventListener_CODE_CLIENT_NICKNAME_SET extends ClientEventLis
 		if (StringUtils.isNotBlank(data)) {
 			Map<String, Object> dataMap = MapHelper.parser(data);
 			if (dataMap.containsKey("invalidLength")) {
-				SimplePrinter.printNotice("Your nickname length was invalid: " + dataMap.get("invalidLength"));
+				SimplePrinter.printNotice("Your nickname has invalid length: " + dataMap.get("invalidLength"));
 			}
 		}
 		SimplePrinter.printNotice("Please set your nickname (upto " + NICKNAME_MAX_LENGTH + " characters)");

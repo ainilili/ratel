@@ -14,9 +14,9 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		SimplePrinter.printNotice("Options: ");
 		SimplePrinter.printNotice("1. PvP");
 		SimplePrinter.printNotice("2. PvE");
-		SimplePrinter.printNotice("3. Setting");
-		SimplePrinter.printNotice("Please enter the number of options (enter [EXIT] log out)");
-		String line = SimpleWriter.write("options");
+		SimplePrinter.printNotice("3. Settings");
+		SimplePrinter.printNotice("Please select an option above (enter [EXIT] to log out)");
+		String line = SimpleWriter.write("selection");
 		
 		if(line.equalsIgnoreCase("EXIT")) {
 			System.exit(0);

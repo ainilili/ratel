@@ -16,7 +16,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 		SimplePrinter.printNotice("1. Easy Mode");
 		SimplePrinter.printNotice("2. Medium Mode");
 		SimplePrinter.printNotice("3. Hard Mode");
-		SimplePrinter.printNotice("Please enter the number of options (enter [BACK] return options list)");
+		SimplePrinter.printNotice("Please select an option above (enter [BACK] to return to options list)");
 		String line = SimpleWriter.write("pve");
 		
 		if(line.equalsIgnoreCase("BACK")) {

@@ -74,48 +74,48 @@ public class ClientEventListener_CODE_GAME_WATCH extends ClientEventListener {
     }
 
     private void printJoinPlayerInfo(Object rawData) {
-        printNoticeWithTime("Player [" + rawData + "] join room");
+        printNoticeWithTime("Player [" + rawData + "] joined the room");
     }
 
     private void printGameStartInfo(Object rawData) {
         Map<String, Object> map = MapHelper.parser(rawData.toString());
 
-        printNoticeWithTime("Game start");
+        printNoticeWithTime("Game starting");
         printNoticeWithTime("Player1 : " + map.get("player1"));
         printNoticeWithTime("Player2 : " + map.get("player2"));
         printNoticeWithTime("Player3 : " + map.get("player3"));
     }
 
     private void printRobLandlord(Object rawData) {
-        printNoticeWithTime("Player [" + rawData + "] don't rob the landlord");
+        printNoticeWithTime("Player [" + rawData + "] didn't choose to become the landlord.");
     }
 
     private void printConfirmLandlord(Object rawData) {
         Map<String, Object> map = MapHelper.parser(rawData.toString());
 
-        printNoticeWithTime("Player [" + map.get("landlord") + "] grabbed the landlord and got extra three poker shots:");
+        printNoticeWithTime("Player [" + map.get("landlord") + "] has become the landlord and gotten three extra cards:");
         SimplePrinter.printPokers(Noson.convert(map.get("additionalPokers"), new NoType<List<Poker>>() {}));
     }
 
     private void printPlayPokers(Object rawData) {
         Map<String, Object> map = MapHelper.parser(rawData.toString());
 
-        printNoticeWithTime("Player [" + map.get("clientNickname") + "] play pokers:");
+        printNoticeWithTime("Player [" + map.get("clientNickname") + "] played:");
         SimplePrinter.printPokers(Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {}));
     }
 
     private void printPlayPass(Object rawData) {
-        printNoticeWithTime("Player [" + rawData + "] : pass");
+        printNoticeWithTime("Player [" + rawData + "] : passed");
     }
 
     private void printPlayerExit(Object rawData, Channel channel) {
-        printNoticeWithTime("Player [" + rawData + "] exit room");
+        printNoticeWithTime("Player [" + rawData + "] left the room");
         quitWatch(channel);
     }
 
     private void quitWatch(Channel channel) {
-        printNoticeWithTime("This room will be close!");
-        printNoticeWithTime("Quit watch, bye.");
+        printNoticeWithTime("This room will be closed!");
+        printNoticeWithTime("Spectating ended. Bye.");
         SimplePrinter.printNotice("");
         SimplePrinter.printNotice("");
 
@@ -129,12 +129,12 @@ public class ClientEventListener_CODE_GAME_WATCH extends ClientEventListener {
     private void printGameResult(Object rawData, Channel channel) {
         Map<String, Object> map = MapHelper.parser(rawData.toString());
 
-        printNoticeWithTime("Player [" + map.get("winnerNickname") + "](" + map.get("winnerType") + ") won the game");
+        printNoticeWithTime("Player [" + map.get("winnerNickname") + "](" + map.get("winnerType") + ") won the game.");
         quitWatch(channel);
     }
 
     private void printKickInfo(Object rawData) {
-        printNoticeWithTime("Player [" + rawData + "] play time out, kick out of room.");
+        printNoticeWithTime("Player [" + rawData + "] has been kicked out for being idle.");
     }
 
 

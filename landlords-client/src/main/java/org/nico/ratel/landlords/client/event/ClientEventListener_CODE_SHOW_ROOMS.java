@@ -28,7 +28,7 @@ public class ClientEventListener_CODE_SHOW_ROOMS extends ClientEventListener{
 			SimplePrinter.printNotice("");
 			get(ClientEventCode.CODE_SHOW_OPTIONS_PVP).call(channel, data);
 		}else {
-			SimplePrinter.printNotice("No available room, please create a room ！");
+			SimplePrinter.printNotice("No available room. Please create a room!");
 			get(ClientEventCode.CODE_SHOW_OPTIONS_PVP).call(channel, data);
 		}
 	}
