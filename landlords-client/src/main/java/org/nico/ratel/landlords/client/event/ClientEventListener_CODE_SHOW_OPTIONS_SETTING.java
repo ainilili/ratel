@@ -19,7 +19,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 		SimplePrinter.printNotice("4. Text Only without types");
 		SimplePrinter.printNotice("5. Unicode Cards");
 
-		SimplePrinter.printNotice("Please enter the number of setting (enter [BACK] return options list)");
+		SimplePrinter.printNotice("Please select an option above (enter [BACK] to return to options list)");
 		String line = SimpleWriter.write("setting");
 		
 		if(line.equalsIgnoreCase("BACK")) {

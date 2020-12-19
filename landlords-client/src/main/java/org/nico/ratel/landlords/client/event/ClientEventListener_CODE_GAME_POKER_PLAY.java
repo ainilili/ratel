@@ -21,13 +21,13 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice("It's your turn to play, your pokers are as follows: ");
+		SimplePrinter.printNotice("It's your turn to play, your cards are as follows: ");
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
 		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.printNotice("Please enter the card you came up with (enter [EXIT] to exit current room, enter [PASS] to jump current round)");
-		String line = SimpleWriter.write("card");
+		SimplePrinter.printNotice("Please enter the combination you came up with (enter [EXIT] to exit current room, enter [PASS] to jump current round)");
+		String line = SimpleWriter.write("combination");
 
 		if(line == null){
 			SimplePrinter.printNotice("Invalid enter");
