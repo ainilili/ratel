@@ -82,7 +82,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 			}else {
 				pokersList.set(cursor, pokers);
 				deduce(cursor, sell, cursor + 1, pokersList, counter);
-				if(counter.get() < -999999 || counter.get() > 999999) {
+				if(counter.get() < -99999 || counter.get() > 99999) {
 					return;
 				}
 				pokersList.set(cursor, original);
