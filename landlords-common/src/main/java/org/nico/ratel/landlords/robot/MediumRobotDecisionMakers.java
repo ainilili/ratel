@@ -2,6 +2,7 @@ package org.nico.ratel.landlords.robot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
@@ -35,19 +36,30 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		if(sells == null || sells.size() == 0) {
 			return null;
 		}
+		PokerSell bestSell = null;
+		Integer weight = null;
 		for(PokerSell sell: sells) {
 			List<Poker> pokers = PokerHelper.clonePokers(selfPoker);
 			pokers.removeAll(sell.getSellPokers());
-			pokersList.set(0, pokers);
-			if (! loseCheck(0, sell, 1, pokersList)){
+			if(pokers.size() == 0) {
 				return sell;
+			}
+			pokersList.set(0, pokers);
+			AtomicInteger counter = new AtomicInteger();
+			deduce(0, sell, 1, pokersList, counter);
+			if(weight == null) {
+				bestSell = sell;
+				weight = counter.get();
+			}else if (counter.get() > weight){
+				bestSell = sell;
+				weight = counter.get();
 			}
 			pokersList.set(0, selfPoker);
 		}
-		return sells.get(0);
+		return bestSell;
 	}
 	
-	private boolean loseCheck(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList) {
+	private void deduce(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList, AtomicInteger counter) {
 		if(cursor > 2) {
 			cursor = 0;
 		}
@@ -55,9 +67,9 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		List<PokerSell> sells = validSells(lastPokerSell, original);
 		if(sells == null || sells.size() == 0) {
 			if(sellCursor != cursor) {
-				return loseCheck(sellCursor, lastPokerSell, ++cursor, pokersList);
+				deduce(sellCursor, lastPokerSell, cursor + 1, pokersList, counter);
 			}else {
-				return loseCheck(sellCursor, null, cursor, pokersList);
+				deduce(sellCursor, null, cursor, pokersList, counter);
 			}
 		}
 		
@@ -65,19 +77,17 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 			List<Poker> pokers = PokerHelper.clonePokers(original);
 			pokers.removeAll(sell.getSellPokers());
 			if(pokers.size() == 0) {
-				if(cursor != 0) {
-					return true;
-				}
+				counter.addAndGet(cursor != 0 ? -1 : 1);
+				return;
 			}else {
 				pokersList.set(cursor, pokers);
-				boolean isLose = loseCheck(cursor, sell, ++cursor, pokersList);
-				if(isLose) {
-					return isLose;
+				deduce(cursor, sell, cursor + 1, pokersList, counter);
+				if(counter.get() < -999999 || counter.get() > 999999) {
+					return;
 				}
 				pokersList.set(cursor, original);
 			}
 		}
-		return false;
 	}
 	
 	
