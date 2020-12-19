@@ -1,4 +1,4 @@
-package org.nico.ratel.landlords.helper;
+package org.nico.ratel.landlords.helper.tests;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,6 +7,7 @@ import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.enums.PokerLevel;
 import org.nico.ratel.landlords.enums.PokerType;
 import org.nico.ratel.landlords.enums.SellType;
+import org.nico.ratel.landlords.helper.PokerHelper;
 
 import java.util.ArrayList;
 

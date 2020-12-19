@@ -61,6 +61,14 @@ public class PokerHelper {
 	public static void sortPoker(List<Poker> pokers){
 		Collections.sort(pokers, pokerComparator);
 	}
+	
+	public static List<Poker> clonePokers(List<Poker> pokers){
+		List<Poker> newPokers = new ArrayList<Poker>(pokers.size());
+		for(Poker poker: pokers) {
+			newPokers.add(new Poker(poker.getLevel(), poker.getType()));
+		}
+		return newPokers;
+	}
 
 	public static int[] getIndexes(Character[] options, List<Poker> pokers) {
 		List<Poker> copyList = new ArrayList<>(pokers.size());
@@ -538,7 +546,7 @@ public class PokerHelper {
 			}
 		}
 	}
-
+	
 	private static void parsePokerSellStraight(List<PokerSell> pokerSells, SellType sellType) {
 		int minLenght = -1;
 		int width = -1;
