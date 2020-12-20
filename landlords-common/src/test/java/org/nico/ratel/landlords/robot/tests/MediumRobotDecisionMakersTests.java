@@ -45,7 +45,7 @@ public class MediumRobotDecisionMakersTests {
 		right.setPokers(buildPokers(new Object[] {3,4,5,6,7,9,9,11,11,12,12,12,14,16}));
 		left.setPokers(buildPokers(new Object[] {6,6,7,7,7,8,8,9,9,10,10,10,10,11,13,14,14,17}));
 		
-//		self.setPokers(buildPokers(new Object[] {3,4,5,9,9}));
+//		self.setPokers(buildPokers(new Object[] {9,9,3,4}));
 //		right.setPokers(buildPokers(new Object[] {3,3,9,9,10}));
 //		left.setPokers(buildPokers(new Object[] {6,6,8,8}));
 		

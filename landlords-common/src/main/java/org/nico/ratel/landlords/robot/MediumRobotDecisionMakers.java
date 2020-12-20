@@ -1,8 +1,11 @@
 package org.nico.ratel.landlords.robot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
@@ -26,6 +29,9 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		List<Poker> selfPoker = PokerHelper.clonePokers(robot.getPokers());
 		List<Poker> leftPoker = PokerHelper.clonePokers(robot.getPre().getPokers());
 		List<Poker> rightPoker = PokerHelper.clonePokers(robot.getNext().getPokers());
+		PokerHelper.sortPoker(selfPoker);
+		PokerHelper.sortPoker(leftPoker);
+		PokerHelper.sortPoker(rightPoker);
 		
 		List<List<Poker>> pokersList = new ArrayList<List<Poker>>();
 		pokersList.add(selfPoker);
@@ -37,7 +43,8 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 			return null;
 		}
 		PokerSell bestSell = null;
-		Integer weight = null;
+		Long weight = null;
+		Map<String, Long> dp = new HashMap<String, Long>();
 		for(PokerSell sell: sells) {
 			List<Poker> pokers = PokerHelper.clonePokers(selfPoker);
 			pokers.removeAll(sell.getSellPokers());
@@ -45,8 +52,8 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 				return sell;
 			}
 			pokersList.set(0, pokers);
-			AtomicInteger counter = new AtomicInteger();
-			deduce(0, sell, 1, pokersList, counter);
+			AtomicLong counter = new AtomicLong();
+			deduce(0, sell, 1, pokersList, counter, dp);
 			if(weight == null) {
 				bestSell = sell;
 				weight = counter.get();
@@ -59,37 +66,78 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		return bestSell;
 	}
 	
-	private void deduce(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList, AtomicInteger counter) {
+	private Boolean deduce(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList, AtomicLong counter, Map<String, Long> dp) {
 		if(cursor > 2) {
 			cursor = 0;
 		}
+		if(sellCursor == cursor) {
+			lastPokerSell = null;
+		}
+		
 		List<Poker> original = pokersList.get(cursor);
 		List<PokerSell> sells = validSells(lastPokerSell, original);
 		if(sells == null || sells.size() == 0) {
 			if(sellCursor != cursor) {
-				deduce(sellCursor, lastPokerSell, cursor + 1, pokersList, counter);
-			}else {
-				deduce(sellCursor, null, cursor, pokersList, counter);
+				return deduce(sellCursor, lastPokerSell, cursor + 1, pokersList, counter, dp);
 			}
 		}
-		
 		for(PokerSell sell: sells) {
 			List<Poker> pokers = PokerHelper.clonePokers(original);
 			pokers.removeAll(sell.getSellPokers());
 			if(pokers.size() == 0) {
-				counter.addAndGet(cursor != 0 ? -1 : 1);
-				return;
+				return cursor == 0;
 			}else {
 				pokersList.set(cursor, pokers);
-				deduce(cursor, sell, cursor + 1, pokersList, counter);
-				if(counter.get() < -99999 || counter.get() > 99999) {
-					return;
+				
+				String key = serialKey(cursor, sell, cursor + 1, pokersList);
+				Long score = dp.get(key);
+				if(score != null) {
+					counter.addAndGet(score);
+				}else {
+					Boolean suc = deduce(cursor, sell, cursor + 1, pokersList, counter, dp);
+					if(cursor != 0) {
+						return suc;
+					}
+					if(suc != null) {
+						score = (long)(suc ? 1 : -1);
+						counter.addAndGet(score);
+						dp.put(key, score);	
+					}
 				}
+//				if(counter.get() < -999999999 || counter.get() > 999999999) {
+//					return;
+//				}
 				pokersList.set(cursor, original);
 			}
 		}
+		return null;
 	}
 	
+	private String serialKey(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList) {
+		return sellCursor + "$" + (lastPokerSell == null ? "[]" : serialPokers(lastPokerSell.getSellPokers())) + "$" + cursor + "$" + serialPokersList(pokersList);
+	}
+	
+	private static String serialPokers(List<Poker> pokers){
+		if(pokers == null || pokers.size() == 0) {
+			return "[]";
+		}
+		StringBuilder builder = new StringBuilder();
+		if(pokers != null && pokers.size() > 0) {
+			for(int index = 0; index < pokers.size(); index ++) {
+				builder.append(pokers.get(index).getLevel() + (index == pokers.size() - 1 ? "" : ","));
+			}
+		}
+		return builder.toString();
+	}
+	
+	private static String serialPokersList(List<List<Poker>> pokersList){
+		StringBuilder builder = new StringBuilder();
+		for(int index = 0; index < pokersList.size(); index ++) {
+			List<Poker> pokers = pokersList.get(index);
+			builder.append(serialPokers(pokers) + (index == pokersList.size() - 1 ? "" : "|"));
+		}
+		return builder.toString();
+	}
 	
 	private List<PokerSell> validSells(PokerSell lastPokerSell, List<Poker> pokers) {
 		List<PokerSell> sells = PokerHelper.parsePokerSells(pokers);
