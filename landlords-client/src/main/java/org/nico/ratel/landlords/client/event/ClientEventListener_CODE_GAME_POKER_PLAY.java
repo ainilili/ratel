@@ -29,7 +29,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.printNotice("Please enter the combination you came up with (enter [exit|e] to exit current room, enter [pass|p] to jump current round, enter [view|v] to show all valid combination.)");
+		SimplePrinter.printNotice("Please enter the combination you came up with (enter [exit|e] to exit current room, enter [pass|p] to jump current round, enter [view|v] to show all valid combinations.)");
 		String line = SimpleWriter.write("combination");
 
 		if(line == null){
