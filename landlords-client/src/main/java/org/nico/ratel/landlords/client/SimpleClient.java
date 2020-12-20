@@ -23,7 +23,7 @@ public class SimpleClient {
 
 	public static String serverAddress;
 
-	public static int port = 80;
+	public static int port = 1024;
 
 	private static String[] serverAddressSource = new String[] {
 			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",

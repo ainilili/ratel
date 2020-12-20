@@ -17,10 +17,10 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 		SimplePrinter.printNotice("2. Room List");
 		SimplePrinter.printNotice("3. Join Room");
 		SimplePrinter.printNotice("4. Spectate Game");
-		SimplePrinter.printNotice("Please select an option above (enter [BACK] to return to options list)");
+		SimplePrinter.printNotice("Please select an option above (enter [back|b] to return to options list)");
 		String line = SimpleWriter.write("pvp");
 		
-		if(line.equalsIgnoreCase("BACK")) {
+		if(line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}else {
 			int choose = OptionsUtils.getOptions(line);
@@ -30,10 +30,10 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 			}else if(choose == 2){
 				pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
 			}else if(choose == 3){
-				SimplePrinter.printNotice("Please enter the room id you wish to join (enter [BACK] to return to options list)");
+				SimplePrinter.printNotice("Please enter the room id you wish to join (enter [back|b] to return to options list)");
 				line = SimpleWriter.write("roomid");
 				
-				if(line.equalsIgnoreCase("BACK")) {
+				if(line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
 					call(channel, data);
 				}else {
 					int option = OptionsUtils.getOptions(line);
@@ -45,10 +45,10 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 					}
 				}
 			} else if (choose == 4) {
-				SimplePrinter.printNotice("Please enter the room id you want to spectate (enter [BACK] to return to options list)");
+				SimplePrinter.printNotice("Please enter the room id you want to spectate (enter [back] to return to options list)");
 				line = SimpleWriter.write("roomid");
 
-				if(line.equalsIgnoreCase("BACK")) {
+				if(line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
 					call(channel, data);
 				}else {
 					int option = OptionsUtils.getOptions(line);

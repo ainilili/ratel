@@ -2,6 +2,7 @@ package org.nico.ratel.landlords.robot;
 
 import java.util.List;
 
+import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 
@@ -13,7 +14,7 @@ import org.nico.ratel.landlords.entity.PokerSell;
 
 public abstract	class AbstractRobotDecisionMakers {
 
-	public abstract PokerSell howToPlayPokers(PokerSell lastPokerSell, List<Poker> myPokers);
+	public abstract PokerSell howToPlayPokers(PokerSell lastPokerSell, ClientSide robot);
 	
 	public abstract boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers);
 }

@@ -89,4 +89,25 @@ public enum PokerLevel{
 	public final void setLevel(int level) {
 		this.level = level;
 	}
+	
+	public static final PokerLevel parseByName(String name) {
+		if(name == null) {
+			return null;
+		}
+		for(PokerLevel level: PokerLevel.values()) {
+			if(level.name.equals(name.toUpperCase())) {
+				return level;
+			}
+		}
+		return null;
+	}
+	
+	public static final PokerLevel parseByLevel(int l) {
+		for(PokerLevel level: PokerLevel.values()) {
+			if(level.level == l) {
+				return level;
+			}
+		}
+		return null;
+	}
 }

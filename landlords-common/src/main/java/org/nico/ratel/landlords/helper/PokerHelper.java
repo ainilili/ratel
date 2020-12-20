@@ -61,6 +61,41 @@ public class PokerHelper {
 	public static void sortPoker(List<Poker> pokers){
 		Collections.sort(pokers, pokerComparator);
 	}
+	
+	public static List<Poker> clonePokers(List<Poker> pokers){
+		List<Poker> newPokers = new ArrayList<Poker>(pokers.size());
+		for(Poker poker: pokers) {
+			newPokers.add(new Poker(poker.getLevel(), poker.getType()));
+		}
+		return newPokers;
+	}
+	
+	public static List<PokerSell> validSells(PokerSell lastPokerSell, List<Poker> pokers) {
+		List<PokerSell> sells = PokerHelper.parsePokerSells(pokers);
+		if(lastPokerSell == null) {
+			return sells;
+		}
+
+		List<PokerSell> validSells = new ArrayList<PokerSell>();
+		for(PokerSell sell: sells) {
+			if(sell.getSellType() == lastPokerSell.getSellType()) {
+				if(sell.getScore() > lastPokerSell.getScore() && sell.getSellPokers().size() == lastPokerSell.getSellPokers().size()) {
+					validSells.add(sell);
+				}
+			}
+			if(sell.getSellType() == SellType.KING_BOMB) {
+				validSells.add(sell);
+			}
+		}
+		if(lastPokerSell.getSellType() != SellType.BOMB) {
+			for(PokerSell sell: sells) {
+				if(sell.getSellType() == SellType.BOMB) {
+					validSells.add(sell);
+				}
+			}
+		}
+		return validSells;
+	}
 
 	public static int[] getIndexes(Character[] options, List<Poker> pokers) {
 		List<Poker> copyList = new ArrayList<>(pokers.size());
@@ -538,7 +573,7 @@ public class PokerHelper {
 			}
 		}
 	}
-
+	
 	private static void parsePokerSellStraight(List<PokerSell> pokerSells, SellType sellType) {
 		int minLenght = -1;
 		int width = -1;

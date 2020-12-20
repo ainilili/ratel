@@ -11,13 +11,13 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import java.util.Timer;
 import org.nico.ratel.landlords.print.SimplePrinter;
+import org.nico.ratel.landlords.robot.RobotDecisionMakers;
 import org.nico.ratel.landlords.server.handler.DefaultChannelInitializer;
 import org.nico.ratel.landlords.server.timer.RoomClearTask;
 
 public class SimpleServer {
 
 	public static void main(String[] args) throws InterruptedException {
-
 		if(args != null && args.length > 1) {
 			if(args[0].equalsIgnoreCase("-p") || args[0].equalsIgnoreCase("-port")) {
 				ServerContains.port = Integer.valueOf(args[1]);
@@ -36,7 +36,9 @@ public class SimpleServer {
 			ChannelFuture f = bootstrap .bind().sync();
 
 			SimplePrinter.serverLog("The server was successfully started on port " + ServerContains.port);
-
+			//Init robot.
+			RobotDecisionMakers.init();
+			
 			ServerContains.THREAD_EXCUTER.execute(() -> {
 				Timer timer=new Timer();
 				timer.schedule(new RoomClearTask(), 0L, 3000L);
