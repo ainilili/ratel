@@ -26,16 +26,16 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.printNotice("Please enter the combination you came up with (enter [EXIT] to exit current room, enter [PASS] to jump current round)");
+		SimplePrinter.printNotice("Please enter the combination you came up with (enter [exit|e] to exit current room, enter [pass|p] to jump current round)");
 		String line = SimpleWriter.write("combination");
 
 		if(line == null){
 			SimplePrinter.printNotice("Invalid enter");
 			call(channel, data);
 		}else{
-			if(line.equalsIgnoreCase("PASS")) {
+			if(line.equalsIgnoreCase("pass") || line.equalsIgnoreCase("p")) {
 				pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_PASS);
-			}else if(line.equalsIgnoreCase("EXIT")){
+			}else if(line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")){
 				pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT);
 			}else {
 				String[] strs = line.split(" ");
