@@ -15,10 +15,10 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		SimplePrinter.printNotice("1. PvP");
 		SimplePrinter.printNotice("2. PvE");
 		SimplePrinter.printNotice("3. Settings");
-		SimplePrinter.printNotice("Please select an option above (enter [EXIT] to log out)");
+		SimplePrinter.printNotice("Please select an option above (enter [exit|e] to log out)");
 		String line = SimpleWriter.write("selection");
 		
-		if(line.equalsIgnoreCase("EXIT")) {
+		if(line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")) {
 			System.exit(0);
 		}else {
 			int choose = OptionsUtils.getOptions(line);

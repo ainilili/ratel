@@ -1,12 +1,8 @@
 package org.nico.ratel.landlords.robot;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,13 +11,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.nico.noson.Noson;
-import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.helper.PokerHelper;
+import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.utils.StreamUtils;
 
 import com.google.gson.Gson;
@@ -48,8 +43,9 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
     		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("dp.json");
         	String dpJson = StreamUtils.convertToString(stream);
         	DP = gson.fromJson(dpJson, new TypeToken<ConcurrentHashMap<String, Long>>() {}.getType());
+        	SimplePrinter.serverLog("Medium Robot init with dp.json.");
     	}catch(Exception e) {
-    		e.printStackTrace();
+    		SimplePrinter.serverLog("Medium Robot init without dp.json.");
     	}
 
 		new Thread() {
@@ -87,7 +83,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		pokersList.add(rightPoker);
 		pokersList.add(leftPoker);
 
-		List<PokerSell> sells = validSells(lastPokerSell, selfPoker);
+		List<PokerSell> sells = PokerHelper.validSells(lastPokerSell, selfPoker);
 		if(sells == null || sells.size() == 0) {
 			return null;
 		}
@@ -123,7 +119,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		}
 
 		List<Poker> original = pokersList.get(cursor);
-		List<PokerSell> sells = validSells(lastPokerSell, original);
+		List<PokerSell> sells = PokerHelper.validSells(lastPokerSell, original);
 		if(sells == null || sells.size() == 0) {
 			if(sellCursor != cursor) {
 				return deduce(sellCursor, lastPokerSell, cursor + 1, pokersList, counter, dp);
@@ -188,34 +184,6 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		}
 		return builder.toString();
 	}
-
-	private List<PokerSell> validSells(PokerSell lastPokerSell, List<Poker> pokers) {
-		List<PokerSell> sells = PokerHelper.parsePokerSells(pokers);
-		if(lastPokerSell == null) {
-			return sells;
-		}
-
-		List<PokerSell> validSells = new ArrayList<PokerSell>();
-		for(PokerSell sell: sells) {
-			if(sell.getSellType() == lastPokerSell.getSellType()) {
-				if(sell.getScore() > lastPokerSell.getScore() && sell.getSellPokers().size() == lastPokerSell.getSellPokers().size()) {
-					validSells.add(sell);
-				}
-			}
-			if(sell.getSellType() == SellType.KING_BOMB) {
-				validSells.add(sell);
-			}
-		}
-		if(lastPokerSell.getSellType() != SellType.BOMB) {
-			for(PokerSell sell: sells) {
-				if(sell.getSellType() == SellType.BOMB) {
-					validSells.add(sell);
-				}
-			}
-		}
-		return validSells;
-	}
-
 
 	@Override
 	public boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {

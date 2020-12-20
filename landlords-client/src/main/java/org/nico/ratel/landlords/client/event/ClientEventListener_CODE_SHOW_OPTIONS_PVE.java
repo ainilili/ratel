@@ -16,10 +16,10 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 		SimplePrinter.printNotice("1. Easy Mode");
 		SimplePrinter.printNotice("2. Medium Mode");
 		SimplePrinter.printNotice("3. Hard Mode");
-		SimplePrinter.printNotice("Please select an option above (enter [BACK] to return to options list)");
+		SimplePrinter.printNotice("Please select an option above (enter [back|b] to return to options list)");
 		String line = SimpleWriter.write("pve");
 		
-		if(line.equalsIgnoreCase("BACK")) {
+		if(line.equalsIgnoreCase("back") ||  line.equalsIgnoreCase("b")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 		}else {
 			int choose = OptionsUtils.getOptions(line);

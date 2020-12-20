@@ -44,6 +44,9 @@ public class SimpleClient {
 			}
 		}
 		
+		serverAddress = "127.0.0.1";
+		port = 1024;
+		
 		if(serverAddress == null){
 			List<String> serverAddressList = getServerAddressList();
 			if(serverAddressList == null || serverAddressList.size() == 0) {

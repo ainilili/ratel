@@ -69,6 +69,33 @@ public class PokerHelper {
 		}
 		return newPokers;
 	}
+	
+	public static List<PokerSell> validSells(PokerSell lastPokerSell, List<Poker> pokers) {
+		List<PokerSell> sells = PokerHelper.parsePokerSells(pokers);
+		if(lastPokerSell == null) {
+			return sells;
+		}
+
+		List<PokerSell> validSells = new ArrayList<PokerSell>();
+		for(PokerSell sell: sells) {
+			if(sell.getSellType() == lastPokerSell.getSellType()) {
+				if(sell.getScore() > lastPokerSell.getScore() && sell.getSellPokers().size() == lastPokerSell.getSellPokers().size()) {
+					validSells.add(sell);
+				}
+			}
+			if(sell.getSellType() == SellType.KING_BOMB) {
+				validSells.add(sell);
+			}
+		}
+		if(lastPokerSell.getSellType() != SellType.BOMB) {
+			for(PokerSell sell: sells) {
+				if(sell.getSellType() == SellType.BOMB) {
+					validSells.add(sell);
+				}
+			}
+		}
+		return validSells;
+	}
 
 	public static int[] getIndexes(Character[] options, List<Poker> pokers) {
 		List<Poker> copyList = new ArrayList<>(pokers.size());

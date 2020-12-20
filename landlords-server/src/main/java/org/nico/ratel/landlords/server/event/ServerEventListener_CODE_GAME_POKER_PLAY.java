@@ -70,7 +70,9 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 								.put("clientId", clientSide.getId())
 								.put("clientNickname", clientSide.getNickname())
 								.put("clientType", clientSide.getType())
-								.put("pokers", currentPokers);
+								.put("pokers", currentPokers)
+								.put("lastSellClientId", clientSide.getId())
+								.put("lastSellPokers", currentPokers);
 						
 						if(! clientSide.getPokers().isEmpty()) {
 							mapHelper.put("sellClinetNickname", next.getNickname());

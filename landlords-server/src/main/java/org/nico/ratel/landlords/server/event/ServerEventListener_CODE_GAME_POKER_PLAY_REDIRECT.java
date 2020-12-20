@@ -1,9 +1,12 @@
 package org.nico.ratel.landlords.server.event;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.nico.noson.Noson;
+import org.nico.noson.util.string.StringUtils;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
@@ -16,6 +19,10 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 	@Override
 	public void call(ClientSide clientSide, String data) {
 		Room room = ServerContains.getRoom(clientSide.getRoomId());
+		Map<String, Object> datas = new HashMap<String, Object>();
+		if(StringUtils.isNotBlank(data)) {
+			datas = Noson.parseMap(data);
+		}
 		
 		List<Map<String, Object>> clientInfos = new ArrayList<Map<String,Object>>(3);
 		for(ClientSide client: room.getClientSideList()){
@@ -32,6 +39,8 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 		
 		String result = MapHelper.newInstance()
 				.put("pokers", clientSide.getPokers())
+				.put("lastSellPokers", datas.get("lastSellPokers"))
+				.put("lastSellClientId", datas.get("lastSellClientId"))
 				.put("clientInfos", clientInfos)
 				.put("sellClientId", room.getCurrentSellClient())
 				.put("sellClinetNickname", ServerContains.CLIENT_SIDE_MAP.get(room.getCurrentSellClient()).getNickname())
