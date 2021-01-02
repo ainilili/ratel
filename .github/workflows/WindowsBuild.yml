@@ -1,0 +1,49 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Build ratel on Windows(Java with Maven)
+
+on:
+  push:
+        branches:
+          - master
+          - feature/*
+        paths-ignore:
+          - '**/*.md'
+          - .gitignore
+          - .editorconfig
+          - appveyor.yml
+          - 'azure-pipelines*.yml'
+          - 'ci/azure-pipelines/template*.yml'
+
+        pull_request:
+          branches:
+            - master
+            - feature/*
+            - release/*
+          paths-ignore:
+            - '**/*.md'
+            - .gitignore
+            - .editorconfig
+            - appveyor.yml
+            - 'azure-pipelines*.yml'
+            - 'ci/azure-pipelines/template*.yml'
+
+jobs:
+  build:
+    name: Build on windows
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: Build ratel (with Maven)
+      run: |
+        mvn install package
+    - name: Test Server
+      run: java -jar target\javafx-ratel-server-1.2.4.jar
+      
+
