@@ -73,9 +73,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Build ratel (with Maven)
-        run: |
-          mvn versions:set -DnewVersion=GetHub_Action_test
-          mvn install package
+      run: |
+        mvn versions:set -DnewVersion=GetHub_Action_test
+        mvn install package
       - name: Test Server
         run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
       - name: Test Cilent
@@ -98,9 +98,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Build ratel (with Maven)
-        run: |
-          mvn versions:set -DnewVersion=GetHub_Action_test
-          mvn install package
+      run: |
+        mvn versions:set -DnewVersion=GetHub_Action_test
+        mvn install package
       - name: Test Server
         run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
       - name: Test Cilent
