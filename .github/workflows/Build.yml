@@ -50,11 +50,11 @@ jobs:
       - name: Build ratel (with Maven)
         run: |
           mvn versions:set -DnewVersion=GetHub_Action_test
-          mvn install package
-      - name: Test Server
-        run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
-      - name: Test Cilent
-        run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
+          mvn test
+ #     - name: Test Server
+ #       run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
+#      - name: Test Cilent
+#        run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
   Build_Linux:
     name: Build on ubuntu
     runs-on: ubuntu-latest
@@ -75,11 +75,11 @@ jobs:
     - name: Build ratel (with Maven)
       run: |
         mvn versions:set -DnewVersion=GetHub_Action_test
-        mvn install package
-    - name: Test Server
-      run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
-    - name: Test Cilent
-      run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
+        mvn test
+#    - name: Test Server
+#      run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
+#    - name: Test Cilent
+#      run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
   build_Windows:
     name: Build on Windows
     runs-on: windows-latest
@@ -100,10 +100,10 @@ jobs:
     - name: Build ratel (with Maven)
       run: |
         mvn versions:set -DnewVersion=GetHub_Action_test
-        mvn install package
-    - name: Test Server
-      run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
-    - name: Test Cilent
-      run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
+        mvn test
+#    - name: Test Server
+#      run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
+#    - name: Test Cilent
+#      run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
       
 
