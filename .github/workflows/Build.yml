@@ -1,0 +1,109 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Build ratel(Java with Maven)
+
+on:
+  push:
+        branches:
+          - master
+          - feature/*
+        paths-ignore:
+          - '**/*.md'
+          - .gitignore
+          - .editorconfig
+          - appveyor.yml
+          - 'azure-pipelines*.yml'
+          - 'ci/azure-pipelines/template*.yml'
+
+        pull_request:
+          branches:
+            - master
+            - feature/*
+            - release/*
+          paths-ignore:
+            - '**/*.md'
+            - .gitignore
+            - .editorconfig
+            - appveyor.yml
+            - 'azure-pipelines*.yml'
+            - 'ci/azure-pipelines/template*.yml'
+
+jobs:
+  Build_macos:
+      name: Build on macos
+      runs-on: macos-latest
+
+      steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 1.8
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Build ratel (with Maven)
+        run: |
+          mvn versions:set -DnewVersion=GetHub_Action_test
+          mvn test
+ #     - name: Test Server
+ #       run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
+#      - name: Test Cilent
+#        run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
+  Build_Linux:
+    name: Build on ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: Cache local Maven repository
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Build ratel (with Maven)
+      run: |
+        mvn versions:set -DnewVersion=GetHub_Action_test
+        mvn test
+#    - name: Test Server
+#      run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
+#    - name: Test Cilent
+#      run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
+  build_Windows:
+    name: Build on Windows
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: Cache local Maven repository
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Build ratel (with Maven)
+      run: |
+        mvn versions:set -DnewVersion=GetHub_Action_test
+        mvn test
+#    - name: Test Server
+#      run: java -jar landlords-server/target/landlords-server-GetHub_Action_test.jar -p 1024
+#    - name: Test Cilent
+#      run: java -jar landlords-client/target/landlords-client-GetHub_Action_test.jar -p 1024 -h 39.105.65.8
+      
+

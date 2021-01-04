@@ -1,3 +1,14 @@
+# Ratel
+
+[![GitHub forks](https://img.shields.io/github/forks/ainilili/ratel?style=flat-square)](https://github.com/ainilili/ratel/network)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/ainilili/ratel?style=flat-square)
+![GitHub all releases](https://img.shields.io/github/downloads/ainilili/ratel/total?logo=spring&style=flat-square)
+[![GitHub stars](https://img.shields.io/github/stars/ainilili/ratel?logo=java&style=flat-square)](https://github.com/ainilili/ratel/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/ainilili/ratel?style=flat-square)](https://github.com/ainilili/ratel/issues)
+[![GitHub license](https://img.shields.io/github/license/ainilili/ratel?logo=apache&style=flat-square)](https://github.com/ainilili/ratel/blob/master/LICENSE)
+![Build ratel(Java with Maven)](https://github.com/AsdStudio/ratel/workflows/Build%20ratel(Java%20with%20Maven)/badge.svg)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/kebyn/ratel?label=Docker&logo=docker&style=flat-square)
+
 ## 项目介绍
 斗地主我想大家都会玩吧，但是不知道大家有没有在命令行内玩过斗地主。
 
