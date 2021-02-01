@@ -13,14 +13,14 @@
 	<parent>
 		<groupId>com.smallnico.ratel</groupId>
 		<artifactId>landlords</artifactId>
-		<version>1.2.4</version>
+		<version>1.2.5</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.smallnico.ratel</groupId>
 			<artifactId>landlords-common</artifactId>
-			<version>1.2.4</version>
+			<version>1.2.5</version>
 		</dependency>
 	</dependencies>
 

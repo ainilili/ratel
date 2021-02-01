@@ -36,7 +36,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 	
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
 	
-	private static final Long DEDUCE_LIMIT = 100 * 5L;
+	private static final Long DEDUCE_LIMIT = 100 * 3L;
 
 	public MediumRobotDecisionMakers() {
     	try {
@@ -47,23 +47,6 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
     	}catch(Exception e) {
     		SimplePrinter.serverLog("Medium Robot init without dp.json.");
     	}
-
-		new Thread() {
-			public void run() {
-				while(true) {
-					try {
-						Thread.sleep(1000 * 60);
-						String date = SDF.format(new Date());
-						FileWriter w = new FileWriter("dp_" + date + ".json", false);
-						w.write(gson.toJson(DP));
-						w.flush();
-						w.close();
-					} catch (InterruptedException | IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
 	}
 
 	@Override
@@ -150,7 +133,6 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 					if(suc != null) {
 						score = (long)(suc ? 1 : -1);
 						counter.addAndGet(score);
-						dp.put(key, score);	
 					}
 				}
 				pokersList.set(cursor, original);
