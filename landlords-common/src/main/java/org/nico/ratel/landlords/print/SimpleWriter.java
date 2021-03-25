@@ -12,11 +12,17 @@ public class SimpleWriter {
 		System.out.println();
 		System.out.print("[ratel@" + message + "]$ ");
 		try {
+			return write();
+		}finally {
+			System.out.println();
+		}
+	}
+
+	public static String write() {
+		try {
 			return reader.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally {
-			System.out.println();
 		}
 		return null;
 	}
