@@ -27,7 +27,7 @@ java -jar landlords-client/target/landlords-client-#{version}.jar -p 1024 -h 127
 ```
 游戏开始...
 ## 玩法介绍 How to Play
-你可以创建一个私服, 或者加入公网服务器 ``39.105.65.8``(``-h``参数指定对应的服务器)
+你可以创建一个私服, 或者加入公网服务器 ``121.5.140.133``(``-h``参数指定对应的服务器)
 
 ![demo](demo.gif)
 

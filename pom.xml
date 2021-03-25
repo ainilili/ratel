@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.smallnico.ratel</groupId>
 	<artifactId>landlords</artifactId>
-	<version>1.2.5</version>
+	<version>1.2.6</version>
 	<name>ratel</name>
 	<url>https://github.com/ainilili/ratel</url>
 	<packaging>pom</packaging>

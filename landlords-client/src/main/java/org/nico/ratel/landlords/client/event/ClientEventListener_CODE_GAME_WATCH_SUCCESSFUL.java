@@ -40,7 +40,7 @@ public class ClientEventListener_CODE_GAME_WATCH_SUCCESSFUL extends ClientEventL
     }
 
     private void registerExitEvent(Channel channel) {
-        String enter = SimpleWriter.write("watch");
+        String enter = SimpleWriter.write();
         if ("exit".equalsIgnoreCase(enter) || "e".equalsIgnoreCase(enter)) {
             quitWatch(channel);
             return;

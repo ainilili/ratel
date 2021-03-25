@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>com.smallnico.ratel</groupId>
 		<artifactId>landlords</artifactId>
-		<version>1.2.5</version>
+		<version>1.2.6</version>
 	</parent>
 
 	<properties>
@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>com.smallnico.ratel</groupId>
 			<artifactId>landlords-common</artifactId>
-			<version>1.2.5</version>
+			<version>1.2.6</version>
 		</dependency>
 	</dependencies>
 
