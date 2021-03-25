@@ -30,7 +30,9 @@ public enum ServerEventCode implements Serializable{
 	
 	CODE_GAME_POKER_PLAY_PASS("不出"),
 
-	CODE_GAME_WATCH("观战");
+	CODE_GAME_WATCH("观战"),
+
+	CODE_GAME_WATCH_EXIT("退出观战");
 	
 	private String msg;
 

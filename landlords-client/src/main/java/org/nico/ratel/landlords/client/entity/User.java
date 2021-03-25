@@ -4,10 +4,10 @@ public class User {
     public static final User INSTANCE = new User();
 
     /** 是否游戏中 */
-    private boolean isPlaying = false;
+    private volatile boolean isPlaying = false;
 
     /** 是否观战中 */
-    private boolean isWatching = false;
+    private volatile boolean isWatching = false;
 
     private User() {}
 
