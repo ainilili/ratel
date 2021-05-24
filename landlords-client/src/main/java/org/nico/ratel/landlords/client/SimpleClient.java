@@ -22,7 +22,7 @@ public class SimpleClient {
 
 	public static int port = 1024;
 
-	public static String protocol = "ws";
+	public static String protocol = "pb";
 
 	private static String[] serverAddressSource = new String[] {
 			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
@@ -39,7 +39,7 @@ public class SimpleClient {
 					if(args[index].equalsIgnoreCase("-h") || args[index].equalsIgnoreCase("-host")) {
 						serverAddress = args[index + 1];
 					}
-					if(args[index].equalsIgnoreCase("-p") || args[index].equalsIgnoreCase("-protocol")) {
+					if(args[index].equalsIgnoreCase("-ptl") || args[index].equalsIgnoreCase("-protocol")) {
 						protocol = args[index + 1];
 					}
 				}
