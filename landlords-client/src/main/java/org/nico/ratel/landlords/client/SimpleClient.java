@@ -18,7 +18,7 @@ public class SimpleClient {
 
 	public static int id = -1;
 
-	public static String serverAddress = "127.0.0.1";
+	public static String serverAddress;
 
 	public static int port = 1024;
 
