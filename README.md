@@ -66,6 +66,11 @@ alias-> │3 |4 |5 |6 |7 |8 |9 |T t 0|J j|Q q|K k|A a 1|2 |S s|X x|
 - 如果本回合内你不想出牌，可以输入 ``pass``
 - 如果本回合内你想退出游戏，可以输入 ``exit``
 
+#### 协议支持
+ - TCP
+ - Websocket
+
+Websocket协议的地址为 ``ws://host:port/ratel``，Websocket的端口需要在原端口基础上加1 （如果tcp端口为1024，则ws端口需要为1025）
 #### 游戏规则
 正统的欢乐斗地主~
 

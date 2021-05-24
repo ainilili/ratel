@@ -17,7 +17,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TransferHandler extends ChannelInboundHandlerAdapter{
+public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter{
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

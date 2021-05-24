@@ -17,7 +17,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
-public class TransferHandler extends ChannelInboundHandlerAdapter{
+public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter{
 
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
