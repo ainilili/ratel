@@ -1,21 +1,18 @@
 package org.nico.ratel.landlords.client;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
-import org.nico.ratel.landlords.client.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.client.proxy.ProtobufProxy;
+import org.nico.ratel.landlords.client.proxy.WebsocketProxy;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 import org.nico.ratel.landlords.utils.StreamUtils;
-
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class SimpleClient {
 
@@ -25,31 +22,35 @@ public class SimpleClient {
 
 	public static int port = 1024;
 
+	public static String protocol = "pb";
+
 	private static String[] serverAddressSource = new String[] {
 			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
 			"https://gitee.com/ainilili/ratel/raw/master/serverlist.json"
 	};
 
-	public static void main(String[] args) throws InterruptedException, IOException {
+	public static void main(String[] args) throws InterruptedException, IOException, URISyntaxException {
 		if(args != null && args.length > 0) {
 			for(int index = 0; index < args.length; index = index + 2) {
 				if(index + 1 < args.length) {
 					if(args[index].equalsIgnoreCase("-p") || args[index].equalsIgnoreCase("-port")) {
-						port = Integer.valueOf(args[index + 1]);
+						port = Integer.parseInt(args[index + 1]);
 					}
 					if(args[index].equalsIgnoreCase("-h") || args[index].equalsIgnoreCase("-host")) {
 						serverAddress = args[index + 1];
 					}
+					if(args[index].equalsIgnoreCase("-ptl") || args[index].equalsIgnoreCase("-protocol")) {
+						protocol = args[index + 1];
+					}
 				}
 			}
 		}
-		
 		if(serverAddress == null){
 			List<String> serverAddressList = getServerAddressList();
 			if(serverAddressList == null || serverAddressList.size() == 0) {
 				throw new RuntimeException("Please use '-host' to setting server address.");
 			}
-			
+
 			SimplePrinter.printNotice("Please select a server:");
 			for(int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i+1) + ". " + serverAddressList.get(i));
@@ -67,17 +68,12 @@ public class SimpleClient {
 			port = Integer.parseInt(elements[1]);
 		}
 
-		EventLoopGroup group = new NioEventLoopGroup();
-		try {
-			Bootstrap bootstrap = new Bootstrap()
-					.group(group)
-					.channel(NioSocketChannel.class)
-					.handler(new DefaultChannelInitializer());
-			SimplePrinter.printNotice("Connecting to " + serverAddress + ":" + port);
-			Channel channel = bootstrap.connect(serverAddress, port).sync().channel();
-			channel.closeFuture().sync();
-		} finally {
-			group.shutdownGracefully().sync();
+		if (Objects.equals(protocol, "pb")){
+			new ProtobufProxy().connect(serverAddress, port);
+		}else if (Objects.equals(protocol, "ws")){
+			new WebsocketProxy().connect(serverAddress, port + 1);
+		}else{
+			throw new UnsupportedOperationException("Unsupported protocol " + protocol);
 		}
 	}
 
