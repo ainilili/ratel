@@ -67,8 +67,8 @@ alias-> │3 |4 |5 |6 |7 |8 |9 |T t 0|J j|Q q|K k|A a 1|2 |S s|X x|
 - 如果本回合内你想退出游戏，可以输入 ``exit``
 
 #### 协议支持
-- TCP
-- Websocket
+ - TCP
+ - Websocket
 
 Websocket协议的地址为 ``ws://host:port/ratel``，Websocket的端口需要在原端口基础上加1 （如果tcp端口为1024，则ws端口需要为1025）
 #### 游戏规则
@@ -78,19 +78,20 @@ Websocket协议的地址为 ``ws://host:port/ratel``，Websocket的端口需要�
 QQ群 ``948365095``，寻找一起划水的玩伴！
 
 ## 更新 Update
-- [更新日志](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
+ - [更新日志](https://github.com/ainilili/ratel/blob/master/UPDATE.md)
 
 ## 相关 Correlation
-- [go-ratel-client](https://github.com/ZuoFuhong/go-ratel)
-- [javafx-ratel-client](https://github.com/marmot-z/javafx-ratel-client)
-
-## Blog
-- [Ratel浅析] (https://github.com/HelloGitHub-Team/Article/blob/master/contents/Java/landlords/content.md)
-- [Ratel玩法视频教学] (https://www.bilibili.com/video/av97603585)
+ - [go-ratel-client](https://github.com/ZuoFuhong/go-ratel)
+ - [javafx-ratel-client](https://github.com/marmot-z/javafx-ratel-client)
+ - [javascript-ratel-client](https://github.com/marmot-z/js-ratel-client)
+ 
+## Blog 
+ - [Ratel浅析] (https://github.com/HelloGitHub-Team/Article/blob/master/contents/Java/landlords/content.md)
+ - [Ratel玩法视频教学] (https://www.bilibili.com/video/av97603585)
 
 ## 最后 End
-- [Serverlist.json](https://github.com/ainilili/ratel/blob/master/serverlist.json) 是当前的服务器列表, 如果你的服务器部署着当前最新版本的服务端并且分享给大家，可以通过PR提交给我们!
-- 如果您想贡献代码，非常欢迎提``PR``，我们将会合并优秀的代码.
-- 如果您发现了``Bug``，非常欢迎提``Issue``给我们.
-- 欢迎扩展其他语言的客户端.
-- 联系我们请发邮件到 ``ainililia@163.com``.
+ - [Serverlist.json](https://github.com/ainilili/ratel/blob/master/serverlist.json) 是当前的服务器列表, 如果你的服务器部署着当前最新版本的服务端并且分享给大家，可以通过PR提交给我们!
+ - 如果您想贡献代码，非常欢迎提``PR``，我们将会合并优秀的代码.
+ - 如果您发现了``Bug``，非常欢迎提``Issue``给我们.
+ - 欢迎扩展其他语言的客户端.
+ - 联系我们请发邮件到 ``ainililia@163.com``.
