@@ -29,6 +29,8 @@ java -jar landlords-client/target/landlords-client-#{version}.jar -p 1024 -h 127
 ## 玩法介绍 How to Play
 你可以创建一个私服, 或者加入公网服务器 ``121.5.140.133``(``-h``参数指定对应的服务器)
 
+在线试玩：[传送门](http://ratel.isnico.com)
+
 ![demo](demo.gif)
 
 #### 出牌
