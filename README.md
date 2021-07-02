@@ -40,6 +40,7 @@ java -jar landlords-client/target/landlords-client-#{version}.jar
 │♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |♦ |  |  |
 └──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘──┘
 ```
+示例：
  - 王炸：``sx``
  - 顺子：``34567``
  - 三带一：``3334``
@@ -49,6 +50,7 @@ java -jar landlords-client/target/landlords-client-#{version}.jar
  - 封顶顺子：``34567890jqka``
  - 不想出牌： ``pass``或``p``
  - 退出： ``exit``或者``e``
+ - [更多](https://zh.wikipedia.org/zh-sg/%E9%AC%A5%E5%9C%B0%E4%B8%BB)
 
 #### 协议支持
  - TCP
