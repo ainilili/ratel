@@ -1,14 +1,7 @@
 package org.nico.ratel.landlords.robot;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.nico.ratel.landlords.entity.ClientSide;
@@ -16,11 +9,7 @@ import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.helper.PokerHelper;
-import org.nico.ratel.landlords.print.SimplePrinter;
-import org.nico.ratel.landlords.utils.StreamUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * Trial game algorithm
@@ -30,24 +19,9 @@ import com.google.gson.reflect.TypeToken;
  */
 public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 
-	private static Gson gson = new Gson();
-	
-	private static Map<String, Long> DP = new ConcurrentHashMap<String, Long>();
-	
-	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
-	
 	private static final Long DEDUCE_LIMIT = 100 * 3L;
 
-	public MediumRobotDecisionMakers() {
-    	try {
-    		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("dp.json");
-        	String dpJson = StreamUtils.convertToString(stream);
-        	DP = gson.fromJson(dpJson, new TypeToken<ConcurrentHashMap<String, Long>>() {}.getType());
-        	SimplePrinter.serverLog("Medium Robot init with dp.json.");
-    	}catch(Exception e) {
-    		SimplePrinter.serverLog("Medium Robot init without dp.json.");
-    	}
-	}
+	public MediumRobotDecisionMakers() {}
 
 	@Override
 	public PokerSell howToPlayPokers(PokerSell lastPokerSell, ClientSide robot) {
@@ -67,7 +41,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		pokersList.add(leftPoker);
 
 		List<PokerSell> sells = PokerHelper.validSells(lastPokerSell, selfPoker);
-		if(sells == null || sells.size() == 0) {
+		if(sells.size() == 0) {
 			return null;
 		}
 		PokerSell bestSell = null;
@@ -80,7 +54,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 			}
 			pokersList.set(0, pokers);
 			AtomicLong counter = new AtomicLong();
-			deduce(0, sell, 1, pokersList, counter, DP);
+			deduce(0, sell, 1, pokersList, counter);
 			if(weight == null) {
 				bestSell = sell;
 				weight = counter.get();
@@ -93,7 +67,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		return bestSell;
 	}
 
-	private Boolean deduce(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList, AtomicLong counter, Map<String, Long> dp) {
+	private Boolean deduce(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList, AtomicLong counter) {
 		if(cursor > 2) {
 			cursor = 0;
 		}
@@ -103,9 +77,9 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 
 		List<Poker> original = pokersList.get(cursor);
 		List<PokerSell> sells = PokerHelper.validSells(lastPokerSell, original);
-		if(sells == null || sells.size() == 0) {
+		if(sells.size() == 0) {
 			if(sellCursor != cursor) {
-				return deduce(sellCursor, lastPokerSell, cursor + 1, pokersList, counter, dp);
+				return deduce(sellCursor, lastPokerSell, cursor + 1, pokersList, counter);
 			}
 		}
 		for(PokerSell sell: sells) {
@@ -116,24 +90,17 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 			}else {
 				pokersList.set(cursor, pokers);
 
-				String key = serialKey(cursor, sell, cursor + 1, pokersList);
-				Long score = dp.get(key);
-				if(score != null) {
-					counter.addAndGet(score);
-				}else {
-					Boolean suc = deduce(cursor, sell, cursor + 1, pokersList, counter, dp);
-					if(cursor != 0) {
-						pokersList.set(cursor, original);
-						return suc;
-					}
-					if(Math.abs(counter.get()) > DEDUCE_LIMIT) {
-						pokersList.set(cursor, original);
-						return counter.get() > DEDUCE_LIMIT;
-					}
-					if(suc != null) {
-						score = (long)(suc ? 1 : -1);
-						counter.addAndGet(score);
-					}
+				Boolean suc = deduce(cursor, sell, cursor + 1, pokersList, counter);
+				if(cursor != 0) {
+					pokersList.set(cursor, original);
+					return suc;
+				}
+				if(Math.abs(counter.get()) > DEDUCE_LIMIT) {
+					pokersList.set(cursor, original);
+					return counter.get() > DEDUCE_LIMIT;
+				}
+				if(suc != null) {
+					counter.addAndGet((long)(suc ? 1 : -1));
 				}
 				pokersList.set(cursor, original);
 			}
@@ -141,19 +108,13 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		return null;
 	}
 
-	private String serialKey(int sellCursor, PokerSell lastPokerSell, int cursor, List<List<Poker>> pokersList) {
-		return sellCursor + "v" + (lastPokerSell == null ? "n" : serialPokers(lastPokerSell.getSellPokers())) + "v" + cursor + "v" + serialPokersList(pokersList);
-	}
-
 	private static String serialPokers(List<Poker> pokers){
 		if(pokers == null || pokers.size() == 0) {
 			return "n";
 		}
 		StringBuilder builder = new StringBuilder();
-		if(pokers != null && pokers.size() > 0) {
-			for(int index = 0; index < pokers.size(); index ++) {
-				builder.append(pokers.get(index).getLevel().getLevel() + (index == pokers.size() - 1 ? "" : "_"));
-			}
+		for(int index = 0; index < pokers.size(); index ++) {
+			builder.append(pokers.get(index).getLevel().getLevel()).append(index == pokers.size() - 1 ? "" : "_");
 		}
 		return builder.toString();
 	}
@@ -162,7 +123,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		StringBuilder builder = new StringBuilder();
 		for(int index = 0; index < pokersList.size(); index ++) {
 			List<Poker> pokers = pokersList.get(index);
-			builder.append(serialPokers(pokers) + (index == pokersList.size() - 1 ? "" : "m"));
+			builder.append(serialPokers(pokers)).append(index == pokersList.size() - 1 ? "" : "m");
 		}
 		return builder.toString();
 	}
