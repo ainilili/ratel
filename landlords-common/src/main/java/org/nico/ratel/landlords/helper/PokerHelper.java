@@ -18,39 +18,34 @@ import org.nico.ratel.landlords.utils.ListUtils;
 public class PokerHelper {
 
 	/**
-	 * Print the type of poker style 
+	 * Print the type of poker style
 	 */
 	public static int pokerPrinterType = 0;
 
 	public static int totalPrinters = 5;
-	
+
 	/**
 	 * The list of all pokers, by 54
 	 */
-	private static List<Poker> basePokers = new ArrayList<Poker>(54);
+	private static final List<Poker> basePokers = new ArrayList<>(54);
 
-	private static Comparator<Poker> pokerComparator = new Comparator<Poker>() {
-		@Override
-		public int compare(Poker o1, Poker o2) {
-			return o1.getLevel().getLevel() - o2.getLevel().getLevel();
-		}
-	};
+	private static final Comparator<Poker> pokerComparator = (o1, o2) -> o1.getLevel().getLevel() - o2.getLevel().getLevel();
 
 	static {
 		PokerLevel[] pokerLevels = PokerLevel.values();
 		PokerType[] pokerTypes = PokerType.values();
 
-		for(PokerLevel level: pokerLevels) {
-			if(level == PokerLevel.LEVEL_BIG_KING) {
+		for (PokerLevel level : pokerLevels) {
+			if (level == PokerLevel.LEVEL_BIG_KING) {
 				basePokers.add(new Poker(level, PokerType.BLANK));
 				continue;
 			}
-			if(level == PokerLevel.LEVEL_SMALL_KING) {
+			if (level == PokerLevel.LEVEL_SMALL_KING) {
 				basePokers.add(new Poker(level, PokerType.BLANK));
 				continue;
 			}
-			for(PokerType type: pokerTypes) {
-				if(type == PokerType.BLANK) {
+			for (PokerType type : pokerTypes) {
+				if (type == PokerType.BLANK) {
 					continue;
 				}
 				basePokers.add(new Poker(level, type));

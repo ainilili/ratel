@@ -1,6 +1,6 @@
 package org.nico.ratel.landlords.exception;
 
-public class LandlordException extends RuntimeException{
+public class LandlordException extends RuntimeException {
 
 	private static final long serialVersionUID = -5643145833569293539L;
 

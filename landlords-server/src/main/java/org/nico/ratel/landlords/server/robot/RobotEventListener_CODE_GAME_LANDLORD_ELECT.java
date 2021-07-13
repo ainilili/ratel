@@ -13,7 +13,7 @@ import org.nico.ratel.landlords.robot.RobotDecisionMakers;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.event.ServerEventListener;
 
-public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventListener{
+public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventListener {
 
 	@Override
 	public void call(ClientSide robot, String data) {
@@ -35,7 +35,7 @@ public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventLi
 			PokerHelper.sortPoker(rightPokers);
 
 			TimeHelper.sleep(300);
-			
+
 			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, String.valueOf(RobotDecisionMakers.howToChooseLandlord(room.getDifficultyCoefficient(), leftPokers, rightPokers, landlordPokers)));
 		});
 	}

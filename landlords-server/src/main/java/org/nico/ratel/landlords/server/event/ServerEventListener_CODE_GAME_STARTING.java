@@ -13,7 +13,7 @@ import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
-public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListener{
+public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListener {
 
 	@Override
 	public void call(ClientSide clientSide, String data) {
@@ -25,23 +25,23 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 		// Send the points of poker
 		List<List<Poker>> pokersList = PokerHelper.distributePoker();
 		int cursor = 0;
-		for(ClientSide client: roomClientList){
-			client.setPokers(pokersList.get(cursor ++));
+		for (ClientSide client : roomClientList) {
+			client.setPokers(pokersList.get(cursor++));
 		}
 		room.setLandlordPokers(pokersList.get(3));
 
 		// Push information about the robber
-		int startGrabIndex = (int)(Math.random() * 3);
+		int startGrabIndex = (int) (Math.random() * 3);
 		ClientSide startGrabClient = roomClientList.get(startGrabIndex);
 		room.setCurrentSellClient(startGrabClient.getId());
-		
+
 		// Push start game messages
 		room.setStatus(RoomStatus.STARTING);
 
 		// Record the first speaker
 		room.setFirstSellClient(startGrabClient.getId());
 
-		for(ClientSide client: roomClientList) {
+		for (ClientSide client : roomClientList) {
 			client.setType(ClientType.PEASANT);
 
 			String result = MapHelper.newInstance()
@@ -55,10 +55,10 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("clientOrderList", roomClientList)
 					.json();
 
-			if(client.getRole() == ClientRole.PLAYER) {
+			if (client.getRole() == ClientRole.PLAYER) {
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
-			}else {
-				if(startGrabClient.getId() == client.getId()) {
+			} else {
+				if (startGrabClient.getId() == client.getId()) {
 					RobotEventListener.get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(client, result);
 				}
 			}

@@ -10,34 +10,34 @@ import org.nico.ratel.landlords.print.SimpleWriter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventListener{
+public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		int turnClientId = (int) map.get("nextClientId");
-		
-		if(map.containsKey("preClientNickname")) {
+
+		if (map.containsKey("preClientNickname")) {
 			SimplePrinter.printNotice(map.get("preClientNickname") + " don't rob the landlord!");
 		}
-		
+
 		if(turnClientId == SimpleClient.id) {
 			SimplePrinter.printNotice("It's your turn. Do you want to rob the landlord? [Y/N] (enter [exit|e] to exit current room)");
 			String line = SimpleWriter.write("Y/N");
-			if(line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")) {
+			if (line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")) {
 				pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT);
-			}else if(line.equalsIgnoreCase("Y")){
+			} else if (line.equalsIgnoreCase("Y")) {
 				pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "TRUE");
-			}else if(line.equalsIgnoreCase("N")){
+			} else if (line.equalsIgnoreCase("N")) {
 				pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, "FALSE");
-			}else{
+			} else {
 				SimplePrinter.printNotice("Invalid options");
 				call(channel, data);
 			}
-		}else {
+		} else {
 			SimplePrinter.printNotice("It's " + map.get("nextClientNickname") + "'s turn. Please wait patiently for his/her confirmation !");
 		}
-		
+
 	}
 
 }

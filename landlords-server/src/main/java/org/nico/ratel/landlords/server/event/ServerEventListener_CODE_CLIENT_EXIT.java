@@ -8,7 +8,7 @@ import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
-public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener{
+public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener {
 
 	@Override
 	public void call(ClientSide clientSide, String data) {

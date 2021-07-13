@@ -8,28 +8,32 @@ import org.nico.ratel.landlords.enums.ClientType;
 
 import io.netty.channel.Channel;
 
-public class ClientSide{
+public class ClientSide {
 
 	private int id;
-	
+
 	private int roomId;
-	
+
+	private int score;
+
+	private int scoreInc;
+
 	private String nickname;
-	
+
 	private List<Poker> pokers;
-	
+
 	private ClientStatus status;
-	
+
 	private ClientRole role;
-	
+
 	private ClientType type;
-	
+
 	private ClientSide next;
-	
+
 	private ClientSide pre;
-	
+
 	private transient Channel channel;
-	
+
 	public ClientSide() {}
 
 	public ClientSide(int id, ClientStatus status, Channel channel) {
@@ -37,7 +41,7 @@ public class ClientSide{
 		this.status = status;
 		this.channel = channel;
 	}
-	
+
 	public void init() {
 		roomId = 0;
 		pokers = null;
@@ -144,9 +148,7 @@ public class ClientSide{
 		if (getClass() != obj.getClass())
 			return false;
 		ClientSide other = (ClientSide) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		return id == other.id;
 	}
 
 }

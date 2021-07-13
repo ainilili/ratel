@@ -1,29 +1,25 @@
 package org.nico.ratel.landlords.channel;
 
-import com.google.gson.Gson;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.nico.ratel.landlords.entity.ClientTransferData;
 import org.nico.ratel.landlords.entity.Msg;
 import org.nico.ratel.landlords.entity.ServerTransferData;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
+import org.nico.ratel.landlords.utils.JsonUtils;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import org.nico.ratel.landlords.utils.JsonUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 public class ChannelUtils {
 
 	public static void pushToClient(Channel channel, ClientEventCode code, String data) {
 		pushToClient(channel, code, data, null);
 	}
-	
+
 	public static void pushToClient(Channel channel, ClientEventCode code, String data, String info) {
-		if(channel != null) {
-			if (channel.pipeline().get("ws") != null){
+		if (channel != null) {
+			if (channel.pipeline().get("ws") != null) {
 				Msg msg = new Msg();
 				msg.setCode(code.toString());
 				msg.setData(data);
@@ -31,36 +27,36 @@ public class ChannelUtils {
 				channel.writeAndFlush(new TextWebSocketFrame(JsonUtils.toJson(msg)));
 			} else {
 				ClientTransferData.ClientTransferDataProtoc.Builder clientTransferData = ClientTransferData.ClientTransferDataProtoc.newBuilder();
-				if(code != null) {
+				if (code != null) {
 					clientTransferData.setCode(code.toString());
 				}
-				if(data != null) {
+				if (data != null) {
 					clientTransferData.setData(data);
 				}
-				if(info != null) {
+				if (info != null) {
 					clientTransferData.setInfo(info);
 				}
 				channel.writeAndFlush(clientTransferData);
 			}
 		}
 	}
-	
+
 	public static ChannelFuture pushToServer(Channel channel, ServerEventCode code, String data) {
-		if (channel.pipeline().get("ws") != null){
+		if (channel.pipeline().get("ws") != null) {
 			Msg msg = new Msg();
 			msg.setCode(code.toString());
 			msg.setData(data);
 			return channel.writeAndFlush(new TextWebSocketFrame(JsonUtils.toJson(msg)));
-		}else{
+		} else {
 			ServerTransferData.ServerTransferDataProtoc.Builder serverTransferData = ServerTransferData.ServerTransferDataProtoc.newBuilder();
-			if(code != null) {
+			if (code != null) {
 				serverTransferData.setCode(code.toString());
 			}
-			if(data != null) {
+			if (data != null) {
 				serverTransferData.setData(data);
 			}
 			return channel.writeAndFlush(serverTransferData);
 		}
 	}
-	
+
 }

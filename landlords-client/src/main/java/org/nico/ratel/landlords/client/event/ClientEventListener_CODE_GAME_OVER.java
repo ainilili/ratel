@@ -7,7 +7,7 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_GAME_OVER extends ClientEventListener{
+public class ClientEventListener_CODE_GAME_OVER extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {

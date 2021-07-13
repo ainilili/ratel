@@ -9,34 +9,34 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import org.nico.ratel.landlords.enums.RoomStatus;
 import org.nico.ratel.landlords.enums.RoomType;
 
-public class Room{
+public class Room {
 
 	private int id;
-	
+
 	private String roomOwner;
-	
+
 	private RoomStatus status;
-	
+
 	private RoomType type;
-	
+
 	private Map<Integer, ClientSide> clientSideMap;
-	
+
 	private LinkedList<ClientSide> clientSideList;
-	
+
 	private int landlordId = -1;
-	
+
 	private List<Poker> landlordPokers;
-	
+
 	private PokerSell lastPokerShell;
-	
+
 	private int lastSellClient = -1;
-	
+
 	private int currentSellClient = -1;
-	
+
 	private int difficultyCoefficient;
-	
+
 	private long lastFlushTime;
-	
+
 	private long createTime;
 
 	private int firstSellClient;

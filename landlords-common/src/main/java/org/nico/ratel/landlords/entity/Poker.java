@@ -5,13 +5,13 @@ import org.nico.ratel.landlords.enums.PokerType;
 
 /**
  * Poke, with {@link PokerLevel} and {@link PokerType}
- * 
+ *
  * @author nico
  */
-public class Poker{
-	
+public class Poker {
+
 	private PokerLevel level;
-	
+
 	private PokerType type;
 
 	public Poker() {
@@ -59,14 +59,12 @@ public class Poker{
 		Poker other = (Poker) obj;
 		if (level != other.level)
 			return false;
-		if (type != other.type)
-			return false;
-		return true;
+		return type == other.type;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(level.getLevel()) + " ";
+		return level.getLevel() + " ";
 	}
-	
+
 }

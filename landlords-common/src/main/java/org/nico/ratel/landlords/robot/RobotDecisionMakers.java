@@ -29,9 +29,9 @@ public class RobotDecisionMakers {
 	public static PokerSell howToPlayPokers(int difficultyCoefficient, PokerSell lastPokerSell, ClientSide robot){
 		return decisionMakersMap.get(difficultyCoefficient).howToPlayPokers(lastPokerSell, robot);
 	}
-	
+
 	public static boolean howToChooseLandlord(int difficultyCoefficient, List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
 		return decisionMakersMap.get(difficultyCoefficient).howToChooseLandlord(leftPokers, rightPokers, myPokers);
 	}
-	
+
 }

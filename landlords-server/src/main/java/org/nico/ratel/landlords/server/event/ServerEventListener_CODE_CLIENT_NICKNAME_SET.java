@@ -6,10 +6,10 @@ import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
-public class ServerEventListener_CODE_CLIENT_NICKNAME_SET implements ServerEventListener{
+public class ServerEventListener_CODE_CLIENT_NICKNAME_SET implements ServerEventListener {
 
 	public static final int NICKNAME_MAX_LENGTH = 10;
-	
+
 	@Override
 	public void call(ClientSide client, String nickname) {
 		
