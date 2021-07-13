@@ -20,6 +20,14 @@ import io.netty.handler.timeout.IdleStateEvent;
 public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
+	public void handlerRemoved(ChannelHandlerContext ctx) {
+		ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(getId(ctx.channel()));
+		SimplePrinter.serverLog("client " + client.getId() + "(" + client.getNickname() + ") disconnected");
+		clientOfflineEvent(ctx.channel());
+		ctx.channel().close();
+	}
+
+	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
 		Channel ch = ctx.channel();
 
