@@ -17,44 +17,42 @@ import io.netty.handler.timeout.IdleStateEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter{
+public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
-		if(msg instanceof ClientTransferDataProtoc) {
+		if (msg instanceof ClientTransferDataProtoc) {
 			ClientTransferDataProtoc clientTransferData = (ClientTransferDataProtoc) msg;
-			if(clientTransferData.getInfo() != null && ! clientTransferData.getInfo().isEmpty()) {
+			if (!clientTransferData.getInfo().isEmpty()) {
 				SimplePrinter.printNotice(clientTransferData.getInfo());
 			}
 			ClientEventCode code = ClientEventCode.valueOf(clientTransferData.getCode());
-			if(code != null) {
-				if (User.INSTANCE.isWatching()) {
-					Map<String, Object> wrapMap = new HashMap<>(3);
-					wrapMap.put("code", code);
-					wrapMap.put("data", clientTransferData.getData());
+			if (User.INSTANCE.isWatching()) {
+				Map<String, Object> wrapMap = new HashMap<>(3);
+				wrapMap.put("code", code);
+				wrapMap.put("data", clientTransferData.getData());
 
-					ClientEventListener.get(ClientEventCode.CODE_GAME_WATCH).call(ctx.channel(), Noson.reversal(wrapMap));
-				} else {
-					ClientEventListener.get(code).call(ctx.channel(), clientTransferData.getData());
-				}
+				ClientEventListener.get(ClientEventCode.CODE_GAME_WATCH).call(ctx.channel(), Noson.reversal(wrapMap));
+			} else {
+				ClientEventListener.get(code).call(ctx.channel(), clientTransferData.getData());
 			}
 		}
 	}
 
-	@Override  
-	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {  
-		if (evt instanceof IdleStateEvent) {  
-			IdleStateEvent event = (IdleStateEvent) evt;  
-			if (event.state() == IdleState.WRITER_IDLE) {  
-				ChannelUtils.pushToServer(ctx.channel(), ServerEventCode.CODE_CLIENT_HEAD_BEAT, "heartbeat");
-			}  
-		}  
-	} 
-	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		if(cause instanceof java.io.IOException) {
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
+		if (evt instanceof IdleStateEvent) {
+			IdleStateEvent event = (IdleStateEvent) evt;
+			if (event.state() == IdleState.WRITER_IDLE) {
+				ChannelUtils.pushToServer(ctx.channel(), ServerEventCode.CODE_CLIENT_HEAD_BEAT, "heartbeat");
+			}
+		}
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		if (cause instanceof java.io.IOException) {
 			SimplePrinter.printNotice("The network is not good or did not operate for a long time, has been offline");
 			System.exit(0);
 		}

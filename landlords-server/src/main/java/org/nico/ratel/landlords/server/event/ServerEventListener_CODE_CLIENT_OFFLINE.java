@@ -15,24 +15,25 @@ public class ServerEventListener_CODE_CLIENT_OFFLINE implements ServerEventListe
 
 		Room room = ServerContains.getRoom(clientSide.getRoomId());
 
-		if(room != null) {
-			String result = MapHelper.newInstance()
-								.put("roomId", room.getId())
-								.put("exitClientId", clientSide.getId())
-								.put("exitClientNickname", clientSide.getNickname())
-								.json();
-			for(ClientSide client: room.getClientSideList()) {
-				if(client.getRole() == ClientRole.PLAYER){
-					if(client.getId() != clientSide.getId()){
-						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, result);
-						client.init();
-					}
-				}
-			}
-			ServerContains.removeRoom(room.getId());
+		if (room == null) {
+			ServerContains.CLIENT_SIDE_MAP.remove(clientSide.getId());
+			return;
 		}
-		
-		ServerContains.CLIENT_SIDE_MAP.remove(clientSide.getId());
-	}
 
+		String result = MapHelper.newInstance()
+				.put("roomId", room.getId())
+				.put("exitClientId", clientSide.getId())
+				.put("exitClientNickname", clientSide.getNickname())
+				.json();
+		for (ClientSide client : room.getClientSideList()) {
+			if (client.getRole() != ClientRole.PLAYER) {
+				continue;
+			}
+			if (client.getId() != clientSide.getId()) {
+				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, result);
+				client.init();
+			}
+		}
+		ServerContains.removeRoom(room.getId());
+	}
 }

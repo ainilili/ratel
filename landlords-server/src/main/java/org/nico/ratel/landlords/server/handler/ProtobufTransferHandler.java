@@ -58,39 +58,39 @@ public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter {
 			cause.printStackTrace();
 		}
 	}
-	
-    @Override  
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {  
-        if (evt instanceof IdleStateEvent) {  
-            IdleStateEvent event = (IdleStateEvent) evt;  
-            if (event.state() == IdleState.READER_IDLE) {  
-                try{
-                	clientOfflineEvent(ctx.channel());
-                	ctx.channel().close();
-                }catch(Exception e){
-                }
-            }  
-        } else {  
-            super.userEventTriggered(ctx, evt);  
-        }  
-    }  
-	
-    private int getId(Channel channel){
-    	String longId = channel.id().asLongText();
-    	Integer clientId = ServerContains.CHANNEL_ID_MAP.get(longId);
-    	if(null == clientId){
-    		clientId = ServerContains.getClientId();
-    		ServerContains.CHANNEL_ID_MAP.put(longId, clientId);
-    	}
-    	return clientId;
-    }
-    
-    private void clientOfflineEvent(Channel channel){
-    	int clientId = getId(channel);
-    	ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(clientId);
-    	if(client != null) {
+
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		if (evt instanceof IdleStateEvent) {
+			IdleStateEvent event = (IdleStateEvent) evt;
+			if (event.state() == IdleState.READER_IDLE) {
+				try {
+					clientOfflineEvent(ctx.channel());
+					ctx.channel().close();
+				} catch (Exception ignore) {
+				}
+			}
+		} else {
+			super.userEventTriggered(ctx, evt);
+		}
+	}
+
+	private int getId(Channel channel) {
+		String longId = channel.id().asLongText();
+		Integer clientId = ServerContains.CHANNEL_ID_MAP.get(longId);
+		if (null == clientId) {
+			clientId = ServerContains.getClientId();
+			ServerContains.CHANNEL_ID_MAP.put(longId, clientId);
+		}
+		return clientId;
+	}
+
+	private void clientOfflineEvent(Channel channel) {
+		int clientId = getId(channel);
+		ClientSide client = ServerContains.CLIENT_SIDE_MAP.get(clientId);
+		if (client != null) {
 			SimplePrinter.serverLog("Has client exit to the server：" + clientId + " | " + client.getNickname());
 			ServerEventListener.get(ServerEventCode.CODE_CLIENT_OFFLINE).call(client, null);
 		}
-    }
+	}
 }

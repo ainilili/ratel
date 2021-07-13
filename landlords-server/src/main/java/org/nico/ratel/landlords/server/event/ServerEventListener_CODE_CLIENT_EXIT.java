@@ -15,23 +15,24 @@ public class ServerEventListener_CODE_CLIENT_EXIT implements ServerEventListener
 
 		Room room = ServerContains.getRoom(clientSide.getRoomId());
 
-		if(room != null) {
-			String result = MapHelper.newInstance()
-								.put("roomId", room.getId())
-								.put("exitClientId", clientSide.getId())
-								.put("exitClientNickname", clientSide.getNickname())
-								.json();
-			for(ClientSide client: room.getClientSideList()) {
-				if(client.getRole() == ClientRole.PLAYER){
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, result);
-					client.init();
-				}
-			}
-
-			notifyWatcherClientExit(room, clientSide);
-
-			ServerContains.removeRoom(room.getId());
+		if (room == null) {
+			return;
 		}
+		String result = MapHelper.newInstance()
+				.put("roomId", room.getId())
+				.put("exitClientId", clientSide.getId())
+				.put("exitClientNickname", clientSide.getNickname())
+				.json();
+		for (ClientSide client : room.getClientSideList()) {
+			if (client.getRole() == ClientRole.PLAYER) {
+				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_CLIENT_EXIT, result);
+				client.init();
+			}
+		}
+
+		notifyWatcherClientExit(room, clientSide);
+
+		ServerContains.removeRoom(room.getId());
 	}
 
 	/**
