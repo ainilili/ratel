@@ -43,7 +43,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 				.put("lastSellClientId", datas.get("lastSellClientId"))
 				.put("clientInfos", clientInfos)
 				.put("sellClientId", room.getCurrentSellClient())
-				.put("sellClinetNickname", ServerContains.CLIENT_SIDE_MAP.get(room.getCurrentSellClient()).getNickname())
+				.put("sellClientNickname", ServerContains.CLIENT_SIDE_MAP.get(room.getCurrentSellClient()).getNickname())
 				.json();
 
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_REDIRECT, result);

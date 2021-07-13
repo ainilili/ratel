@@ -226,8 +226,10 @@ public class PokerHelper {
 					return new PokerSell(SellType.THREE_ZONES_DOUBLE, pokers, threeEndIndex);
 				}
 				if (threeEndIndex - threeStartIndex + 1 == threeCount && threeEndIndex < PokerLevel.LEVEL_2.getLevel()) {
-					return new PokerSell(SellType.FOUR_STRAIGHT_WITH_DOUBLE, pokers, threeEndIndex);
+					return new PokerSell(SellType.THREE_STRAIGHT_WITH_DOUBLE, pokers, threeEndIndex);
 				}
+			} else if (singleCount + doubleCount * 2 == threeCount && fourCount == 0) {
+				return new PokerSell(SellType.THREE_STRAIGHT_WITH_SINGLE, pokers, threeEndIndex);
 			}
 		}
 
@@ -260,7 +262,7 @@ public class PokerHelper {
 			return level;
 		} else if (sellType == SellType.SINGLE_STRAIGHT || sellType == SellType.DOUBLE_STRAIGHT || sellType == SellType.THREE_STRAIGHT || sellType == SellType.FOUR_STRAIGHT) {
 			return level;
-		} else if (sellType == SellType.THREE_ZONES_SINGLE || sellType == SellType.THREE_STRAIGHT_WITH_SINGLE || sellType == SellType.THREE_ZONES_DOUBLE || sellType == SellType.FOUR_STRAIGHT_WITH_DOUBLE) {
+		} else if (sellType == SellType.THREE_ZONES_SINGLE || sellType == SellType.THREE_STRAIGHT_WITH_SINGLE || sellType == SellType.THREE_ZONES_DOUBLE || sellType == SellType.THREE_STRAIGHT_WITH_DOUBLE) {
 			return level;
 		} else if (sellType == SellType.FOUR_ZONES_SINGLE || sellType == SellType.FOUR_STRAIGHT_WITH_SINGLE || sellType == SellType.FOUR_ZONES_DOUBLE || sellType == SellType.FOUR_STRAIGHT_WITH_DOUBLE) {
 			return level;
