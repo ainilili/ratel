@@ -37,7 +37,7 @@ public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter {
 		clientSide.setRole(ClientRole.PLAYER);
 
 		ServerContains.CLIENT_SIDE_MAP.put(clientSide.getId(), clientSide);
-		SimplePrinter.serverLog("Has client connect to the server：" + clientSide.getId());
+		SimplePrinter.serverLog("Has client connect to the server: " + clientSide.getId());
 
 		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_CONNECT, String.valueOf(clientSide.getId()));
 		ChannelUtils.pushToClient(ch, ClientEventCode.CODE_CLIENT_NICKNAME_SET, null);
@@ -54,16 +54,6 @@ public class ProtobufTransferHandler extends ChannelInboundHandlerAdapter {
 				SimplePrinter.serverLog(client.getId() + " | " + client.getNickname() + " do:" + code.getMsg());
 				ServerEventListener.get(code).call(client, serverTransferData.getData());
 			}
-		}
-	}
-
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		if (cause instanceof java.io.IOException) {
-			clientOfflineEvent(ctx.channel());
-		} else {
-			SimplePrinter.serverLog("ERROR：" + cause.getMessage());
-			cause.printStackTrace();
 		}
 	}
 
