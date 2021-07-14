@@ -5,6 +5,7 @@ import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
+import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.RoomStatus;
 import org.nico.ratel.landlords.enums.RoomType;
 import org.nico.ratel.landlords.server.ServerContains;
@@ -15,7 +16,7 @@ public class ServerEventListener_CODE_ROOM_CREATE implements ServerEventListener
 	public void call(ClientSide clientSide, String data) {
 
 		Room room = new Room(ServerContains.getServerId());
-		room.setStatus(RoomStatus.BLANK);
+		room.setStatus(RoomStatus.WAIT);
 		room.setType(RoomType.PVP);
 		room.setRoomOwner(clientSide.getNickname());
 		room.getClientSideMap().put(clientSide.getId(), clientSide);
@@ -26,6 +27,8 @@ public class ServerEventListener_CODE_ROOM_CREATE implements ServerEventListener
 
 		clientSide.setRoomId(room.getId());
 		ServerContains.addRoom(room);
+
+		clientSide.setStatus(ClientStatus.NOT_READY);
 
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_CREATE_SUCCESS, Noson.reversal(room));
 	}

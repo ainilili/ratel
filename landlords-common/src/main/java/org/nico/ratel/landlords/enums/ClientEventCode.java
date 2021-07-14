@@ -62,6 +62,8 @@ public enum ClientEventCode implements Serializable {
 
 	CODE_PVE_DIFFICULTY_NOT_SUPPORT("人机难度不支持"),
 
+	CODE_GAME_READY("准备开始游戏"),
+
 	CODE_GAME_WATCH("观战"),
 
 	CODE_GAME_WATCH_SUCCESSFUL("观战成功");

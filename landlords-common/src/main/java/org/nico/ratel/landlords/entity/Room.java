@@ -51,7 +51,7 @@ public class Room {
 		this.id = id;
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
-		this.status = RoomStatus.BLANK;
+		this.status = RoomStatus.WAIT;
 	}
 
 	public final long getCreateTime() {

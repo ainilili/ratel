@@ -4,7 +4,7 @@ public enum ClientStatus {
 
 	TO_CHOOSE,
 
-	NO_READY,
+	NOT_READY,
 
 	READY,
 

@@ -43,6 +43,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 
 		for (ClientSide client : roomClientList) {
 			client.setType(ClientType.PEASANT);
+			client.setStatus(ClientStatus.PLAYING);
 
 			String result = MapHelper.newInstance()
 					.put("roomId", room.getId())

@@ -20,6 +20,7 @@ public class ClientEventListener_CODE_ROOM_JOIN_SUCCESS extends ClientEventListe
 		if (SimpleClient.id == joinClientId) {
 			SimplePrinter.printNotice("You have joined room：" + map.get("roomId") + ". There are " + map.get("roomClientCount") + " players in the room now.");
 			SimplePrinter.printNotice("Please wait for other players to join. The game would start at three players!");
+			ClientEventListener_CODE_GAME_READY.gameReady(channel);
 		} else {
 			SimplePrinter.printNotice(map.get("clientNickname") + " joined room, there are currently " + map.get("roomClientCount") + " in the room.");
 		}

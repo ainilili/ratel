@@ -135,7 +135,6 @@ public class ClientEventListener_CODE_GAME_WATCH extends ClientEventListener {
         Map<String, Object> map = MapHelper.parser(rawData.toString());
 
         printNoticeWithTime("Player [" + map.get("winnerNickname") + "](" + map.get("winnerType") + ") won the game.");
-        quitWatch(channel);
     }
 
     private void printKickInfo(Object rawData) {

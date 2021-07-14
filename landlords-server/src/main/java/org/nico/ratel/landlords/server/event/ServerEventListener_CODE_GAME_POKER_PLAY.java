@@ -101,12 +101,12 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 			for(ClientSide client: room.getClientSideList()) {
 				if(client.getRole() == ClientRole.PLAYER) {
 					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
+					client.setStatus(ClientStatus.NOT_READY);
 				}
 			}
+			room.setStatus(RoomStatus.WAIT);
 
 			notifyWatcherGameOver(room, result);
-
-			ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(clientSide, data);
 		} else {
 			if(next.getRole() == ClientRole.PLAYER) {
 				ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT).call(next, result);
