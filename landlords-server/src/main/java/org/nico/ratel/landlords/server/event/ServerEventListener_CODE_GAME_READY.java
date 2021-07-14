@@ -14,6 +14,9 @@ public class ServerEventListener_CODE_GAME_READY implements ServerEventListener 
 	@Override
 	public void call(ClientSide clientSide, String data) {
 		Room room = ServerContains.getRoom(clientSide.getRoomId());
+		if (room == null) {
+			return;
+		}
 		SimplePrinter.serverLog("房间状态：" + room.getStatus());
 		SimplePrinter.serverLog("玩家状态：" + clientSide.getStatus());
 		if (room.getStatus() == RoomStatus.STARTING) {

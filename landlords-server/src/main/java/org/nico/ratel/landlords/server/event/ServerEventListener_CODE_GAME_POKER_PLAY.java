@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.server.event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.nico.noson.Noson;
@@ -11,6 +12,7 @@ import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.*;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
+import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
@@ -65,6 +67,11 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 
 		ClientSide next = clientSide.getNext();
 
+		if (currentPokerSell.getSellType() == SellType.BOMB || currentPokerSell.getSellType() == SellType.KING_BOMB) {
+			// 炸弹积分翻倍
+			room.increaseRate();
+		}
+
 		room.setLastSellClient(clientSide.getId());
 		room.setLastPokerShell(currentPokerSell);
 		room.setCurrentSellClient(next.getId());
@@ -92,28 +99,90 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 
 		notifyWatcherPlayPoker(room, result);
 
-		if (clientSide.getPokers().isEmpty()) {
-			result = MapHelper.newInstance()
-								.put("winnerNickname", clientSide.getNickname())
-								.put("winnerType", clientSide.getType())
-								.json();
-
-			for(ClientSide client: room.getClientSideList()) {
-				if(client.getRole() == ClientRole.PLAYER) {
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
-					client.setStatus(ClientStatus.NOT_READY);
-				}
-			}
-			room.setStatus(RoomStatus.WAIT);
-
-			notifyWatcherGameOver(room, result);
-		} else {
-			if(next.getRole() == ClientRole.PLAYER) {
-				ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT).call(next, result);
-			}else {
+		if (!clientSide.getPokers().isEmpty()) {
+			if (next.getRole() == ClientRole.ROBOT) {
 				RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(next, data);
+			} else {
+				ServerEventListener.get(ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT).call(next, result);
+			}
+			return;
+		}
+
+		gameOver(clientSide, room);
+//        ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, data);
+	}
+
+	private void setRoomClientScore(Room room, ClientType winnerType) {
+		int landLordScore = room.getScore() * 2;
+		int peasantScore = room.getScore();
+		// 输的一方分数为负
+		if (winnerType == ClientType.LANDLORD) {
+			peasantScore = -peasantScore;
+		} else {
+			landLordScore = -landLordScore;
+		}
+		for (ClientSide client : room.getClientSideList()) {
+			if (client.getType() == ClientType.LANDLORD) {
+				client.addScore(landLordScore);
+			} else {
+				client.addScore(peasantScore);
 			}
 		}
+	}
+
+	private void gameOver(ClientSide winner, Room room) {
+		ClientType winnerType = winner.getType();
+		if (isSpring(winner, room)) {
+			room.increaseRate();
+		}
+
+		setRoomClientScore(room, winnerType);
+
+		ArrayList<Object> clientScores = new ArrayList<>();
+		for (ClientSide client : room.getClientSideList()) {
+			MapHelper score = MapHelper.newInstance()
+					.put("clientId", client.getId())
+					.put("nickName", client.getNickname())
+					.put("score", client.getScore())
+					.put("scoreInc", client.getScoreInc())
+					.put("pokers", client.getPokers());
+			clientScores.add(score.map());
+		}
+
+		SimplePrinter.serverLog(clientScores.toString());
+		String result = MapHelper.newInstance()
+				.put("winnerNickname", winner.getNickname())
+				.put("winnerType", winner.getType())
+				.put("scores", clientScores)
+				.json();
+
+		for (ClientSide client : room.getClientSideList()) {
+			if (client.getRole() == ClientRole.ROBOT) {
+				continue;
+			}
+
+			client.setStatus(ClientStatus.NOT_READY);
+			ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
+		}
+		room.setStatus(RoomStatus.WAIT);
+		room.initScoreRate();
+		notifyWatcherGameOver(room, result);
+	}
+
+	private boolean isSpring(ClientSide winner, Room room) {
+		boolean isSpring = true;
+		for (ClientSide client: room.getClientSideList()) {
+			if (client.getId() == winner.getId()) {
+				continue;
+			}
+			if (client.getType() == ClientType.PEASANT && client.getPokers().size() < 17) {
+				isSpring = false;
+			}
+			if (client.getType() == ClientType.LANDLORD && client.getPokers().size() < 20) {
+				isSpring = false;
+			}
+		}
+		return isSpring;
 	}
 
 	/**

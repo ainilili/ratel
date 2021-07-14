@@ -51,8 +51,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 					call(channel, data);
 					return;
 				} else {
-					List<Poker> lastSellPokers = Noson.convert(lastSellPokersObj, new NoType<List<Poker>>() {
-					});
+					List<Poker> lastSellPokers = Noson.convert(lastSellPokersObj, new NoType<List<Poker>>() {});
 					List<PokerSell> sells = PokerHelper.validSells(PokerHelper.checkPokerType(lastSellPokers), pokers);
 					if (sells.size() == 0) {
 						SimplePrinter.printNotice("It is a pity that, there is no winning combination...");

@@ -49,6 +49,7 @@ public class ClientSide {
 		type = null;
 		next = null;
 		pre = null;
+		score = 0;
 	}
 
 	public final ClientRole getRole() {
@@ -89,6 +90,27 @@ public class ClientSide {
 
 	public final void setPokers(List<Poker> pokers) {
 		this.pokers = pokers;
+	}
+
+	public final int getScore() {
+		return score;
+	}
+
+	public final void setScore(int score) {
+		this.score = score;
+	}
+
+	public final void addScore(int score) {
+		this.score += score;
+		this.scoreInc = score;
+	}
+
+	public final void setScoreInc(int scoreInc) {
+		this.scoreInc = scoreInc;
+	}
+
+	public final int getScoreInc() {
+		return this.scoreInc;
 	}
 
 	public final ClientStatus getStatus() {
