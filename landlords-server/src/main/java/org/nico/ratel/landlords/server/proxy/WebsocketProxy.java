@@ -54,11 +54,6 @@ public class WebsocketProxy implements Proxy{
             SimplePrinter.serverLog("The websocket server was successfully started on port " + port);
             //Init robot.
             RobotDecisionMakers.init();
-
-            ServerContains.THREAD_EXCUTER.execute(() -> {
-                Timer timer=new Timer();
-                timer.schedule(new RoomClearTask(), 0L, 3000L);
-            });
             f.channel().closeFuture().sync();
         } finally {
             parentGroup.shutdownGracefully();

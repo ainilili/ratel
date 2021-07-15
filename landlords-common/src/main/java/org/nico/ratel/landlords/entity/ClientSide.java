@@ -34,6 +34,8 @@ public class ClientSide {
 
 	private transient Channel channel;
 
+	private String version;
+
 	public ClientSide() {}
 
 	public ClientSide(int id, ClientStatus status, Channel channel) {
@@ -151,6 +153,14 @@ public class ClientSide {
 
 	public final void setPre(ClientSide pre) {
 		this.pre = pre;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	@Override

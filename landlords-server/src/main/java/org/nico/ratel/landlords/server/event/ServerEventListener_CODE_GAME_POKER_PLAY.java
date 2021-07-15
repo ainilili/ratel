@@ -10,6 +10,7 @@ import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.*;
+import org.nico.ratel.landlords.features.Features;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -156,16 +157,22 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 				.put("scores", clientScores)
 				.json();
 
+		boolean supportReady = true;
 		for (ClientSide client : room.getClientSideList()) {
-			if (client.getRole() == ClientRole.ROBOT) {
-				continue;
+			if (client.getRole() == ClientRole.ROBOT || ! Features.supported(client.getVersion(), Features.READY)) {
+				supportReady = false;
+				break;
 			}
-
-			client.setStatus(ClientStatus.NOT_READY);
-			ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 		}
-		room.setStatus(RoomStatus.WAIT);
-		room.initScoreRate();
+		if (supportReady){
+			room.setStatus(RoomStatus.WAIT);
+			room.initScoreRate();
+			for (ClientSide client : room.getClientSideList()) {
+				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
+			}
+		}else{
+			ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(winner, "");
+		}
 		notifyWatcherGameOver(room, result);
 	}
 

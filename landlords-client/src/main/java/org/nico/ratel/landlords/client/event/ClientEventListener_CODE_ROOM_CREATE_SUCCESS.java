@@ -10,15 +10,10 @@ public class ClientEventListener_CODE_ROOM_CREATE_SUCCESS extends ClientEventLis
 
 	@Override
 	public void call(Channel channel, String data) {
-
 		Room room = Noson.convert(data, Room.class);
-
 		initLastSellInfo();
-
 		SimplePrinter.printNotice("You have created a room with id " + room.getId());
 		SimplePrinter.printNotice("Please wait for other players to join !");
-
-		ClientEventListener_CODE_GAME_READY.gameReady(channel);
 	}
 
 }

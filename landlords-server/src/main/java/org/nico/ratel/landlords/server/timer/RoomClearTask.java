@@ -56,21 +56,21 @@ public class RoomClearTask extends TimerTask {
             if (alreadyLiveTime > liveTime) {
                 SimplePrinter.serverLog("room " + room.getId() + " live time overflow " + liveTime + ", closed!");
                 ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(room.getClientSideList().get(0), null);
-                return;
+                continue;
             }
 
 			long diff = now - room.getLastFlushTime();
             if (room.getStatus() != RoomStatus.STARTING && diff > waitingStatusInterval) {
                 SimplePrinter.serverLog("room " + room.getId() + " starting waiting time overflow " + waitingStatusInterval + ", closed!");
                 ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(room.getClientSideList().get(0), null);
-                return;
+				continue;
             }
 			if (room.getType() != RoomType.PVP) {
-				return;
+				continue;
 			}
 
 			if (diff <= startingStatusInterval) {
-				return;
+				continue;
 			}
 
 			boolean allRobots = true;
@@ -86,7 +86,7 @@ public class RoomClearTask extends TimerTask {
 			if (allRobots) {
 				SimplePrinter.serverLog("room " + room.getId() + " all is robots, closed!");
 				ServerEventListener.get(ServerEventCode.CODE_CLIENT_EXIT).call(currentPlayer, null);
-				return;
+				continue;
 			}
             //kick this client
             ChannelUtils.pushToClient(currentPlayer.getChannel(), ClientEventCode.CODE_CLIENT_KICK, null);

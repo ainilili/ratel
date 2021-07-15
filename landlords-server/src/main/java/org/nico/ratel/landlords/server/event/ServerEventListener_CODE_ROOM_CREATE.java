@@ -28,7 +28,7 @@ public class ServerEventListener_CODE_ROOM_CREATE implements ServerEventListener
 		clientSide.setRoomId(room.getId());
 		ServerContains.addRoom(room);
 
-		clientSide.setStatus(ClientStatus.NOT_READY);
+		clientSide.setStatus(ClientStatus.NO_READY);
 
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_CREATE_SUCCESS, Noson.reversal(room));
 	}

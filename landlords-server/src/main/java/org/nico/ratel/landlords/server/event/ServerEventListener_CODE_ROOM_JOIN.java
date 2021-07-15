@@ -9,6 +9,7 @@ import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.RoomStatus;
+import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 
@@ -34,6 +35,8 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener {
 			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_ROOM_JOIN_FAIL_BY_FULL, result);
 			return;
 		}
+		// join default ready
+		clientSide.setStatus(ClientStatus.READY);
 		clientSide.setRoomId(room.getId());
 
 		ConcurrentSkipListMap<Integer, ClientSide> roomClientMap = (ConcurrentSkipListMap<Integer, ClientSide>) room.getClientSideMap();
@@ -51,10 +54,11 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener {
 		if (roomClientMap.size() == 3) {
 			clientSide.setNext(roomClientList.getFirst());
 			roomClientList.getFirst().setPre(clientSide);
-		}
 
+			ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
+			return;
+		}
 		room.setStatus(RoomStatus.WAIT);
-		clientSide.setStatus(ClientStatus.NOT_READY);
 		String result = MapHelper.newInstance()
 				.put("clientId", clientSide.getId())
 				.put("clientNickname", clientSide.getNickname())

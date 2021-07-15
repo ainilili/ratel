@@ -8,6 +8,8 @@ public enum ServerEventCode implements Serializable {
 
 	CODE_CLIENT_OFFLINE("玩家离线"),
 
+	CODE_CLIENT_INFO_SET("设置客户端信息"),
+
 	CODE_CLIENT_NICKNAME_SET("设置昵称"),
 
 	CODE_CLIENT_HEAD_BEAT("不出"),
@@ -35,6 +37,7 @@ public enum ServerEventCode implements Serializable {
 	CODE_GAME_WATCH("观战"),
 
 	CODE_GAME_WATCH_EXIT("退出观战");
+
 
 	private String msg;
 

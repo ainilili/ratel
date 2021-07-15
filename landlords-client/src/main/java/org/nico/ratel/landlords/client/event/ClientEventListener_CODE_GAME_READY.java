@@ -22,16 +22,12 @@ public class ClientEventListener_CODE_GAME_READY extends ClientEventListener {
     }
 
     static void gameReady(Channel channel) {
-        SimplePrinter.printNotice("\nPress any key to get ready(Press [exit|e] to exit the room)");
+        SimplePrinter.printNotice("\nDo you want to continue the game? [Y/N]");
         String line = SimpleWriter.write("notReady");
-        if (line.equals("")) {
-            gameReady(channel);
+        if (line.equals("Y") || line.equals("y")) {
+            ChannelUtils.pushToServer(channel, ServerEventCode.CODE_GAME_READY, "");
             return;
         }
-        if (line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")) {
-            ChannelUtils.pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT, "");
-            return;
-        }
-        ChannelUtils.pushToServer(channel, ServerEventCode.CODE_GAME_READY, "");
+        ChannelUtils.pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT, "");
     }
 }

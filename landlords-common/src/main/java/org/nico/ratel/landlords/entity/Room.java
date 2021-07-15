@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.locks.ReentrantLock;
 
+import org.nico.noson.annotations.JsonIgnore;
 import org.nico.ratel.landlords.enums.RoomStatus;
 import org.nico.ratel.landlords.enums.RoomType;
 

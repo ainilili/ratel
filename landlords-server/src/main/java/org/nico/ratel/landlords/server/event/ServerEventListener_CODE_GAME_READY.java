@@ -25,7 +25,7 @@ public class ServerEventListener_CODE_GAME_READY implements ServerEventListener 
 		if (clientSide.getStatus() == ClientStatus.PLAYING || clientSide.getStatus() == ClientStatus.TO_CHOOSE || clientSide.getStatus() == ClientStatus.CALL_LANDLORD) {
 			return;
 		}
-		clientSide.setStatus(clientSide.getStatus() == ClientStatus.READY ? ClientStatus.NOT_READY : ClientStatus.READY);
+		clientSide.setStatus(clientSide.getStatus() == ClientStatus.READY ? ClientStatus.NO_READY : ClientStatus.READY);
 		String result = MapHelper.newInstance()
 				.put("clientNickName", clientSide.getNickname())
 				.put("status", clientSide.getStatus())

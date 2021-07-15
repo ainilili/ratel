@@ -10,6 +10,7 @@ import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.proxy.ProtobufProxy;
 import org.nico.ratel.landlords.client.proxy.WebsocketProxy;
+import org.nico.ratel.landlords.features.Features;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 import org.nico.ratel.landlords.utils.StreamUtils;
@@ -18,13 +19,15 @@ public class SimpleClient {
 
 	public static int id = -1;
 
+	public final static String VERSION = Features.VERSION_1_3_0;
+
 	public static String serverAddress;
 
 	public static int port = 1024;
 
 	public static String protocol = "pb";
 
-	private static final String[] serverAddressSource = new String[]{
+	private final static String[] serverAddressSource = new String[]{
 			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
 			"https://gitee.com/ainilili/ratel/raw/master/serverlist.json"
 	};

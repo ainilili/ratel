@@ -22,7 +22,6 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener {
 			System.exit(0);
 		} else {
 			int choose = OptionsUtils.getOptions(line);
-
 			if (choose == 1) {
 				get(ClientEventCode.CODE_SHOW_OPTIONS_PVP).call(channel, data);
 			} else if (choose == 2) {
