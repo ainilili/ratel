@@ -52,8 +52,6 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("nextClientNickname", startGrabClient.getNickname())
 					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
-					// this key-value use to client order to show
-					.put("clientOrderList", roomClientList)
 					.json();
 
 			if (client.getRole() == ClientRole.PLAYER) {
@@ -76,16 +74,12 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 	 * @param room	房间
 	 */
 	private void notifyWatcherGameStart(Room room) {
+		String result = MapHelper.newInstance()
+				.put("player1", room.getClientSideList().getFirst().getNickname())
+				.put("player2", room.getClientSideList().getFirst().getNext().getNickname())
+				.put("player3", room.getClientSideList().getLast().getNickname())
+				.json();
 		for (ClientSide clientSide : room.getWatcherList()) {
-			String result = MapHelper.newInstance()
-					.put("player1", room.getClientSideList().getFirst().getNickname())
-					.put("pokers1", room.getClientSideList().getFirst().getPokers())
-					.put("player2", room.getClientSideList().getFirst().getNext().getNickname())
-					.put("pokers2", room.getClientSideList().getFirst().getNext().getPokers())
-					.put("player3", room.getClientSideList().getLast().getNickname())
-					.put("pokers3", room.getClientSideList().getLast().getPokers())
-					.json();
-
 			ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_STARTING, result);
 		}
 	}
