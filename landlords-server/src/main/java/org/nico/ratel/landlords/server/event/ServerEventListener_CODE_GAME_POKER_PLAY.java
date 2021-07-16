@@ -168,6 +168,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 			room.setStatus(RoomStatus.WAIT);
 			room.initScoreRate();
 			for (ClientSide client : room.getClientSideList()) {
+				client.setStatus(ClientStatus.NO_READY);
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_OVER, result);
 			}
 		}else{
