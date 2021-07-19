@@ -5,45 +5,51 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.locks.ReentrantLock;
 
+import org.nico.noson.annotations.JsonIgnore;
 import org.nico.ratel.landlords.enums.RoomStatus;
 import org.nico.ratel.landlords.enums.RoomType;
 
-public class Room{
+public class Room {
 
 	private int id;
-	
+
 	private String roomOwner;
-	
+
 	private RoomStatus status;
-	
+
 	private RoomType type;
-	
+
 	private Map<Integer, ClientSide> clientSideMap;
-	
+
 	private LinkedList<ClientSide> clientSideList;
-	
+
 	private int landlordId = -1;
-	
+
 	private List<Poker> landlordPokers;
-	
+
 	private PokerSell lastPokerShell;
-	
+
 	private int lastSellClient = -1;
-	
+
 	private int currentSellClient = -1;
-	
+
 	private int difficultyCoefficient;
-	
+
 	private long lastFlushTime;
-	
+
 	private long createTime;
 
 	private int firstSellClient;
 
 	/** 观战者列表 */
 	private List<ClientSide> watcherList = new ArrayList<>(5);
-	
+
+	private int scoreRate = 1;
+
+	private int baseScore = 3;
+
 	public Room() {
 	}
 
@@ -51,7 +57,36 @@ public class Room{
 		this.id = id;
 		this.clientSideMap = new ConcurrentSkipListMap<>();
 		this.clientSideList = new LinkedList<>();
-		this.status = RoomStatus.BLANK;
+		this.status = RoomStatus.WAIT;
+		this.createTime = System.currentTimeMillis();
+	}
+
+	public int getScore() {
+		return this.baseScore * this.scoreRate;
+	}
+
+	public int getBaseScore() {
+		return this.baseScore;
+	}
+
+	public void setBaseScore(int baseScore) {
+		this.baseScore = baseScore;
+	}
+
+	public int getScoreRate() {
+		return this.scoreRate;
+	}
+
+	public void setScoreRate(int scoreRate) {
+		this.scoreRate = scoreRate;
+	}
+
+	public void initScoreRate() {
+		this.scoreRate = 1;
+	}
+
+	public void increaseRate() {
+		this.scoreRate *= 2;
 	}
 
 	public final long getCreateTime() {

@@ -12,12 +12,12 @@ import io.netty.handler.codec.MessageToMessageCodec;
 public class SecondProtobufCodec extends MessageToMessageCodec<ServerTransferDataProtoc, MessageLite> {
 
 	@Override
-	protected void encode(ChannelHandlerContext ctx, MessageLite msg, List<Object> out) throws Exception {
+	protected void encode(ChannelHandlerContext ctx, MessageLite msg, List<Object> out) {
 		out.add(msg);
 	}
 
 	@Override
-	protected void decode(ChannelHandlerContext ctx, ServerTransferDataProtoc msg, List<Object> out) throws Exception {
+	protected void decode(ChannelHandlerContext ctx, ServerTransferDataProtoc msg, List<Object> out) {
 		out.add(msg);
 	}
 

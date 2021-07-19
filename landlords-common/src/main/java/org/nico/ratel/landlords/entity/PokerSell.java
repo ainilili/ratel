@@ -1,27 +1,27 @@
 package org.nico.ratel.landlords.entity;
 
-import java.util.List;
-
 import org.nico.ratel.landlords.enums.SellType;
 import org.nico.ratel.landlords.helper.PokerHelper;
+
+import java.util.List;
 
 public class PokerSell {
 
 	private int score;
-	
+
 	private SellType sellType;
-	
+
 	private List<Poker> sellPokers;
-	
+
 	private int coreLevel;
-	
+
 	public PokerSell(SellType sellType, List<Poker> sellPokers, int coreLevel) {
 		this.score = PokerHelper.parseScore(sellType, coreLevel);
 		this.sellType = sellType;
 		this.sellPokers = sellPokers;
 		this.coreLevel = coreLevel;
 	}
-	
+
 	public final int getCoreLevel() {
 		return coreLevel;
 	}
@@ -58,5 +58,5 @@ public class PokerSell {
 	public String toString() {
 		return sellType + "\t| " + score + "\t|" + sellPokers;
 	}
-	
+
 }

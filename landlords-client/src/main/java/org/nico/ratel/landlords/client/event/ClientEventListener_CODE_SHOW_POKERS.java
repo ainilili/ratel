@@ -11,22 +11,22 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_SHOW_POKERS extends ClientEventListener{
+public class ClientEventListener_CODE_SHOW_POKERS extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
-		
+
 		Map<String, Object> map = MapHelper.parser(data);
-		
+
 		lastSellClientNickname = (String) map.get("clientNickname");
 		lastSellClientType = (String) map.get("clientType");
-		
+
 		SimplePrinter.printNotice(lastSellClientNickname + "[" + lastSellClientType + "] played:");
 		lastPokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
 		SimplePrinter.printPokers(lastPokers);
-		
-		if(map.containsKey("sellClinetNickname")) {
-			SimplePrinter.printNotice("Next player is " + map.get("sellClinetNickname") + ". Please wait for him to play his combination.");
+
+		if (map.containsKey("sellClientNickname")) {
+			SimplePrinter.printNotice("Next player is " + map.get("sellClientNickname") + ". Please wait for him to play his combination.");
 		}
 	}
 

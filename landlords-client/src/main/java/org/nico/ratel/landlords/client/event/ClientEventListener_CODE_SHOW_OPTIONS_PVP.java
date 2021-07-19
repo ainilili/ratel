@@ -8,7 +8,7 @@ import org.nico.ratel.landlords.utils.OptionsUtils;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListener{
+public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
@@ -19,54 +19,67 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 		SimplePrinter.printNotice("4. Spectate Game");
 		SimplePrinter.printNotice("Please select an option above (enter [back|b] to return to options list)");
 		String line = SimpleWriter.write("pvp");
-		
-		if(line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
-			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
-		}else {
-			int choose = OptionsUtils.getOptions(line);
-			
-			if(choose == 1) {
-				pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE, null);
-			}else if(choose == 2){
-				pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
-			}else if(choose == 3){
-				SimplePrinter.printNotice("Please enter the room id you wish to join (enter [back|b] to return to options list)");
-				line = SimpleWriter.write("roomid");
-				
-				if(line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
-					call(channel, data);
-				}else {
-					int option = OptionsUtils.getOptions(line);
-					if(line == null || option < 1) {
-						SimplePrinter.printNotice("Invalid option, please choose again：");
-						call(channel, data);
-					}else{
-						pushToServer(channel, ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
-					}
-				}
-			} else if (choose == 4) {
-				SimplePrinter.printNotice("Please enter the room id you want to spectate (enter [back] to return to options list)");
-				line = SimpleWriter.write("roomid");
+		if (line == null) {
+			SimplePrinter.printNotice("Invalid options, please choose again：");
+			call(channel, data);
+			return;
+		}
 
-				if(line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
-					call(channel, data);
-				}else {
-					int option = OptionsUtils.getOptions(line);
-					if(line == null || option < 1) {
-						SimplePrinter.printNotice("Invalid option, please choose again：");
-						call(channel, data);
-					}else{
-						pushToServer(channel, ServerEventCode.CODE_GAME_WATCH, String.valueOf(option));
-					}
-				}
-			} else {
+		if (line.equalsIgnoreCase("BACK") || line.equalsIgnoreCase("b")) {
+			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
+			return;
+		}
+
+		int choose = OptionsUtils.getOptions(line);
+		switch (choose) {
+			case 1:
+				pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE, null);
+				break;
+			case 2:
+				pushToServer(channel, ServerEventCode.CODE_GET_ROOMS, null);
+				break;
+			case 3:
+				handleJoinRoom(channel, data);
+				break;
+			case 4:
+				handleJoinRoom(channel, data, true);
+				break;
+			default:
 				SimplePrinter.printNotice("Invalid option, please choose again：");
 				call(channel, data);
-			}
 		}
-		
 	}
 
+	private void parseInvalid(Channel channel, String data) {
+		SimplePrinter.printNotice("Invalid options, please choose again：");
+		call(channel, data);
+	}
 
+	private void handleJoinRoom(Channel channel, String data) {
+		handleJoinRoom(channel, data, false);
+	}
 
+	private void handleJoinRoom(Channel channel, String data, Boolean watchMode) {
+		String notice = String.format("Please enter the room id you want to %s (enter [back|b] return options list)", watchMode ? "spectate" : "join");
+
+		SimplePrinter.printNotice(notice);
+		String line = SimpleWriter.write("roomid");
+		if (line == null) {
+			parseInvalid(channel, data);
+			return;
+		}
+
+		if (line.equalsIgnoreCase("BACK") || line.equalsIgnoreCase("b")) {
+			call(channel, data);
+			return;
+		}
+
+		int option = OptionsUtils.getOptions(line);
+		if (option < 1) {
+			parseInvalid(channel, data);
+			return;
+		}
+
+		pushToServer(channel, watchMode? ServerEventCode.CODE_GAME_WATCH : ServerEventCode.CODE_ROOM_JOIN, String.valueOf(option));
+	}
 }

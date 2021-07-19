@@ -7,7 +7,7 @@ import org.nico.ratel.landlords.utils.OptionsUtils;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
+public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
@@ -17,25 +17,21 @@ public class ClientEventListener_CODE_SHOW_OPTIONS extends ClientEventListener{
 		SimplePrinter.printNotice("3. Settings");
 		SimplePrinter.printNotice("Please select an option above (enter [exit|e] to log out)");
 		String line = SimpleWriter.write("selection");
-		
+
 		if(line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")) {
 			System.exit(0);
-		}else {
+		} else {
 			int choose = OptionsUtils.getOptions(line);
-			
-			if(choose == 1) {
+			if (choose == 1) {
 				get(ClientEventCode.CODE_SHOW_OPTIONS_PVP).call(channel, data);
-			}else if(choose == 2){
+			} else if (choose == 2) {
 				get(ClientEventCode.CODE_SHOW_OPTIONS_PVE).call(channel, data);
-			}else if(choose == 3){
+			} else if (choose == 3) {
 				get(ClientEventCode.CODE_SHOW_OPTIONS_SETTING).call(channel, data);
-			}else {
+			} else {
 				SimplePrinter.printNotice("Invalid option, please choose again：");
 				call(channel, data);
 			}
 		}
 	}
-
-
-
 }

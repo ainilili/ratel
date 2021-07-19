@@ -17,7 +17,7 @@ import org.nico.ratel.landlords.helper.PokerHelper;
  * @author nico
  * @date 2020-12-19 16:36
  */
-public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
+public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers {
 
 	private static final Long DEDUCE_LIMIT = 100 * 3L;
 
@@ -133,7 +133,7 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers{
 		int leftScore = PokerHelper.parsePokerColligationScore(leftPokers);
 		int rightScore = PokerHelper.parsePokerColligationScore(rightPokers);
 		int myScore = PokerHelper.parsePokerColligationScore(myPokers);
-		return myScore >= (leftScore + rightScore)/2;
+		return myScore >= (leftScore + rightScore) / 2;
 	}
 
 }

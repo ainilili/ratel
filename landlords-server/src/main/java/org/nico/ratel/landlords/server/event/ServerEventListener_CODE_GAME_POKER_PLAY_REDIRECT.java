@@ -23,10 +23,10 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 		if(StringUtils.isNotBlank(data)) {
 			datas = Noson.parseMap(data);
 		}
-		
+
 		List<Map<String, Object>> clientInfos = new ArrayList<Map<String,Object>>(3);
-		for(ClientSide client: room.getClientSideList()){
-			if(clientSide.getId() != client.getId()){
+		for(ClientSide client : room.getClientSideList()) {
+			if(clientSide.getId() != client.getId()) {
 				clientInfos.add(MapHelper.newInstance()
 						.put("clientId", client.getId())
 						.put("clientNickname", client.getNickname())
@@ -36,16 +36,16 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 						.map());
 			}
 		}
-		
+
 		String result = MapHelper.newInstance()
 				.put("pokers", clientSide.getPokers())
 				.put("lastSellPokers", datas.get("lastSellPokers"))
 				.put("lastSellClientId", datas.get("lastSellClientId"))
 				.put("clientInfos", clientInfos)
 				.put("sellClientId", room.getCurrentSellClient())
-				.put("sellClinetNickname", ServerContains.CLIENT_SIDE_MAP.get(room.getCurrentSellClient()).getNickname())
+				.put("sellClientNickname", ServerContains.CLIENT_SIDE_MAP.get(room.getCurrentSellClient()).getNickname())
 				.json();
-		
+
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_REDIRECT, result);
 	}
 

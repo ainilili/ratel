@@ -9,7 +9,7 @@ import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
 
-public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEventListener{
+public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEventListener {
 
 	@Override
 	public void call(ClientSide clientSide, String data) {

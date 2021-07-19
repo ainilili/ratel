@@ -9,19 +9,19 @@ import org.nico.ratel.landlords.enums.ClientEventCode;
 
 public interface RobotEventListener {
 
-	final static String LISTENER_PREFIX = "org.nico.ratel.landlords.server.robot.RobotEventListener_";
-	
-	public final static Map<ClientEventCode, RobotEventListener> LISTENER_MAP = new HashMap<>();
-	
-	public void call(ClientSide robot, String data);
+	String LISTENER_PREFIX = "org.nico.ratel.landlords.server.robot.RobotEventListener_";
+
+	Map<ClientEventCode, RobotEventListener> LISTENER_MAP = new HashMap<>();
+
+	void call(ClientSide robot, String data);
 
 	@SuppressWarnings("unchecked")
-	public static RobotEventListener get(ClientEventCode code) {
+	static RobotEventListener get(ClientEventCode code) {
 		RobotEventListener listener = null;
 		try {
-			if(RobotEventListener.LISTENER_MAP.containsKey(code)){
+			if (RobotEventListener.LISTENER_MAP.containsKey(code)) {
 				listener = RobotEventListener.LISTENER_MAP.get(code);
-			}else{
+			} else {
 				String eventListener = LISTENER_PREFIX + code.name();
 				Class<RobotEventListener> listenerClass = (Class<RobotEventListener>) Class.forName(eventListener);
 				try {
@@ -32,10 +32,9 @@ public interface RobotEventListener {
 				RobotEventListener.LISTENER_MAP.put(code, listener);
 			}
 			return listener;
-		}catch(ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		return listener;
+		return null;
 	}
-	
 }
