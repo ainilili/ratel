@@ -16,7 +16,7 @@ on:
           - 'azure-pipelines*.yml'
           - 'ci/azure-pipelines/template*.yml'
 
-        pull_request:
+  pull_request:
           branches:
             - master
             - feature/*

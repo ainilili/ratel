@@ -12,19 +12,19 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_GAME_LANDLORD_CONFIRM extends ClientEventListener{
+public class ClientEventListener_CODE_GAME_LANDLORD_CONFIRM extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		
+
 		String landlordNickname = String.valueOf(map.get("landlordNickname"));
-		
+
 		SimplePrinter.printNotice(landlordNickname + " has become the landlord and gotten three extra cards");
-		
+
 		List<Poker> additionalPokers = Noson.convert(map.get("additionalPokers"), new NoType<List<Poker>>() {});
 		SimplePrinter.printPokers(additionalPokers);
-		
+
 		pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY_REDIRECT);
 	}
 

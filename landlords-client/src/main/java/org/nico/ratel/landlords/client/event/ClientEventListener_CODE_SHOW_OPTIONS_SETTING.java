@@ -8,7 +8,7 @@ import org.nico.ratel.landlords.utils.OptionsUtils;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventListener{
+public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
@@ -21,13 +21,13 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 
 		SimplePrinter.printNotice("Please select an option above (enter [BACK] to return to options list)");
 		String line = SimpleWriter.write("setting");
-		
-		if(line.equalsIgnoreCase("BACK")) {
+
+		if (line.equalsIgnoreCase("BACK")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
-		}else {
+		} else {
 			int choose = OptionsUtils.getOptions(line);
-			
-			if(choose >=1 && choose <= 5){
+
+			if (choose >= 1 && choose <= 5) {
 				PokerHelper.pokerPrinterType = choose - 1;
 				get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 			} else {
@@ -36,7 +36,6 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 			}
 		}
 	}
-
 
 
 }

@@ -9,19 +9,19 @@ import org.nico.ratel.landlords.enums.ServerEventCode;
 
 public interface ServerEventListener {
 
-	public void call(ClientSide client, String data);
+	void call(ClientSide client, String data);
 
-	public final static Map<ServerEventCode, ServerEventListener> LISTENER_MAP = new HashMap<>();
-	
-	final static String LISTENER_PREFIX = "org.nico.ratel.landlords.server.event.ServerEventListener_";
-	
+	Map<ServerEventCode, ServerEventListener> LISTENER_MAP = new HashMap<>();
+
+	String LISTENER_PREFIX = "org.nico.ratel.landlords.server.event.ServerEventListener_";
+
 	@SuppressWarnings("unchecked")
-	public static ServerEventListener get(ServerEventCode code){
+	static ServerEventListener get(ServerEventCode code) {
 		ServerEventListener listener = null;
 		try {
-			if(ServerEventListener.LISTENER_MAP.containsKey(code)){
+			if (ServerEventListener.LISTENER_MAP.containsKey(code)) {
 				listener = ServerEventListener.LISTENER_MAP.get(code);
-			}else{
+			} else {
 				String eventListener = LISTENER_PREFIX + code.name();
 				Class<ServerEventListener> listenerClass = (Class<ServerEventListener>) Class.forName(eventListener);
 				try {
@@ -32,10 +32,10 @@ public interface ServerEventListener {
 				ServerEventListener.LISTENER_MAP.put(code, listener);
 			}
 			return listener;
-		}catch(ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		return listener;
+		return null;
 	}
-	
+
 }

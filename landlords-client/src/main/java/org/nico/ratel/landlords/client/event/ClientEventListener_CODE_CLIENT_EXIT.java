@@ -9,23 +9,22 @@ import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_CLIENT_EXIT extends ClientEventListener{
+public class ClientEventListener_CODE_CLIENT_EXIT extends ClientEventListener {
 
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		
+
 		Integer exitClientId = (Integer) map.get("exitClientId");
-		
-		String role = null;
-		if(exitClientId == SimpleClient.id) {
+
+		String role;
+		if (exitClientId == SimpleClient.id) {
 			role = "You";
-		}else {
+		} else {
 			role = String.valueOf(map.get("exitClientNickname"));
 		}
 		SimplePrinter.printNotice(role + " left the room. Room disbanded!\n");
 		
 		get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
 	}
-
 }

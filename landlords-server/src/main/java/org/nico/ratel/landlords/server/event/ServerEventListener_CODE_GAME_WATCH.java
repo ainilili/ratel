@@ -15,7 +15,7 @@ public class ServerEventListener_CODE_GAME_WATCH implements ServerEventListener 
 
     @Override
     public void call(ClientSide clientSide, String data) {
-        Room room = ServerContains.getRoom(Integer.valueOf(data));
+        Room room = ServerContains.getRoom(Integer.parseInt(data));
 
         if (room == null) {
             String result = MapHelper.newInstance()

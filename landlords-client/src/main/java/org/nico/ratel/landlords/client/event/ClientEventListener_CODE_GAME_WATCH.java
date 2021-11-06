@@ -18,6 +18,11 @@ public class ClientEventListener_CODE_GAME_WATCH extends ClientEventListener {
 
     @Override
     public void call(Channel channel, String wrapData) {
+        // 退出观战模式后不处理观战请求
+        if (!User.INSTANCE.isWatching()) {
+            return;
+        }
+
         Map<String, Object> wrapMap = MapHelper.parser(wrapData);
         ClientEventCode rawCode = ClientEventCode.valueOf(wrapMap.get("code").toString());
         Object rawData = wrapMap.get("data");
@@ -130,7 +135,6 @@ public class ClientEventListener_CODE_GAME_WATCH extends ClientEventListener {
         Map<String, Object> map = MapHelper.parser(rawData.toString());
 
         printNoticeWithTime("Player [" + map.get("winnerNickname") + "](" + map.get("winnerType") + ") won the game.");
-        quitWatch(channel);
     }
 
     private void printKickInfo(Object rawData) {

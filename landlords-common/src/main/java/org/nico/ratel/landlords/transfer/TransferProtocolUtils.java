@@ -5,13 +5,13 @@ import org.nico.ratel.landlords.exception.LandlordException;
 
 /**
  * Protocol transport related tools
- * 
+ *
  * @author nico
  * @time 2018-11-01 20:43
  */
 public class TransferProtocolUtils {
-	
-	
+
+
 	/**
 	 * A protocol header that represents the beginning of an available stream of data
 	 */
@@ -24,8 +24,8 @@ public class TransferProtocolUtils {
 
 	/**
 	 * Serialize the poker list to transportable bytes
-	 * 
-	 * @param pokers Poker list
+	 *
+	 * @param obj Poker list
 	 * @return Transportable byte array
 	 */
 	public static byte[] serialize(Object obj) {
@@ -38,7 +38,7 @@ public class TransferProtocolUtils {
 
 	/**
 	 * Deserialize the byte stream as an object
-	 * 
+	 *
 	 * @param bytes Byte array
 	 * @return Genericity
 	 */
@@ -46,20 +46,20 @@ public class TransferProtocolUtils {
 		ByteKit bk = new ByteKit(bytes);
 		int start = -1;
 		int end = -1;
-		
+
 		int index = bk.indexOf(PROTOCOL_HAED, 0);
-		if(index != -1) start = index + 1;
-		
+		if (index != -1) start = index + 1;
+
 		index = bk.indexOf(PROTOCOL_TAIL, 0);
-		if(index != -1) end = index;
-		
-		if(start != -1 && end != -1 && start > end) {
+		if (index != -1) end = index;
+
+		if (start != -1 && end != -1 && start > end) {
 			throw new LandlordException("Message format error, head and tail error.");
-		}else {
+		} else {
 			byte[] content = new byte[end - start];
 			System.arraycopy(bytes, start, content, 0, content.length);
 			return Noson.convert(new String(content), clazz);
 		}
 	}
-	
+
 }

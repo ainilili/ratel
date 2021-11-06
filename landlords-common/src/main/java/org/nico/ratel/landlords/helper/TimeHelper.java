@@ -8,10 +8,10 @@ package org.nico.ratel.landlords.helper;
 
 public class TimeHelper {
 
-	public static void sleep(long millis){
+	public static void sleep(long millis) {
 		try {
 			Thread.sleep(millis);
-		} catch (InterruptedException e) {
+		} catch (InterruptedException ignored) {
 		}
 	}
 }
