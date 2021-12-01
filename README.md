@@ -27,6 +27,7 @@ java -jar landlords-client/target/landlords-client-#{version}.jar -p 1024 -h 127
 ```powershell
 java -jar landlords-client/target/landlords-client-#{version}.jar
 ```
+**注意**，实际运行中请将``#{version}``改为当前运行版本！
 ## 玩法介绍
 在线试玩：[传送门](http://ratel.isnico.com)
 
