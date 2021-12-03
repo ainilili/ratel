@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.server.event;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
+import org.nico.ratel.landlords.utils.JsonUtils;
+import org.nico.ratel.landlords.utils.LastCardsUtils;
 
 public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListener {
 
@@ -42,11 +45,17 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 
 		// Record the first speaker
 		room.setFirstSellClient(startGrabClient.getId());
-
+		List<List<Poker>> otherPokers = new ArrayList<>();
 		for (ClientSide client : roomClientList) {
 			client.setType(ClientType.PEASANT);
 			client.setStatus(ClientStatus.PLAYING);
-
+			for(ClientSide otherClient : roomClientList){
+				if(otherClient.getId() != client.getId()){
+					otherPokers.add(otherClient.getPokers());
+				}
+			}
+			String lastCards = LastCardsUtils.getLastCards(otherPokers);
+			otherPokers = new ArrayList<>();
 			String result = MapHelper.newInstance()
 					.put("roomId", room.getId())
 					.put("roomOwner", room.getRoomOwner())
@@ -54,6 +63,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("nextClientNickname", startGrabClient.getNickname())
 					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
+					.put("lastPokers",lastCards)
 					.json();
 
 			if (client.getRole() == ClientRole.PLAYER) {

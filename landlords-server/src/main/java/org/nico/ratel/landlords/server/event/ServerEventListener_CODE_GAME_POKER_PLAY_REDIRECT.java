@@ -9,10 +9,12 @@ import org.nico.noson.Noson;
 import org.nico.noson.util.string.StringUtils;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.entity.ClientSide;
+import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.server.ServerContains;
+import org.nico.ratel.landlords.utils.LastCardsUtils;
 
 public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements ServerEventListener{
 
@@ -37,6 +39,14 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 			}
 		}
 
+		List<List<Poker>> lastPokerList = new ArrayList<>();
+		for(int i = 0; i < room.getClientSideList().size(); i++){
+			if(room.getClientSideList().get(i).getId() != clientSide.getId()){
+				lastPokerList.add(room.getClientSideList().get(i).getPokers());
+			}
+		}
+		String lastPokers = LastCardsUtils.getLastCards(lastPokerList);
+		lastPokerList = new ArrayList<>();
 		String result = MapHelper.newInstance()
 				.put("pokers", clientSide.getPokers())
 				.put("lastSellPokers", datas.get("lastSellPokers"))
@@ -44,6 +54,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_REDIRECT implements Server
 				.put("clientInfos", clientInfos)
 				.put("sellClientId", room.getCurrentSellClient())
 				.put("sellClientNickname", ServerContains.CLIENT_SIDE_MAP.get(room.getCurrentSellClient()).getNickname())
+				.put("lastPokers",lastPokers)
 				.json();
 
 		ChannelUtils.pushToClient(clientSide.getChannel(), ClientEventCode.CODE_GAME_POKER_PLAY_REDIRECT, result);

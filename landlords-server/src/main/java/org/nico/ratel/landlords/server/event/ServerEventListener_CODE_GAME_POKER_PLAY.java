@@ -16,6 +16,7 @@ import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.ServerContains;
 import org.nico.ratel.landlords.server.robot.RobotEventListener;
+import org.nico.ratel.landlords.utils.LastCardsUtils;
 
 public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventListener {
 
@@ -77,6 +78,14 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 		room.setLastPokerShell(currentPokerSell);
 		room.setCurrentSellClient(next.getId());
 
+		List<List<Poker>> lastPokerList = new ArrayList<>();
+		for(int i = 0; i < room.getClientSideList().size(); i++){
+			if(room.getClientSideList().get(i).getId() != clientSide.getId()){
+				lastPokerList.add(room.getClientSideList().get(i).getPokers());
+			}
+		}
+		String lastPokers = LastCardsUtils.getLastCards(lastPokerList);
+		lastPokerList = new ArrayList<>();
 		clientSide.getPokers().removeAll(currentPokers);
 		MapHelper mapHelper = MapHelper.newInstance()
 				.put("clientId", clientSide.getId())
@@ -84,7 +93,8 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 				.put("clientType", clientSide.getType())
 				.put("pokers", currentPokers)
 				.put("lastSellClientId", clientSide.getId())
-				.put("lastSellPokers", currentPokers);
+				.put("lastSellPokers", currentPokers)
+				.put("lastPokers",lastPokers);
 
 		if (!clientSide.getPokers().isEmpty()) {
 			mapHelper.put("sellClientNickname", next.getNickname());

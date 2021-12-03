@@ -28,7 +28,7 @@ public class SimpleClient {
 	public static String protocol = "pb";
 
 	private final static String[] serverAddressSource = new String[]{
-			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
+//			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
 			"https://gitee.com/ainilili/ratel/raw/master/serverlist.json"
 	};
 
