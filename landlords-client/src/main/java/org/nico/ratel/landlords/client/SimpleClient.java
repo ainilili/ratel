@@ -28,17 +28,8 @@ public class SimpleClient {
 	public static String protocol = "pb";
 
 	private final static String[] serverAddressSource = new String[]{
-<<<<<<< HEAD
-//			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
+			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",
 			"https://gitee.com/ainilili/ratel/raw/master/serverlist.json"
-=======
-			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",			//Source
-			"https://cdn.jsdelivr.net/gh/ainilili/ratel@master/serverlist.json",				//CN CDN
-			"https://raw.fastgit.org/ainilili/ratel/master/serverlist.json",				//HongKong CDN
-			"https://cdn.staticaly.com/gh/ainilili/ratel/master/serverlist.json",				//Japanese CDN
-			"https://ghproxy.com/https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",	//Korea CDN
-			"https://gitee.com/ainilili/ratel/raw/master/serverlist.json"					//CN Gitee
->>>>>>> bb37c563fd6788bc8763267c2b7936de2a386ae4
 	};
 
 	public static void main(String[] args) throws InterruptedException, IOException, URISyntaxException {
