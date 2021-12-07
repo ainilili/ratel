@@ -6,9 +6,45 @@ import java.util.*;
 
 public class LastCardsUtils {
 
+    private static final List<String> defSort = new ArrayList(){{
+        add("3");
+        add("4");
+        add("5");
+        add("6");
+        add("7");
+        add("8");
+        add("9");
+        add("10");
+        add("J");
+        add("Q");
+        add("K");
+        add("A");
+        add("2");
+        add("S");
+        add("X");
+    }};
+
+    private static Map<String, Integer> lastCardMap = new HashMap(){{
+        put("A",0);
+        put("2",0);
+        put("3",0);
+        put("4",0);
+        put("5",0);
+        put("6",0);
+        put("7",0);
+        put("8",0);
+        put("9",0);
+        put("10",0);
+        put("J",0);
+        put("Q",0);
+        put("K",0);
+        put("S",0);
+        put("X",0);
+    }};
+
     public static String getLastCards(List<List<Poker>> pokers){
         StringBuffer lastCards = new StringBuffer();
-        Map<String, Integer> lastCardMap = initLastCards();
+        initLastCards();
         for(int i = 0; i < pokers.size(); i++){
             List<Poker> pokerList = pokers.get(i);
             for(int a = 0; a < pokerList.size(); a++){
@@ -16,8 +52,6 @@ public class LastCardsUtils {
                 lastCardMap.put(poker.getLevel().getName(),(lastCardMap.get(poker.getLevel().getName())+1));
             }
         }
-        List<String> defSort = new ArrayList<>();
-        initDefSort(defSort);
         for(int i = 0; i < defSort.size(); i++){
             String key = defSort.get(i);
             lastCards.append(key + "["+lastCardMap.get(key)+"] ");
@@ -26,42 +60,22 @@ public class LastCardsUtils {
         return lastCards.toString();
     }
 
-    private static void initDefSort(List<String> defSort){
-        defSort.add("3");
-        defSort.add("4");
-        defSort.add("5");
-        defSort.add("6");
-        defSort.add("7");
-        defSort.add("8");
-        defSort.add("9");
-        defSort.add("10");
-        defSort.add("J");
-        defSort.add("Q");
-        defSort.add("K");
-        defSort.add("A");
-        defSort.add("2");
-        defSort.add("S");
-        defSort.add("X");
 
-    }
-
-    private static Map<String, Integer> initLastCards(){
-        Map<String, Integer> lastCards = new HashMap<>();
-        lastCards.put("A",0);
-        lastCards.put("2",0);
-        lastCards.put("3",0);
-        lastCards.put("4",0);
-        lastCards.put("5",0);
-        lastCards.put("6",0);
-        lastCards.put("7",0);
-        lastCards.put("8",0);
-        lastCards.put("9",0);
-        lastCards.put("10",0);
-        lastCards.put("J",0);
-        lastCards.put("Q",0);
-        lastCards.put("K",0);
-        lastCards.put("S",0);
-        lastCards.put("X",0);
-        return lastCards;
+    private static void initLastCards(){
+        lastCardMap.put("A",0);
+        lastCardMap.put("2",0);
+        lastCardMap.put("3",0);
+        lastCardMap.put("4",0);
+        lastCardMap.put("5",0);
+        lastCardMap.put("6",0);
+        lastCardMap.put("7",0);
+        lastCardMap.put("8",0);
+        lastCardMap.put("9",0);
+        lastCardMap.put("10",0);
+        lastCardMap.put("J",0);
+        lastCardMap.put("Q",0);
+        lastCardMap.put("K",0);
+        lastCardMap.put("S",0);
+        lastCardMap.put("X",0);
     }
 }

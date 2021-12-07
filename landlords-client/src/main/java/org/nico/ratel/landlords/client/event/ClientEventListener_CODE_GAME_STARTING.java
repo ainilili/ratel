@@ -26,7 +26,7 @@ public class ClientEventListener_CODE_GAME_STARTING extends ClientEventListener 
 		SimplePrinter.printNotice("Your cards are");
 		SimplePrinter.printPokers(pokers);
 		SimplePrinter.printNotice("Last cards are");
-		SimplePrinter.printNotice(map.get("lastPokers").toString());
+		SimplePrinter.printNotice(map.containsKey("lastPokers")?map.get("lastPokers").toString():"");
 
 		get(ClientEventCode.CODE_GAME_LANDLORD_ELECT).call(channel, data);
 	}
