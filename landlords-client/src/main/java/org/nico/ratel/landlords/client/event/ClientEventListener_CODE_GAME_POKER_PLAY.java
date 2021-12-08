@@ -27,6 +27,8 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {
 		});
 		SimplePrinter.printPokers(pokers);
+		SimplePrinter.printNotice("Last cards are");
+		SimplePrinter.printNotice(map.containsKey("lastPokers")?map.get("lastPokers").toString():"");
 
 		SimplePrinter.printNotice("Please enter the combination you came up with (enter [exit|e] to exit current room, enter [pass|p] to jump current round, enter [view|v] to show all valid combinations.)");
 		String line = SimpleWriter.write("combination");
