@@ -24,27 +24,9 @@ public class LastCardsUtils {
         add("X");
     }};
 
-    private static Map<String, Integer> lastCardMap = new HashMap(){{
-        put("A",0);
-        put("2",0);
-        put("3",0);
-        put("4",0);
-        put("5",0);
-        put("6",0);
-        put("7",0);
-        put("8",0);
-        put("9",0);
-        put("10",0);
-        put("J",0);
-        put("Q",0);
-        put("K",0);
-        put("S",0);
-        put("X",0);
-    }};
-
     public static String getLastCards(List<List<Poker>> pokers){
         StringBuffer lastCards = new StringBuffer();
-        initLastCards();
+        Map<String, Integer> lastCardMap = initLastCards();
         for(int i = 0; i < pokers.size(); i++){
             List<Poker> pokerList = pokers.get(i);
             for(int a = 0; a < pokerList.size(); a++){
@@ -61,7 +43,8 @@ public class LastCardsUtils {
     }
 
 
-    private static void initLastCards(){
+    private static Map<String, Integer> initLastCards(){
+        Map<String, Integer> lastCardMap = new HashMap<>();
         lastCardMap.put("A",0);
         lastCardMap.put("2",0);
         lastCardMap.put("3",0);
@@ -77,5 +60,6 @@ public class LastCardsUtils {
         lastCardMap.put("K",0);
         lastCardMap.put("S",0);
         lastCardMap.put("X",0);
+        return lastCardMap;
     }
 }
