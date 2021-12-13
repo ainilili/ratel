@@ -11,6 +11,8 @@
 ## 介绍
 基于Netty实现的命令行斗地主游戏，为划水摸鱼而生~
 
+> 新版开发中：[直通车](https://github.com/ratel-online)，新增癞子模式，增加超时机制，完美复现欢乐斗地主，欢迎体验在线版 [http://rtol.isnico.com/](http://rtol.isnico.com/) 
+
 ## 安装
 首先下载打包，确保本地安装有maven及JRE环境：
 ```powershell
