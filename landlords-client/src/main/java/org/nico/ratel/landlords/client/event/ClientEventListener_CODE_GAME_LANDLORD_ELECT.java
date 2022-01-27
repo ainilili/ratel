@@ -3,6 +3,7 @@ package org.nico.ratel.landlords.client.event;
 import java.util.Map;
 
 import org.nico.ratel.landlords.client.SimpleClient;
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -23,7 +24,7 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 
 		if(turnClientId == SimpleClient.id) {
 			SimplePrinter.printNotice("It's your turn. Do you want to rob the landlord? [Y/N] (enter [exit|e] to exit current room)");
-			String line = SimpleWriter.write("Y/N");
+			String line = SimpleWriter.write(User.INSTANCE.getNickname(), "Y/N");
 			if (line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("e")) {
 				pushToServer(channel, ServerEventCode.CODE_CLIENT_EXIT);
 			} else if (line.equalsIgnoreCase("Y")) {

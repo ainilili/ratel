@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.client.proxy.ProtobufProxy;
 import org.nico.ratel.landlords.client.proxy.WebsocketProxy;
 import org.nico.ratel.landlords.features.Features;
@@ -62,11 +63,11 @@ public class SimpleClient {
 			for (int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i + 1) + ". " + serverAddressList.get(i));
 			}
-			int serverPick = Integer.parseInt(SimpleWriter.write("option"));
+			int serverPick = Integer.parseInt(SimpleWriter.write(User.INSTANCE.getNickname(), "option"));
 			while (serverPick < 1 || serverPick > serverAddressList.size()) {
 				try {
 					SimplePrinter.printNotice("The server address does not exist!");
-					serverPick = Integer.parseInt(SimpleWriter.write("option"));
+					serverPick = Integer.parseInt(SimpleWriter.write(User.INSTANCE.getNickname(), "option"));
 				} catch (NumberFormatException ignore) {}
 			}
 			serverAddress = serverAddressList.get(serverPick - 1);
