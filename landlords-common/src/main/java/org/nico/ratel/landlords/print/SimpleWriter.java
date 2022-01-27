@@ -12,9 +12,9 @@ public class SimpleWriter {
 		return write("player", message);
 	}
 
-	public static String write(String user, String message) {
+	public static String write(String nickname, String message) {
 		System.out.println();
-		System.out.printf("[%s:ratel@%s]$ ", user, message);
+		System.out.printf("[%s@%s]$ ", nickname, message);
 		try {
 			return write();
 		} finally {
