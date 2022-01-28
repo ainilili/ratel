@@ -308,103 +308,97 @@ public class PokerHelper {
 	public static String printPoker(List<Poker> pokers) {
 		sortPoker(pokers);
 		switch (pokerPrinterType) {
-			case 0:
-				return buildHandStringSharp(pokers);
 			case 1:
 				return buildHandStringRounded(pokers);
 			case 2:
 				return textOnly(pokers);
 			case 3:
 				return textOnlyNoType(pokers);
+			case 0:
 			default:
 				return buildHandStringSharp(pokers);
-
 		}
 
 	}
 
 	private static String buildHandStringSharp(List<Poker> pokers) {
-		StringBuilder builder = new StringBuilder();
-		if (pokers != null && pokers.size() > 0) {
-
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("┌──┐");
-				} else {
-					builder.append("──┐");
-				}
-			}
-			builder.append(System.lineSeparator());
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("│");
-				}
-				String name = pokers.get(index).getLevel().getName();
-				builder.append(name).append(name.length() == 1 ? " " : "").append("|");
-			}
-			builder.append(System.lineSeparator());
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("│");
-				}
-				builder.append(pokers.get(index).getType().getName()).append(" |");
-			}
-			builder.append(System.lineSeparator());
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("└──┘");
-				} else {
-					builder.append("──┘");
-				}
-			}
-		}
-		return builder.toString();
+		return buildPoker(pokers, "┌", "┐", "└", "┘", "──", "──", "│", "│");
 	}
 
 	private static String buildHandStringRounded(List<Poker> pokers) {
-		StringBuilder builder = new StringBuilder();
-		if (pokers != null && pokers.size() > 0) {
-
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("┌──╮");
-				} else {
-					builder.append("──╮");
-				}
-			}
-			builder.append(System.lineSeparator());
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("│");
-				}
-				String name = pokers.get(index).getLevel().getName();
-				builder.append(name).append(name.length() == 1 ? " " : "").append("|");
-			}
-			builder.append(System.lineSeparator());
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("│");
-				}
-				builder.append(pokers.get(index).getType().getName()).append(" |");
-			}
-			builder.append(System.lineSeparator());
-			for (int index = 0; index < pokers.size(); index++) {
-				if (index == 0) {
-					builder.append("└──╯");
-				} else {
-					builder.append("──╯");
-				}
-			}
-		}
-		return builder.toString();
+		return buildPoker(pokers, "┌", "╮", "└", "╯", "──", "──", "│", "│");
 	}
+
+    /**
+     * basic build the poker message
+     *
+     * @param pokers      poker array
+     * @param topLeft     top left symbol
+     * @param topRight    top right symbol
+     * @param bottomLeft  bottom left symbol
+     * @param bottomRight bottom right symbol
+     * @param top         top symbol
+     * @param bottom      bottom symbol
+     * @param left        left symbol
+     * @param right       right symbol
+     * @return poker message
+     */
+    private static String buildPoker(List<Poker> pokers,
+									 String topLeft,
+									 String topRight,
+									 String bottomLeft,
+									 String bottomRight,
+									 String top,
+									 String bottom,
+									 String left,
+									 String right) {
+        // assemble real bottom & top
+        final String firstLineMessage = String.format("%s%s", top, topRight);
+        final String lastLineMessage = String.format("%s%s", bottom, bottomRight);
+
+        // init five line builder
+        final StringBuilder firstLine = new StringBuilder();
+        final StringBuilder numberLine = new StringBuilder();
+        final StringBuilder symbolLine = new StringBuilder();
+        final StringBuilder lastLine = new StringBuilder();
+
+        if (pokers != null && !pokers.isEmpty()) {
+            // all in once traverse
+            final int size = pokers.size();
+            PokerLevel pokerLevel;
+            PokerType pokerType;
+            for (int index = 0; index < size; index++) {
+                pokerLevel = pokers.get(index).getLevel();
+                pokerType = pokers.get(index).getType();
+                if (index == 0) {
+                    // the first poke needs print the left side
+                    firstLine.append(ColorHelper.color(pokerType, topLeft));
+                    numberLine.append(ColorHelper.color(pokerType, left));
+                    symbolLine.append(ColorHelper.color(pokerType, left));
+                    lastLine.append(ColorHelper.color(pokerType, bottomLeft));
+                }
+                firstLine.append(ColorHelper.color(pokerType, firstLineMessage));
+                numberLine.append(ColorHelper.color(pokerType, String.format("%-2s%s", pokerLevel.getName(), right)));
+                symbolLine.append(ColorHelper.color(pokerType, String.format("%-2s%s", pokerType.getName(), right)));
+                lastLine.append(ColorHelper.color(pokerType, lastLineMessage));
+            }
+        }
+        return firstLine
+                .append(System.lineSeparator())
+                .append(numberLine)
+                .append(System.lineSeparator())
+                .append(symbolLine)
+                .append(System.lineSeparator())
+                .append(lastLine)
+                .toString();
+    }
 
 	private static String textOnly(List<Poker> pokers) {
 		StringBuilder builder = new StringBuilder();
 		if (pokers != null && pokers.size() > 0) {
 			for (Poker poker : pokers) {
-				String name = poker.getLevel().getName();
-				String type = poker.getType().getName();
+				String name = ColorHelper.color(poker.getType(), poker.getLevel().getName());
+				String type = ColorHelper.color(poker.getType(), poker.getType().getName());
 
 				builder.append(name).append(type);
 			}
@@ -416,7 +410,7 @@ public class PokerHelper {
 		StringBuilder builder = new StringBuilder();
 		if (pokers != null && pokers.size() > 0) {
 			for (Poker poker : pokers) {
-				String name = poker.getLevel().getName();
+				String name = ColorHelper.color(poker.getType(), poker.getLevel().getName());
 				builder.append(name).append(" ");
 			}
 		}
