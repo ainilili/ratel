@@ -3,6 +3,7 @@ package org.nico.ratel.landlords.client.event;
 import io.netty.channel.Channel;
 import org.nico.ratel.landlords.channel.ChannelUtils;
 import org.nico.ratel.landlords.client.SimpleClient;
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -23,7 +24,7 @@ public class ClientEventListener_CODE_GAME_READY extends ClientEventListener {
 
     static void gameReady(Channel channel) {
         SimplePrinter.printNotice("\nDo you want to continue the game? [Y/N]");
-        String line = SimpleWriter.write("notReady");
+        String line = SimpleWriter.write(User.INSTANCE.getNickname(), "notReady");
         if (line.equals("Y") || line.equals("y")) {
             ChannelUtils.pushToServer(channel, ServerEventCode.CODE_GAME_READY, "");
             return;

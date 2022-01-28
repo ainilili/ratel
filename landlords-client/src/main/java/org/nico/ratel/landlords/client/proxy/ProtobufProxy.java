@@ -12,14 +12,14 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
-import org.nico.ratel.landlords.client.handler.SecondProtobufCodec;
 import org.nico.ratel.landlords.client.handler.ProtobufTransferHandler;
+import org.nico.ratel.landlords.client.handler.SecondProtobufCodec;
 import org.nico.ratel.landlords.entity.ClientTransferData;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
 import java.util.concurrent.TimeUnit;
 
-public class ProtobufProxy implements Proxy{
+public class ProtobufProxy implements Proxy {
     @Override
     public void connect(String serverAddress, int port) throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();

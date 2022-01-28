@@ -9,6 +9,8 @@ public class User {
     /** 是否观战中 */
     private volatile boolean isWatching = false;
 
+    private String nickname = "player";
+
     private User() {}
 
     public boolean isPlaying() {
@@ -25,5 +27,13 @@ public class User {
 
     public void setWatching(boolean watching) {
         isWatching = watching;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

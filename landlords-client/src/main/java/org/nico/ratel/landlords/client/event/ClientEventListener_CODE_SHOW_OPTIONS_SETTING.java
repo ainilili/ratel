@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.client.event;
 
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.helper.PokerHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -20,7 +21,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_SETTING extends ClientEventLi
 		SimplePrinter.printNotice("5. Unicode Cards");
 
 		SimplePrinter.printNotice("Please select an option above (enter [BACK] to return to options list)");
-		String line = SimpleWriter.write("setting");
+		String line = SimpleWriter.write(User.INSTANCE.getNickname(), "setting");
 
 		if (line.equalsIgnoreCase("BACK")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);

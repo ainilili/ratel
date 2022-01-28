@@ -4,6 +4,7 @@ import io.netty.channel.Channel;
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
 import org.nico.ratel.landlords.client.SimpleClient;
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.PokerSell;
 import org.nico.ratel.landlords.enums.PokerLevel;
@@ -31,7 +32,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 		SimplePrinter.printNotice(map.containsKey("lastPokers")?map.get("lastPokers").toString():"");
 
 		SimplePrinter.printNotice("Please enter the combination you came up with (enter [exit|e] to exit current room, enter [pass|p] to jump current round, enter [view|v] to show all valid combinations.)");
-		String line = SimpleWriter.write("combination");
+		String line = SimpleWriter.write(User.INSTANCE.getNickname(), "combination");
 
 		if (line == null) {
 			SimplePrinter.printNotice("Invalid enter");
@@ -65,7 +66,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 					}
 					while (true) {
 						SimplePrinter.printNotice("You can enter index to choose anyone.(enter [back|b] to go back.)");
-						line = SimpleWriter.write("choose");
+						line = SimpleWriter.write(User.INSTANCE.getNickname(), "choose");
 						if (line.equalsIgnoreCase("back") || line.equalsIgnoreCase("b")) {
 							call(channel, data);
 							return;

@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.client.event;
 
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -18,7 +19,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 		SimplePrinter.printNotice("3. Join Room");
 		SimplePrinter.printNotice("4. Spectate Game");
 		SimplePrinter.printNotice("Please select an option above (enter [back|b] to return to options list)");
-		String line = SimpleWriter.write("pvp");
+		String line = SimpleWriter.write(User.INSTANCE.getNickname(), "pvp");
 		if (line == null) {
 			SimplePrinter.printNotice("Invalid options, please choose again：");
 			call(channel, data);
@@ -63,7 +64,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVP extends ClientEventListen
 		String notice = String.format("Please enter the room id you want to %s (enter [back|b] return options list)", watchMode ? "spectate" : "join");
 
 		SimplePrinter.printNotice(notice);
-		String line = SimpleWriter.write("roomid");
+		String line = SimpleWriter.write(User.INSTANCE.getNickname(), "roomid");
 		if (line == null) {
 			parseInvalid(channel, data);
 			return;

@@ -2,6 +2,7 @@ package org.nico.ratel.landlords.client.event;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.nico.ratel.landlords.channel.ChannelUtils;
@@ -37,7 +38,7 @@ public abstract class ClientEventListener {
 			if (ClientEventListener.LISTENER_MAP.containsKey(code)) {
 				listener = ClientEventListener.LISTENER_MAP.get(code);
 			} else {
-				String eventListener = LISTENER_PREFIX + code.name();
+				String eventListener = LISTENER_PREFIX + code.name().toUpperCase(Locale.ROOT);
 				Class<ClientEventListener> listenerClass = (Class<ClientEventListener>) Class.forName(eventListener);
 				listener = listenerClass.newInstance();
 				ClientEventListener.LISTENER_MAP.put(code, listener);

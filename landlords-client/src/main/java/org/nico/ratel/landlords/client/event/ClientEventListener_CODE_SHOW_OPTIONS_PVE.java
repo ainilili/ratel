@@ -1,5 +1,6 @@
 package org.nico.ratel.landlords.client.event;
 
+import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.enums.ClientEventCode;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.print.SimplePrinter;
@@ -17,7 +18,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 		SimplePrinter.printNotice("2. Medium Mode");
 		SimplePrinter.printNotice("3. Hard Mode");
 		SimplePrinter.printNotice("Please select an option above (enter [back|b] to return to options list)");
-		String line = SimpleWriter.write("pve");
+		String line = SimpleWriter.write(User.INSTANCE.getNickname(), "pve");
 
 		if(line.equalsIgnoreCase("back") ||  line.equalsIgnoreCase("b")) {
 			get(ClientEventCode.CODE_SHOW_OPTIONS).call(channel, data);
