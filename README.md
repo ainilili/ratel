@@ -8,7 +8,7 @@
 ![Build ratel(Java with Maven)](https://github.com/ainilili/ratel/workflows/Build%20ratel(Java%20with%20Maven)/badge.svg?branch=master)
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/kebyn/ratel?label=Docker&logo=docker&style=flat-square)
 
-# 新版开发中：[直通车](https://github.com/ratel-online)，新增癞子模式，增加超时机制，完美复现欢乐斗地主，欢迎体验[在线版](http://rtol.isnico.com/) 
+# [新版](https://github.com/ratel-online)：，新增癞子模式，增加超时机制，完美复现欢乐斗地主，欢迎体验[在线版](http://rtol.isnico.com/) 
 
 ## 介绍
 基于Netty实现的命令行斗地主游戏，为划水摸鱼而生~
