@@ -16,8 +16,8 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 	@Override
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
-		int turnClientId = (Integer)map.get("nextClientId");
-		int highestScore = (Integer)map.get("highestScore");
+		int turnClientId = (int) map.get("nextClientId");
+		int highestScore = (int) map.get("highestScore");
 		if (map.containsKey("preClientNickname")) {
 			if (highestScore != 0 && map.get("preClientId") == map.get("currentLandlordId")) {
 				SimplePrinter.printNotice(map.get("preClientNickname") + " robs the landlord with " + highestScore + " score" + (highestScore == 1 ? "" : "s") + "!");
@@ -49,11 +49,19 @@ public class ClientEventListener_CODE_GAME_LANDLORD_ELECT extends ClientEventLis
 
 					String result;
 					if (currentScore > highestScore) {
-						result = MapHelper.newInstance().put("highestScore", currentScore).put("currentLandlordId", SimpleClient.id).json();
+						result = MapHelper.newInstance()
+							.put("highestScore", currentScore)
+							.put("currentLandlordId", SimpleClient.id)
+							.json();
 					} else if (map.containsKey("currentLandlordId")) {
-						result = MapHelper.newInstance().put("highestScore", highestScore).put("currentLandlordId", (Integer)map.get("currentLandlordId")).json();
+						result = MapHelper.newInstance()
+							.put("highestScore", highestScore)
+							.put("currentLandlordId", (int) map.get("currentLandlordId"))
+							.json();
 					} else {
-						result = MapHelper.newInstance().put("highestScore", 0).json();
+						result = MapHelper.newInstance()
+							.put("highestScore", 0)
+							.json();
 					}
 
 					this.pushToServer(channel, ServerEventCode.CODE_GAME_LANDLORD_ELECT, result);

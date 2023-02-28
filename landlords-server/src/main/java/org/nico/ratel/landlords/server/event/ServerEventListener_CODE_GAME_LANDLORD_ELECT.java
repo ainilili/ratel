@@ -28,7 +28,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 			return;
 		}
 		if (highestScore == 3) {
-            room.setBaseScore(highestScore);
+			room.setBaseScore(highestScore);
 			confirmLandlord(clientSide, room);
 			return;
 		}
