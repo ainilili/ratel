@@ -18,6 +18,8 @@ public class ClientSide {
 
 	private int scoreInc;
 
+	private int round;
+
 	private String nickname;
 
 	private List<Poker> pokers;
@@ -52,6 +54,18 @@ public class ClientSide {
 		next = null;
 		pre = null;
 		score = 0;
+	}
+
+	public final void resetRound() {
+		round = 0;
+	}
+
+	public final int getRound() {
+		return round;
+	}
+
+	public final void addRound() {
+		round += 1;
 	}
 
 	public final ClientRole getRole() {

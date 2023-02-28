@@ -69,6 +69,8 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 
 		ClientSide next = clientSide.getNext();
 
+		clientSide.addRound();
+
 		if (currentPokerSell.getSellType() == SellType.BOMB || currentPokerSell.getSellType() == SellType.KING_BOMB) {
 			// 炸弹积分翻倍
 			room.increaseRate();
@@ -190,13 +192,13 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 	private boolean isSpring(ClientSide winner, Room room) {
 		boolean isSpring = true;
 		for (ClientSide client: room.getClientSideList()) {
-			if (client.getId() == winner.getId()) {
+			if (client.getType() == winner.getType()) {
 				continue;
 			}
-			if (client.getType() == ClientType.PEASANT && client.getPokers().size() < 17) {
+			if (client.getType() == ClientType.PEASANT && client.getRound() > 0) {
 				isSpring = false;
 			}
-			if (client.getType() == ClientType.LANDLORD && client.getPokers().size() < 20) {
+			if (client.getType() == ClientType.LANDLORD && client.getRound() > 1) {
 				isSpring = false;
 			}
 		}

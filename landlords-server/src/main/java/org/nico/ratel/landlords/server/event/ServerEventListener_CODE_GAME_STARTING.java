@@ -54,6 +54,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					otherPokers.add(otherClient.getPokers());
 				}
 			}
+			otherPokers.add(room.getLandlordPokers());
 			String lastCards = LastCardsUtils.getLastCards(otherPokers);
 			otherPokers = new ArrayList<>();
 			String result = MapHelper.newInstance()
@@ -64,6 +65,7 @@ public class ServerEventListener_CODE_GAME_STARTING implements ServerEventListen
 					.put("nextClientId", startGrabClient.getId())
 					.put("pokers", client.getPokers())
 					.put("lastPokers",lastCards)
+					.put("highestScore", 0)
 					.json();
 
 			if (client.getRole() == ClientRole.PLAYER) {

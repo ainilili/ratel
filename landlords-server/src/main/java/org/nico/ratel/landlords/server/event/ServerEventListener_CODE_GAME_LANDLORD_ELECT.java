@@ -21,34 +21,64 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 	public void call(ClientSide clientSide, String data) {
 
 		Room room = ServerContains.getRoom(clientSide.getRoomId());
+		Map<String, Object> map = MapHelper.parser(data);
+		int highestScore = (Integer)map.get("highestScore");
 
 		if (room == null) {
 			return;
 		}
-		if (Boolean.parseBoolean(data)) {
+		if (highestScore == 3) {
+            room.setBaseScore(highestScore);
 			confirmLandlord(clientSide, room);
 			return;
 		}
 		if (clientSide.getNext().getId() == room.getFirstSellClient()) {
-			for (ClientSide client : room.getClientSideList()) {
-				if (client.getRole() == ClientRole.PLAYER) {
-					ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
+			if (highestScore == 0) {
+				for (ClientSide client : room.getClientSideList()) {
+					if (client.getRole() == ClientRole.PLAYER) {
+						ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CYCLE, null);
+					}
 				}
+				ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, null);
+				return;
+			} else {
+				room.setBaseScore(highestScore);
+				int landlordId = (Integer)map.get("currentLandlordId");
+				for (ClientSide client : room.getClientSideList())
+					if (client.getId() == landlordId) {
+						confirmLandlord(client, room);
+						return;
+					}
 			}
-			ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, null);
-			return;
+			
 		}
 		ClientSide turnClientSide = clientSide.getNext();
 		room.setCurrentSellClient(turnClientSide.getId());
-		String result = MapHelper.newInstance()
+		String result;
+
+		if (highestScore != 0) {
+			result = MapHelper.newInstance()
+				.put("roomId", room.getId())
+				.put("roomOwner", room.getRoomOwner())
+				.put("roomClientCount", room.getClientSideList().size())
+				.put("preClientNickname", clientSide.getNickname())
+				.put("preClientId", clientSide.getId())
+				.put("nextClientNickname", turnClientSide.getNickname())
+				.put("nextClientId", turnClientSide.getId())
+				.put("highestScore", highestScore)
+				.put("currentLandlordId", (Integer)map.get("currentLandlordId"))
+				.json();
+		} else {
+			result = MapHelper.newInstance()
 				.put("roomId", room.getId())
 				.put("roomOwner", room.getRoomOwner())
 				.put("roomClientCount", room.getClientSideList().size())
 				.put("preClientNickname", clientSide.getNickname())
 				.put("nextClientNickname", turnClientSide.getNickname())
 				.put("nextClientId", turnClientSide.getId())
+				.put("highestScore", 0)
 				.json();
-
+		}
 		for (ClientSide client : room.getClientSideList()) {
 			if (client.getRole() == ClientRole.PLAYER) {
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_ELECT, result);
@@ -80,6 +110,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 					.put("landlordId", clientSide.getId())
 					.put("additionalPokers", room.getLandlordPokers())
 					.json();
+			client.resetRound();
 
 			if (client.getRole() == ClientRole.PLAYER) {
 				ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_GAME_LANDLORD_CONFIRM, result);

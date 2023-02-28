@@ -20,6 +20,10 @@ public class ServerEventListener_CODE_CLIENT_OFFLINE implements ServerEventListe
 			return;
 		}
 
+		if (room.getWatcherList().contains(clientSide)) {
+			return;
+		}
+
 		String result = MapHelper.newInstance()
 				.put("roomId", room.getId())
 				.put("exitClientId", clientSide.getId())

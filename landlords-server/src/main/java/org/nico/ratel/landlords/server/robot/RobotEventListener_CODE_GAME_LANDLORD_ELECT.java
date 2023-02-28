@@ -2,12 +2,14 @@ package org.nico.ratel.landlords.server.robot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.nico.ratel.landlords.entity.ClientSide;
 import org.nico.ratel.landlords.entity.Poker;
 import org.nico.ratel.landlords.entity.Room;
 import org.nico.ratel.landlords.enums.ServerEventCode;
 import org.nico.ratel.landlords.helper.PokerHelper;
+import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.helper.TimeHelper;
 import org.nico.ratel.landlords.robot.RobotDecisionMakers;
 import org.nico.ratel.landlords.server.ServerContains;
@@ -36,7 +38,20 @@ public class RobotEventListener_CODE_GAME_LANDLORD_ELECT implements RobotEventLi
 
 			TimeHelper.sleep(300);
 
-			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, String.valueOf(RobotDecisionMakers.howToChooseLandlord(room.getDifficultyCoefficient(), leftPokers, rightPokers, landlordPokers)));
+			Map<String, Object> map = MapHelper.parser(data);
+			int expectedScore = RobotDecisionMakers.getLandlordScore(room.getDifficultyCoefficient(), leftPokers, rightPokers, landlordPokers);
+			int highestScore = (Integer)map.get("highestScore");
+			String result;
+			if (expectedScore > highestScore) {
+				result = MapHelper.newInstance()
+					.put("highestScore", expectedScore)
+					.put("currentLandlordId", robot.getId())
+					.json();
+			} else {
+				result = data;
+			}
+   
+			ServerEventListener.get(ServerEventCode.CODE_GAME_LANDLORD_ELECT).call(robot, result);
 		});
 	}
 
