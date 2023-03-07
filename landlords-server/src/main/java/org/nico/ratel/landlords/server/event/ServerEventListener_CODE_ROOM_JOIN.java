@@ -50,14 +50,6 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener {
 
 		roomClientList.add(clientSide);
 		roomClientMap.put(clientSide.getId(), clientSide);
-
-		if (roomClientMap.size() == 3) {
-			clientSide.setNext(roomClientList.getFirst());
-			roomClientList.getFirst().setPre(clientSide);
-
-			ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
-			return;
-		}
 		room.setStatus(RoomStatus.WAIT);
 		String result = MapHelper.newInstance()
 				.put("clientId", clientSide.getId())
@@ -68,6 +60,14 @@ public class ServerEventListener_CODE_ROOM_JOIN implements ServerEventListener {
 				.json();
 		for (ClientSide client : roomClientMap.values()) {
 			ChannelUtils.pushToClient(client.getChannel(), ClientEventCode.CODE_ROOM_JOIN_SUCCESS, result);
+		}
+
+		if (roomClientMap.size() == 3) {
+			clientSide.setNext(roomClientList.getFirst());
+			roomClientList.getFirst().setPre(clientSide);
+
+			ServerEventListener.get(ServerEventCode.CODE_GAME_STARTING).call(clientSide, String.valueOf(room.getId()));
+			return;
 		}
 
 		notifyWatcherJoinRoom(room, clientSide);

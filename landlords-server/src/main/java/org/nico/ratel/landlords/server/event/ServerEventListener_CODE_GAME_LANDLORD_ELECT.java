@@ -109,6 +109,7 @@ public class ServerEventListener_CODE_GAME_LANDLORD_ELECT implements ServerEvent
 					.put("landlordNickname", clientSide.getNickname())
 					.put("landlordId", clientSide.getId())
 					.put("additionalPokers", room.getLandlordPokers())
+					.put("baseScore", room.getBaseScore())
 					.json();
 			client.resetRound();
 
