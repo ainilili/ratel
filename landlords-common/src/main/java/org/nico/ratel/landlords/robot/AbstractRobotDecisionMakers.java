@@ -16,5 +16,5 @@ public abstract class AbstractRobotDecisionMakers {
 
 	public abstract PokerSell howToPlayPokers(PokerSell lastPokerSell, ClientSide robot);
 	
-	public abstract boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers);
+	public abstract int getLandlordScore(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers);
 }

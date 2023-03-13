@@ -51,10 +51,23 @@ public class EasyRobotDecisionMakers extends AbstractRobotDecisionMakers {
 	}
 
 	@Override
-	public boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
+	public int getLandlordScore(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
 		List<PokerSell> leftSells = PokerHelper.parsePokerSells(leftPokers);
 		List<PokerSell> mySells = PokerHelper.parsePokerSells(myPokers);
 		List<PokerSell> rightSells = PokerHelper.parsePokerSells(rightPokers);
-		return mySells.size() > leftSells.size() && mySells.size() > rightSells.size();
-	}
+		int expectedScore = 0;
+		if (mySells.size() > leftSells.size()) {
+			++expectedScore;
+		}
+
+		if (mySells.size() > rightSells.size()) {
+			++expectedScore;
+		}
+
+		if (expectedScore != 0) {
+			++expectedScore;
+		}
+
+		return expectedScore;
+	 }
 }

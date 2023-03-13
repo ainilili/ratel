@@ -129,11 +129,24 @@ public class MediumRobotDecisionMakers extends AbstractRobotDecisionMakers {
 	}
 
 	@Override
-	public boolean howToChooseLandlord(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
+	public int getLandlordScore(List<Poker> leftPokers, List<Poker> rightPokers, List<Poker> myPokers) {
 		int leftScore = PokerHelper.parsePokerColligationScore(leftPokers);
 		int rightScore = PokerHelper.parsePokerColligationScore(rightPokers);
 		int myScore = PokerHelper.parsePokerColligationScore(myPokers);
-		return myScore >= (leftScore + rightScore) / 2;
+		int expectedScore = 0;
+		if (myScore >= Math.min(leftScore, rightScore)) {
+			++expectedScore;
+		}
+
+		if (myScore * 2 >= leftScore + rightScore) {
+			++expectedScore;
+		}
+
+		if (myScore >= Math.max(leftScore, rightScore)) {
+			++expectedScore;
+		}
+
+		return expectedScore;
 	}
 
 }
