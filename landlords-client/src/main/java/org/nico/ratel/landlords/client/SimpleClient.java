@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
+import org.nico.noson.util.string.StringUtils;
 import org.nico.ratel.landlords.client.entity.User;
 import org.nico.ratel.landlords.client.proxy.ProtobufProxy;
 import org.nico.ratel.landlords.client.proxy.WebsocketProxy;
 import org.nico.ratel.landlords.features.Features;
+import org.nico.ratel.landlords.helper.I18nHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.print.SimpleWriter;
 import org.nico.ratel.landlords.utils.StreamUtils;
@@ -27,6 +30,8 @@ public class SimpleClient {
 	public static int port = 1024;
 
 	public static String protocol = "pb";
+
+	public static String language;
 
 	private final static String[] serverAddressSource = new String[]{
 			"https://raw.githubusercontent.com/ainilili/ratel/master/serverlist.json",			//Source
@@ -50,23 +55,34 @@ public class SimpleClient {
 					if (args[index].equalsIgnoreCase("-ptl") || args[index].equalsIgnoreCase("-protocol")) {
 						protocol = args[index + 1];
 					}
+					if (args[index].equalsIgnoreCase("-lang") || args[index].equalsIgnoreCase("-language")) {
+						language = args[index + 1];
+					}
 				}
 			}
 		}
+
+		if (StringUtils.isBlank(language)) {
+			I18nHelper.enable();
+		} else {
+			Locale locale = getLocale(language);
+			I18nHelper.enable(locale);
+		}
+
 		if (serverAddress == null) {
 			List<String> serverAddressList = getServerAddressList();
 			if (serverAddressList == null || serverAddressList.size() == 0) {
 				throw new RuntimeException("Please use '-host' to setting server address.");
 			}
 
-			SimplePrinter.printNotice("Please select a server:");
+			SimplePrinter.printTranslate("pls_select_srv");
 			for (int i = 0; i < serverAddressList.size(); i++) {
 				SimplePrinter.printNotice((i + 1) + ". " + serverAddressList.get(i));
 			}
 			int serverPick = Integer.parseInt(SimpleWriter.write(User.INSTANCE.getNickname(), "option"));
 			while (serverPick < 1 || serverPick > serverAddressList.size()) {
 				try {
-					SimplePrinter.printNotice("The server address does not exist!");
+					SimplePrinter.printTranslate("srv_addr_not_exist");
 					serverPick = Integer.parseInt(SimpleWriter.write(User.INSTANCE.getNickname(), "option"));
 				} catch (NumberFormatException ignore) {}
 			}
@@ -91,10 +107,23 @@ public class SimpleClient {
 				String serverInfo = StreamUtils.convertToString(new URL(serverAddressSource));
 				return Noson.convert(serverInfo, new NoType<List<String>>() {});
 			} catch (IOException e) {
-				SimplePrinter.printNotice("Try connected " + serverAddressSource + " failed: " + e.getMessage());
+				SimplePrinter.printTranslate("try_connect_%s_failed_%s", serverAddressSource, e.getMessage());
 			}
 		}
 		return null;
 	}
 
+	private static Locale getLocale(String langCode) {
+		switch (langCode) {
+			case "zh":
+			case "zh_CN":
+				return Locale.SIMPLIFIED_CHINESE;
+			case "en":
+			case "en_US":
+					return Locale.US;
+			default:
+				System.out.println("[warning] not supported language code: " + langCode + ", set to en_US");
+				return Locale.US;
+		}
+	}
 }
