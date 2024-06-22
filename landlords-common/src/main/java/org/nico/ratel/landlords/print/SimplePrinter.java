@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import org.nico.ratel.landlords.entity.Poker;
+import org.nico.ratel.landlords.helper.I18nHelper;
 import org.nico.ratel.landlords.helper.PokerHelper;
 
 public class SimplePrinter {
@@ -20,6 +21,10 @@ public class SimplePrinter {
 
 	public static void printNotice(String msg) {
 		System.out.println(msg);
+	}
+
+	public static void printTranslate(String key, Object... args) {
+		System.out.println(I18nHelper.translate(key, args));
 	}
 
 	public static void printNotice(String msgKey, String locale) {
