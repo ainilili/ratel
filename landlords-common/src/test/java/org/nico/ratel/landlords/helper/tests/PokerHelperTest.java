@@ -240,4 +240,19 @@ public class PokerHelperTest {
         Assert.assertEquals(8, PokerHelper.checkPokerType(pokers).getScore());
 		Assert.assertEquals(SellType.THREE_STRAIGHT_WITH_SINGLE, pokerSell.getSellType());
 	}
+
+	@Test
+	public void testRejectsNonConsecutiveAirplaneWithMixedSingleWings() {
+		pokers.clear();
+		for (int i = 0; i < 3; i++) {
+			pokers.add(new Poker(PokerLevel.LEVEL_3, PokerType.HEART));
+			pokers.add(new Poker(PokerLevel.LEVEL_5, PokerType.HEART));
+		}
+		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.HEART));
+		pokers.add(new Poker(PokerLevel.LEVEL_7, PokerType.HEART));
+
+		PokerSell pokerSell = PokerHelper.checkPokerType(pokers);
+		Assert.assertEquals(SellType.ILLEGAL, pokerSell.getSellType());
+		Assert.assertNull(pokerSell.getSellPokers());
+	}
 }
