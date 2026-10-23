@@ -228,7 +228,9 @@ public class PokerHelper {
 				if (threeEndIndex - threeStartIndex + 1 == threeCount && threeEndIndex < PokerLevel.LEVEL_2.getLevel()) {
 					return new PokerSell(SellType.THREE_STRAIGHT_WITH_DOUBLE, pokers, threeEndIndex);
 				}
-			} else if (singleCount + doubleCount * 2 == threeCount && fourCount == 0) {
+			} else if (singleCount + doubleCount * 2 == threeCount && fourCount == 0
+					&& threeEndIndex - threeStartIndex + 1 == threeCount
+					&& threeEndIndex < PokerLevel.LEVEL_2.getLevel()) {
 				return new PokerSell(SellType.THREE_STRAIGHT_WITH_SINGLE, pokers, threeEndIndex);
 			}
 		}
